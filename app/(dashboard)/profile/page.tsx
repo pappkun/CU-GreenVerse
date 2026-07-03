@@ -116,6 +116,7 @@ export default function ProfilePage() {
         lang === "th" ? "คัดลอกข้อความสำหรับแชร์แล้ว!" : "Copied to clipboard!",
         { description: lang === "th" ? "นำไปวางใน Instagram Story ได้เลย" : "Paste it in your Instagram Story!" }
       );
+    }
   }
 
   return (
