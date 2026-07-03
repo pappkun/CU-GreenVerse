@@ -8,13 +8,13 @@ import { cn } from "@/lib/utils";
 
 export function BottomNav() {
   const pathname = usePathname();
-  const { t } = useLang();
+  const { t, lang } = useLang();
 
   const navItems = [
     { name: t("dashboard"), href: "/dashboard", icon: LayoutDashboard },
     { name: t("activities"), href: "/activities", icon: Leaf },
     // Center scan button
-    { name: "Scan", href: "/activities/submit?scan=true", icon: ScanLine, isSpecial: true },
+    { name: lang === "th" ? "สแกน" : "Scan", href: "/activities/submit?scan=true", icon: ScanLine, isSpecial: true },
     { name: t("rewards"), href: "/rewards", icon: Gift },
     { name: t("profile"), href: "/profile", icon: User },
   ];

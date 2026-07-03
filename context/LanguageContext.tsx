@@ -14,7 +14,7 @@ export const translations = {
     login: "เข้าสู่ระบบ",
     startJourney: "เริ่มต้นการเดินทาง",
     profile: "โปรไฟล์ของฉัน",
-    passport: "สมุดพาสปอร์ตสีเขียว",
+    passport: "กรีนพาสปอร์ต",
     adminDashboard: "แดชบอร์ดผู้ดูแลระบบ",
     logout: "ออกจากระบบ",
 
@@ -38,14 +38,14 @@ export const translations = {
 
     // Activities
     activitiesTitle: "กิจกรรมรักษ์โลก",
-    activitiesDesc: "ค้นหากิจกรรมที่ช่วยลดคาร์บอนและรับ Green Credits",
+    activitiesDesc: "เข้าร่วมกิจกรรมลดคาร์บอนเพื่อสะสม Green Credits",
     searchPlaceholder: "ค้นหากิจกรรม...",
     submitAction: "บันทึกกิจกรรม",
     noActivities: "ไม่พบกิจกรรมที่ตรงกับเงื่อนไขการค้นหา",
 
     // Rewards
     rewardsTitle: "ร้านค้าของรางวัล",
-    rewardsDesc: "แลก Green Credits เพื่อรับของรางวัลและสิทธิพิเศษได้",
+    rewardsDesc: "ใช้ Green Credits แลกรับของรางวัลและสิทธิพิเศษมากมาย",
     yourBalance: "ยอดคงเหลือ",
     redeemNow: "แลกเลย",
     notEnough: "Credits ไม่พอ",
@@ -57,7 +57,7 @@ export const translations = {
     leaderboardDesc: "ดูอันดับผู้นำด้านความยั่งยืนของจุฬาลงกรณ์มหาวิทยาลัย",
     faculties: "คณะ",
     individuals: "บุคคล",
-    liveData: "ข้อมูล Live",
+    liveData: "อัปเดตเรียลไทม์",
     refresh: "รีเฟรช",
     seasonEnds: "Season สิ้นสุดใน 14 วัน",
 

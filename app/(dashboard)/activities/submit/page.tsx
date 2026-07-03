@@ -45,10 +45,16 @@ function ScanQRContent() {
     // Fallback if not ?scan=true, just redirect to activities list or show manual form
     return (
       <div className="p-6 max-w-lg mx-auto text-center space-y-4">
-        <h1 className="text-2xl font-bold">Submit Action Manually</h1>
-        <p>Form goes here...</p>
+        <h1 className="text-2xl font-bold">
+          {lang === "th" ? "บันทึกกิจกรรมด้วยตนเอง" : "Submit Action Manually"}
+        </h1>
+        <p className="text-muted-foreground">
+          {lang === "th" ? "แบบฟอร์มจะอยู่ที่นี่..." : "Form goes here..."}
+        </p>
         <Link href="/dashboard">
-          <Button variant="outline">Back to Dashboard</Button>
+          <Button variant="outline">
+            {lang === "th" ? "กลับสู่หน้าหลัก" : "Back to Dashboard"}
+          </Button>
         </Link>
       </div>
     );
@@ -95,7 +101,7 @@ function ScanQRContent() {
                 {lang === "th" ? "กำลังค้นหา QR Code..." : "Looking for QR Code..."}
               </p>
               <p className="text-sm text-white/70">
-                {lang === "th" ? "เล็งกล้องไปที่ QR Code บนรถป๊อบหรือถังขยะ" : "Point camera at QR code on MuvMi bus or recycling bin"}
+                {lang === "th" ? "สแกน QR Code ที่รถป๊อบหรือจุดแยกขยะ" : "Point camera at QR code on MuvMi bus or recycling bin"}
               </p>
             </div>
           </>
