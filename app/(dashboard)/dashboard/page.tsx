@@ -50,7 +50,7 @@ export default function DashboardPage() {
             {lang === "th" ? `ยินดีต้อนรับกลับ, ${displayName} 🌱` : `Welcome back, ${displayName} 🌱`}
           </p>
         </div>
-        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        <div className="flex md:hidden items-center gap-2 sm:gap-3 flex-shrink-0">
           <Link href="/activities">
             <Button className="h-9 sm:h-10 rounded-xl font-semibold text-sm gap-1.5 shadow-sm shadow-primary/20">
               <Leaf className="h-4 w-4" />
