@@ -12,18 +12,40 @@ interface RewardCardProps {
   userCredits: number;
 }
 
-const categoryIconMap: Record<string, React.ComponentType<{className?: string}>> = {
+const categoryIconMap: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
   voucher: Star,
   physical: Package,
   digital: Zap,
   event: Gift,
 };
 
-const categoryColors: Record<string, { bg: string; text: string; cardGlow: string }> = {
-  voucher:  { bg: "from-amber-500/20 to-amber-500/5",  text: "text-amber-600 dark:text-amber-400",  cardGlow: "group-hover:shadow-amber-500/10" },
-  physical: { bg: "from-blue-500/20 to-blue-500/5",    text: "text-blue-600 dark:text-blue-400",    cardGlow: "group-hover:shadow-blue-500/10" },
-  digital:  { bg: "from-purple-500/20 to-purple-500/5",text: "text-purple-600 dark:text-purple-400",cardGlow: "group-hover:shadow-purple-500/10" },
-  event:    { bg: "from-emerald-500/20 to-emerald-500/5",text: "text-emerald-600 dark:text-emerald-400",cardGlow: "group-hover:shadow-emerald-500/10" },
+const categoryColors: Record<
+  string,
+  { bg: string; text: string; badge: string }
+> = {
+  voucher: {
+    bg: "from-amber-200/70 to-amber-100",
+    text: "text-amber-700",
+    badge: "border-amber-200 bg-amber-50 text-amber-700",
+  },
+  physical: {
+    bg: "from-sky-200/70 to-sky-100",
+    text: "text-sky-700",
+    badge: "border-sky-200 bg-sky-50 text-sky-700",
+  },
+  digital: {
+    bg: "from-violet-200/70 to-violet-100",
+    text: "text-violet-700",
+    badge: "border-violet-200 bg-violet-50 text-violet-700",
+  },
+  event: {
+    bg: "from-emerald-200/70 to-emerald-100",
+    text: "text-emerald-700",
+    badge: "border-emerald-200 bg-emerald-50 text-emerald-700",
+  },
 };
 
 export function RewardCard({ reward, userCredits }: RewardCardProps) {
@@ -36,36 +58,50 @@ export function RewardCard({ reward, userCredits }: RewardCardProps) {
   return (
     <div
       className={cn(
-        "group relative flex flex-col rounded-2xl border border-border/60 bg-card overflow-hidden",
-        "transition-all duration-300 hover:shadow-xl hover:-translate-y-1",
-        isOutOfStock && "opacity-60",
-        colors.cardGlow
+        "group relative flex flex-col rounded-[2rem] border border-slate-200 bg-white overflow-hidden shadow-[0_26px_60px_-40px_rgba(16,185,129,0.18)]",
+        "transition-all duration-300 hover:-translate-y-1",
+        isOutOfStock && "opacity-70",
       )}
     >
       {/* Image / Illustration Area */}
-      <div className={cn("relative h-40 sm:h-44 w-full bg-gradient-to-br flex items-center justify-center overflow-hidden", colors.bg)}>
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: "radial-gradient(circle at 50% 120%, currentColor 0%, transparent 60%)",
-          }}
+      <div
+        className={cn(
+          "relative h-40 sm:h-44 w-full overflow-hidden bg-slate-50",
+          colors.bg,
+        )}
+      >
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.95),transparent_55%),radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.7),transparent_40%)]" />
+        <div className="absolute right-4 top-4 h-16 w-16 rounded-full bg-white/80 shadow-sm" />
+        <CatIcon
+          className={cn(
+            "relative h-16 w-16 opacity-70 transition-transform duration-500 group-hover:scale-110",
+            colors.text,
+          )}
         />
-        <CatIcon className={cn("h-16 w-16 opacity-30 transition-transform duration-500 group-hover:scale-110 group-hover:opacity-50", colors.text)} />
 
         {/* Top badges */}
-        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
           <Badge
             variant="secondary"
-            className="text-[10px] font-bold uppercase tracking-wider bg-background/80 backdrop-blur-sm border-0 shadow-sm"
+            className={cn(
+              "text-[10px] font-semibold uppercase tracking-[0.24em] border border-slate-200 bg-white/95 shadow-sm",
+              colors.badge,
+            )}
           >
             {reward.category}
           </Badge>
           {isOutOfStock ? (
-            <Badge variant="destructive" className="text-[10px] font-bold">
+            <Badge
+              variant="destructive"
+              className="text-[10px] font-semibold uppercase tracking-[0.24em] bg-white/95 shadow-sm"
+            >
               {lang === "th" ? "หมดแล้ว" : "Out of Stock"}
             </Badge>
           ) : (
-            <Badge variant="outline" className="text-[10px] font-bold bg-background/80 backdrop-blur-sm border-0 shadow-sm">
+            <Badge
+              variant="secondary"
+              className="text-[10px] font-semibold uppercase tracking-[0.24em] border border-slate-200 bg-white/95 shadow-sm"
+            >
               {lang === "th" ? `เหลือ ${reward.stock}` : `${reward.stock} left`}
             </Badge>
           )}
@@ -73,44 +109,58 @@ export function RewardCard({ reward, userCredits }: RewardCardProps) {
       </div>
 
       {/* Content */}
-      <div className="p-4 sm:p-5 flex flex-col flex-1 gap-2.5">
+      <div className="p-5 flex flex-col flex-1 gap-3">
         <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-base leading-snug line-clamp-2">{reward.title}</h3>
-          <p className="text-sm text-muted-foreground line-clamp-2 mt-1 leading-relaxed">{reward.description}</p>
+          <h3 className="font-semibold text-base leading-snug line-clamp-2 text-slate-900">
+            {reward.title}
+          </h3>
+          <p className="text-sm text-slate-600 line-clamp-2 mt-2 leading-relaxed">
+            {reward.description}
+          </p>
         </div>
 
-        {/* Cost row */}
-        <div className="flex items-center justify-between pt-2 border-t border-border/40 mt-auto">
-          <div className={cn("flex items-center gap-1.5 font-bold text-sm", canAfford ? "text-primary" : "text-muted-foreground")}>
+        <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-200/80 mt-auto">
+          <div
+            className={cn(
+              "flex items-center gap-1.5 font-semibold text-sm",
+              canAfford ? "text-emerald-700" : "text-slate-500",
+            )}
+          >
             <Leaf className="h-4 w-4 flex-shrink-0" />
-            <span>{reward.cost.toLocaleString()} {lang === "th" ? "เครดิต" : "Credits"}</span>
+            <span>
+              {reward.cost.toLocaleString()}{" "}
+              {lang === "th" ? "เครดิต" : "Credits"}
+            </span>
           </div>
           {!canAfford && !isOutOfStock && (
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-              <Lock className="h-3 w-3" />
+            <div className="flex items-center gap-1 text-xs text-slate-500">
+              <Lock className="h-3.5 w-3.5" />
               <span>{lang === "th" ? "ไม่พอ" : "Low"}</span>
             </div>
           )}
         </div>
 
-        {/* CTA */}
         <Button
           className={cn(
-            "w-full h-10 rounded-xl font-semibold text-sm mt-1",
-            "transition-all duration-300",
+            "w-full h-11 rounded-[1.5rem] font-semibold text-sm mt-2 shadow-sm",
             canAfford && !isOutOfStock
-              ? "group-hover:shadow-md group-hover:shadow-primary/20 group-hover:scale-[1.02]"
-              : ""
+              ? "bg-emerald-700 text-white hover:bg-emerald-800"
+              : "bg-slate-100 text-slate-600",
           )}
           variant={canAfford && !isOutOfStock ? "default" : "secondary"}
           disabled={!canAfford || isOutOfStock}
         >
           {isOutOfStock
-            ? (lang === "th" ? "สินค้าหมด" : "Out of Stock")
+            ? lang === "th"
+              ? "สินค้าหมด"
+              : "Out of Stock"
             : canAfford
-              ? (lang === "th" ? "แลกเลย" : "Redeem Now")
-              : (lang === "th" ? "Credits ไม่พอ" : "Not Enough Credits")
-          }
+              ? lang === "th"
+                ? "แลกเลย"
+                : "Redeem Now"
+              : lang === "th"
+                ? "Credits ไม่พอ"
+                : "Not Enough Credits"}
         </Button>
       </div>
     </div>

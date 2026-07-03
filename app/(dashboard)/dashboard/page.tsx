@@ -14,24 +14,37 @@ export default function DashboardPage() {
   const { profile, user } = useAuth();
   const { t, lang } = useLang();
 
-  const displayName = profile?.name || user?.user_metadata?.full_name || user?.email?.split("@")[0] || currentUser.name;
-  const credits     = profile?.green_credits   ?? currentUser.greenCredits;
-  const carbon      = profile?.carbon_saved_kg ?? currentUser.carbonSaved;
-  const actions     = currentUser.greenActions;
+  const displayName =
+    profile?.name ||
+    user?.user_metadata?.full_name ||
+    user?.email?.split("@")[0] ||
+    currentUser.name;
+  const credits = profile?.green_credits ?? currentUser.greenCredits;
+  const carbon = profile?.carbon_saved_kg ?? currentUser.carbonSaved;
+  const actions = currentUser.greenActions;
 
-  const recentActivities = lang === "th"
-    ? [
-        { action: "ใช้รถป๊อบ (POP-BUS)",      pts: "+10",  time: "2 ชั่วโมงที่แล้ว" },
-        { action: "พกแก้วมาเอง",              pts: "+40",  time: "เมื่อวาน" },
-        { action: "แยกขยะพลาสติก",            pts: "+30",  time: "2 วันที่แล้ว" },
-        { action: "เดินเท้าเข้ามหาวิทยาลัย", pts: "+50",  time: "3 วันที่แล้ว" },
-      ]
-    : [
-        { action: "Used POP-BUS",          pts: "+10", time: "2 hours ago" },
-        { action: "Bring Your Own Cup",  pts: "+40", time: "Yesterday" },
-        { action: "Waste Separation",    pts: "+30", time: "2 days ago" },
-        { action: "Walk to Campus",      pts: "+50", time: "3 days ago" },
-      ];
+  const recentActivities =
+    lang === "th"
+      ? [
+          {
+            action: "ใช้รถป๊อบ (POP-BUS)",
+            pts: "+10",
+            time: "2 ชั่วโมงที่แล้ว",
+          },
+          { action: "พกแก้วมาเอง", pts: "+40", time: "เมื่อวาน" },
+          { action: "แยกขยะพลาสติก", pts: "+30", time: "2 วันที่แล้ว" },
+          {
+            action: "เดินเท้าเข้ามหาวิทยาลัย",
+            pts: "+50",
+            time: "3 วันที่แล้ว",
+          },
+        ]
+      : [
+          { action: "Used POP-BUS", pts: "+10", time: "2 hours ago" },
+          { action: "Bring Your Own Cup", pts: "+40", time: "Yesterday" },
+          { action: "Waste Separation", pts: "+30", time: "2 days ago" },
+          { action: "Walk to Campus", pts: "+50", time: "3 days ago" },
+        ];
 
   return (
     <div className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6 max-w-7xl mx-auto">
@@ -42,25 +55,33 @@ export default function DashboardPage() {
             {lang === "th" ? "แดชบอร์ด" : "Dashboard"}
           </h1>
           <p className="text-muted-foreground mt-0.5 text-sm sm:text-base truncate">
-            {lang === "th" ? `ยินดีต้อนรับกลับ, ${displayName} 🌱` : `Welcome back, ${displayName} 🌱`}
+            {lang === "th"
+              ? `ยินดีต้อนรับกลับ, ${displayName} 🌱`
+              : `Welcome back, ${displayName} 🌱`}
           </p>
         </div>
         <div className="flex md:hidden items-center gap-2 sm:gap-3 flex-shrink-0">
           <Link href="/activities">
             <Button className="h-9 sm:h-10 rounded-xl font-semibold text-sm gap-1.5 shadow-sm shadow-primary/20">
               <Leaf className="h-4 w-4" />
-              <span className="hidden xs:inline">{lang === "th" ? "บันทึกกิจกรรม" : "Log Activity"}</span>
-              <span className="xs:hidden">{lang === "th" ? "บันทึก" : "Log"}</span>
+              <span className="hidden xs:inline">
+                {lang === "th" ? "บันทึกกิจกรรม" : "Log Activity"}
+              </span>
+              <span className="xs:hidden">
+                {lang === "th" ? "บันทึก" : "Log"}
+              </span>
             </Button>
           </Link>
           <Link href="/activities/submit?scan=true">
-            <Button variant="outline" className="h-9 sm:h-10 rounded-xl font-semibold text-sm gap-1.5">
+            <Button
+              variant="outline"
+              className="h-9 sm:h-10 rounded-xl font-semibold text-sm gap-1.5"
+            >
               <span>{lang === "th" ? "สแกน QR" : "Scan QR"}</span>
             </Button>
           </Link>
         </div>
       </div>
-
 
       {/* Stats grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -104,28 +125,36 @@ export default function DashboardPage() {
           <ActivityChart />
         </div>
         <div className="lg:col-span-1">
-          <div className="rounded-2xl border border-border/60 bg-card shadow-sm overflow-hidden h-full flex flex-col">
-            <div className="p-4 border-b border-border/60 bg-muted/20">
-              <h3 className="font-bold text-base">
+          <div className="rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_-44px_rgba(15,23,42,0.2)] overflow-hidden h-full flex flex-col">
+            <div className="p-5 border-b border-slate-200/70 bg-slate-50">
+              <h3 className="font-semibold text-base text-slate-900">
                 {lang === "th" ? "กิจกรรมล่าสุด" : "Recent Activities"}
               </h3>
             </div>
-            <div className="divide-y divide-border/60 flex-1">
+            <div className="divide-y divide-slate-200/70 flex-1">
               {recentActivities.map((act, i) => (
-                <div key={i} className="p-3.5 flex items-center justify-between hover:bg-muted/40 transition-colors">
+                <div
+                  key={i}
+                  className="p-4 flex items-center justify-between gap-3 hover:bg-slate-50 transition-colors"
+                >
                   <div className="min-w-0 space-y-0.5">
-                    <p className="text-sm font-medium leading-none truncate">{act.action}</p>
-                    <p className="text-xs text-muted-foreground">{act.time}</p>
+                    <p className="text-sm font-semibold leading-none truncate text-slate-900">
+                      {act.action}
+                    </p>
+                    <p className="text-xs text-slate-500">{act.time}</p>
                   </div>
-                  <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full flex-shrink-0 ml-2">
+                  <div className="text-xs font-semibold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full flex-shrink-0 ml-2">
                     {act.pts}
                   </div>
                 </div>
               ))}
             </div>
-            <div className="p-3 border-t border-border/60 bg-muted/10">
+            <div className="p-4 border-t border-slate-200/70 bg-slate-50">
               <Link href="/passport">
-                <Button variant="ghost" className="w-full text-sm text-primary h-9 rounded-xl font-semibold">
+                <Button
+                  variant="ghost"
+                  className="w-full text-sm text-slate-900 h-11 rounded-[1.5rem] font-semibold border border-slate-200 bg-white shadow-sm hover:bg-slate-100"
+                >
                   {lang === "th" ? "ดูประวัติทั้งหมด" : "View Full History"}
                 </Button>
               </Link>

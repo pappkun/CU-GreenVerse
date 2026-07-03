@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Leaf, Moon, Sun, User as UserIcon, LogOut, Settings } from "lucide-react";
+import {
+  Leaf,
+  Moon,
+  Sun,
+  User as UserIcon,
+  LogOut,
+  Settings,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,44 +31,59 @@ export function Navbar() {
   const { lang, setLang, t } = useLang();
 
   // Use real user data if logged in, else fall back to mock for public pages
-  const displayName = profile?.name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || currentUser.name;
+  const displayName =
+    profile?.name ||
+    user?.user_metadata?.full_name ||
+    user?.email?.split("@")[0] ||
+    currentUser.name;
   const displayEmail = user?.email || currentUser.email;
   const displayAvatar = profile?.avatar_url || currentUser.avatar;
-  const isAdmin = profile?.role === 'admin' || currentUser.role === 'admin';
+  const isAdmin = profile?.role === "admin" || currentUser.role === "admin";
 
   const isPublicPage = pathname === "/" || pathname === "/login";
-  
-  const navLinks = isPublicPage 
+
+  const navLinks = isPublicPage
     ? [
-        { name: t("home"),     href: "/" },
+        { name: t("home"), href: "/" },
         { name: t("features"), href: "/#features" },
       ]
     : [
-        { name: t("dashboard"),    href: "/dashboard" },
-        { name: t("rewards"),      href: "/rewards" },
-        { name: t("leaderboard"),  href: "/leaderboard" },
+        { name: t("dashboard"), href: "/dashboard" },
+        { name: t("rewards"), href: "/rewards" },
+        { name: t("leaderboard"), href: "/leaderboard" },
       ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 shadow-sm">
+    <nav
+      className={`sticky top-0 z-50 w-full border-b shadow-sm ${isPublicPage ? "bg-white/95 border-slate-200" : "bg-background/95"}`}
+    >
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link href={isPublicPage ? "/" : "/dashboard"} className="flex items-center gap-2">
+          <Link
+            href={isPublicPage ? "/" : "/dashboard"}
+            className="flex items-center gap-2"
+          >
             <div className="border border-emerald-200 bg-emerald-50/90 p-2 rounded-2xl">
               <Leaf className="h-6 w-6 text-emerald-700" />
             </div>
-            <span className="font-semibold text-xl tracking-tight hidden sm:inline-block text-slate-900">CU GreenVerse</span>
+            <span
+              className={`font-semibold text-xl tracking-tight hidden sm:inline-block ${isPublicPage ? "text-slate-900" : "text-foreground"}`}
+            >
+              CU GreenVerse
+            </span>
           </Link>
         </div>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
-            <Link 
-              key={link.name} 
+            <Link
+              key={link.name}
               href={link.href}
               className={`text-sm font-medium transition-colors hover:text-primary ${
-                pathname === link.href ? "text-primary" : "text-muted-foreground"
+                pathname === link.href
+                  ? "text-primary"
+                  : "text-muted-foreground"
               }`}
             >
               {link.name}
@@ -94,34 +116,60 @@ export function Navbar() {
           {isPublicPage ? (
             <div>
               <Link href="/login">
-                <Button className="rounded-full px-4 md:px-6 h-9 md:h-10 text-xs md:text-sm">{t("login")}</Button>
+                <Button className="rounded-full px-4 md:px-6 h-9 md:h-10 text-xs md:text-sm">
+                  {t("login")}
+                </Button>
               </Link>
             </div>
           ) : (
             <DropdownMenu>
-              <DropdownMenuTrigger render={<Button variant="ghost" className="relative h-9 w-9 md:h-10 md:w-10 rounded-full" />}>
+              <DropdownMenuTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    className="relative h-9 w-9 md:h-10 md:w-10 rounded-full"
+                  />
+                }
+              >
                 <Avatar className="h-9 w-9 md:h-10 md:w-10 border-2 border-primary/20">
                   <AvatarImage src={displayAvatar} alt={displayName} />
-                  <AvatarFallback>{displayName.substring(0, 2).toUpperCase()}</AvatarFallback>
+                  <AvatarFallback>
+                    {displayName.substring(0, 2).toUpperCase()}
+                  </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end">
                 {/* User info header - plain div avoids base-ui MenuGroupLabel context error */}
                 <div className="px-3 py-2 border-b border-border/60 mb-1">
-                  <p className="text-sm font-semibold leading-none">{displayName}</p>
-                  <p className="text-xs leading-none text-muted-foreground mt-1">{displayEmail}</p>
+                  <p className="text-sm font-semibold leading-none">
+                    {displayName}
+                  </p>
+                  <p className="text-xs leading-none text-muted-foreground mt-1">
+                    {displayEmail}
+                  </p>
                 </div>
-                <DropdownMenuItem render={<Link href="/profile" className="cursor-pointer" />}>
+                <DropdownMenuItem
+                  render={<Link href="/profile" className="cursor-pointer" />}
+                >
                   <UserIcon className="mr-2 h-4 w-4" />
                   <span>{t("profile")}</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem render={<Link href="/passport" className="cursor-pointer" />}>
+                <DropdownMenuItem
+                  render={<Link href="/passport" className="cursor-pointer" />}
+                >
                   <Leaf className="mr-2 h-4 w-4" />
                   <span>{t("passport")}</span>
                 </DropdownMenuItem>
                 {isAdmin && (
                   <>
-                    <DropdownMenuItem render={<Link href="/admin" className="cursor-pointer text-primary" />}>
+                    <DropdownMenuItem
+                      render={
+                        <Link
+                          href="/admin"
+                          className="cursor-pointer text-primary"
+                        />
+                      }
+                    >
                       <Settings className="mr-2 h-4 w-4" />
                       <span>แดชบอร์ดผู้ดูแลระบบ</span>
                     </DropdownMenuItem>
