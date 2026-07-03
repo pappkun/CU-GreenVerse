@@ -21,13 +21,13 @@ export default function DashboardPage() {
 
   const recentActivities = lang === "th"
     ? [
-        { action: "ใช้ MuvMi (รถป๊อบ)",      pts: "+10",  time: "2 ชั่วโมงที่แล้ว" },
+        { action: "ใช้รถป๊อบ (POP-BUS)",      pts: "+10",  time: "2 ชั่วโมงที่แล้ว" },
         { action: "พกแก้วมาเอง",              pts: "+40",  time: "เมื่อวาน" },
         { action: "แยกขยะพลาสติก",            pts: "+30",  time: "2 วันที่แล้ว" },
         { action: "เดินเท้าเข้ามหาวิทยาลัย", pts: "+50",  time: "3 วันที่แล้ว" },
       ]
     : [
-        { action: "Used MuvMi",          pts: "+10", time: "2 hours ago" },
+        { action: "Used POP-BUS",          pts: "+10", time: "2 hours ago" },
         { action: "Bring Your Own Cup",  pts: "+40", time: "Yesterday" },
         { action: "Waste Separation",    pts: "+30", time: "2 days ago" },
         { action: "Walk to Campus",      pts: "+50", time: "3 days ago" },

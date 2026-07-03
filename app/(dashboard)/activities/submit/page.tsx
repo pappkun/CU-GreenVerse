@@ -26,7 +26,7 @@ function ScanQRContent() {
       const qrData = detectedCodes[0].rawValue;
       
       // ถ้ารหัสใน QR Code ตรงกับที่เรากำหนดไว้
-      if (qrData === "MUVMI_CU" || qrData === "RECYCLE_CU") {
+      if (qrData === "POP-BUS" || qrData === "RECYCLE_CU") {
         setScanning(false);
         setSuccess(true);
         
@@ -40,9 +40,9 @@ function ScanQRContent() {
         });
 
         // ตรวจสอบว่าเป็น QR ของอะไร
-        const isBus = qrData === "MUVMI_CU";
+        const isBus = qrData === "POP-BUS";
         setScannedActivity({
-          title: isBus ? (lang === "th" ? "เช็คอินรถป๊อบ (MuvMi)" : "MuvMi Bus Check-in") : (lang === "th" ? "แยกขยะขวดพลาสติก" : "Plastic Bottle Recycling"),
+          title: isBus ? (lang === "th" ? "เช็คอินรถป๊อบ (POP-BUS)" : "POP-BUS Check-in") : (lang === "th" ? "แยกขยะขวดพลาสติก" : "Plastic Bottle Recycling"),
           points: isBus ? 10 : 30,
           carbon: isBus ? 0.5 : 0.2,
           icon: isBus ? Bus : Trash2,
@@ -130,7 +130,7 @@ function ScanQRContent() {
                 {lang === "th" ? "กำลังค้นหา QR Code..." : "Looking for QR Code..."}
               </p>
               <p className="text-sm text-white/70">
-                {lang === "th" ? "สแกน QR Code ที่รถป๊อบหรือจุดแยกขยะ" : "Point camera at QR code on MuvMi bus or recycling bin"}
+                {lang === "th" ? "สแกน QR Code ที่รถป๊อบหรือจุดแยกขยะ" : "Point camera at QR code on POP-BUS or recycling bin"}
               </p>
             </div>
           </>

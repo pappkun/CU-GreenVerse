@@ -67,7 +67,7 @@ export default function AdminDashboardPage() {
             <CardContent>
               <div className="space-y-4 mt-4">
                 {[
-                  { user: "Patarapon W.", action: lang === "th" ? "นั่งรถป๊อบ" : "MuvMi Ride", time: lang === "th" ? "10 นาทีที่แล้ว" : "10 mins ago" },
+                  { user: "Patarapon W.", action: lang === "th" ? "นั่งรถป๊อบ" : "POP-BUS Ride", time: lang === "th" ? "10 นาทีที่แล้ว" : "10 mins ago" },
                   { user: "Siriya S.", action: lang === "th" ? "แยกขยะ" : "Waste Separation", time: lang === "th" ? "1 ชั่วโมงที่แล้ว" : "1 hour ago" },
                   { user: "Kittipong M.", action: lang === "th" ? "ใช้แก้วส่วนตัว" : "Bring Your Own Cup", time: lang === "th" ? "2 ชั่วโมงที่แล้ว" : "2 hours ago" },
                   { user: "Nattapong J.", action: lang === "th" ? "ขนส่งสาธารณะ" : "Public Transport", time: lang === "th" ? "3 ชั่วโมงที่แล้ว" : "3 hours ago" },

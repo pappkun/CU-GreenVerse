@@ -19,7 +19,7 @@ export const mockPartners: Partner[] = [
   },
   {
     id: "p_2",
-    name: "MuvMi",
+    name: "POP-BUS",
     description: "Electric tuk-tuk sharing service around campus.",
     logo: "/partners/muvmi.png",
     discount: "Earn 10 Green Credits per ride",

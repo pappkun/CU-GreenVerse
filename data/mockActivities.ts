@@ -13,7 +13,7 @@ export const availableActivities: ActivityType[] = [
   {
     id: "act_2",
     title: "Bicycle to Campus",
-    description: "Use a bicycle or MuvMi instead of a personal car.",
+    description: "Use a bicycle or POP-BUS instead of a personal car.",
     category: "transport",
     points: 80,
     carbonReduction: 1.2,

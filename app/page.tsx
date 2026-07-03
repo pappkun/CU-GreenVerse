@@ -87,7 +87,7 @@ export default function LandingPage() {
               <FeatureCard 
                 icon={<Leaf className="h-10 w-10 text-emerald-500" />}
                 title={lang === "th" ? "บันทึกกิจกรรม" : "Log Actions"}
-                description={lang === "th" ? "บันทึกกิจกรรมรักษ์โลกของคุณ เช่น การใช้บริการ MuvMi การแยกขยะ หรือการนำแก้วน้ำส่วนตัวมาเอง" : "Log your eco-friendly activities like taking MuvMi, recycling, or bringing your own cup."}
+                description={lang === "th" ? "บันทึกกิจกรรมรักษ์โลกของคุณ เช่น การใช้บริการ POP-BUS การแยกขยะ หรือการนำแก้วน้ำส่วนตัวมาเอง" : "Log your eco-friendly activities like taking POP-BUS, recycling, or bringing your own cup."}
               />
               <FeatureCard 
                 icon={<TrendingDown className="h-10 w-10 text-blue-500" />}
@@ -117,7 +117,7 @@ export default function LandingPage() {
               {/* Mock partner logos */}
               <div className="flex items-center gap-2 font-bold text-xl"><Leaf className="text-emerald-500" /> CU Zero Waste</div>
               <div className="flex items-center gap-2 font-bold text-xl"><Award className="text-amber-500" /> Green Cafe</div>
-              <div className="flex items-center gap-2 font-bold text-xl"><TrendingDown className="text-blue-500" /> MuvMi</div>
+              <div className="flex items-center gap-2 font-bold text-xl"><TrendingDown className="text-blue-500" /> POP-BUS</div>
               <div className="flex items-center gap-2 font-bold text-xl">Anywheel</div>
             </div>
           </div>
