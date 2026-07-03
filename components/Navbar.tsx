@@ -35,7 +35,6 @@ export function Navbar() {
     ? [
         { name: t("home"),     href: "/" },
         { name: t("features"), href: "/#features" },
-        { name: t("partners"), href: "/#partners" },
       ]
     : [
         { name: t("dashboard"),    href: "/dashboard" },

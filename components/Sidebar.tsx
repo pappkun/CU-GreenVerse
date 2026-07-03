@@ -32,7 +32,6 @@ export function Sidebar({ className }: SidebarProps) {
     { name: t("leaderboard"),  href: "/leaderboard", icon: Trophy },
     { name: t("passport_side"),href: "/passport",    icon: BookOpen },
     { name: t("profile"),      href: "/profile",     icon: User },
-    { name: t("partners_side"),href: "/partners",    icon: Users },
   ];
 
   const adminLinks = [
