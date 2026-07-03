@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Leaf, ScanLine, ArrowLeft, CheckCircle2, Bus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import { useLang } from "@/context/LanguageContext";
 import { toast } from "sonner";
 import Link from "next/link";
 
-export default function ScanQRPage() {
+function ScanQRContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isScan = searchParams.get("scan") === "true";
@@ -150,5 +150,13 @@ export default function ScanQRPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function ScanQRPage() {
+  return (
+    <Suspense fallback={<div className="flex h-screen items-center justify-center bg-black text-white">Loading scanner...</div>}>
+      <ScanQRContent />
+    </Suspense>
   );
 }
