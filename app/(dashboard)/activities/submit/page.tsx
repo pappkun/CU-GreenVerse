@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense, useRef } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Leaf, ScanLine, ArrowLeft, CheckCircle2, Bus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { useLang } from "@/context/LanguageContext";
 import { toast } from "sonner";
 import Link from "next/link";
 import confetti from "canvas-confetti";
+import { Scanner } from "@yudiel/react-qr-scanner";
 
 function ScanQRContent() {
   const router = useRouter();
@@ -19,48 +20,11 @@ function ScanQRContent() {
   const [scanning, setScanning] = useState(true);
   const [success, setSuccess] = useState(false);
   const [scannedActivity, setScannedActivity] = useState<any>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const streamRef = useRef<MediaStream | null>(null);
 
-  // Stop camera function
-  const stopCamera = () => {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop());
-      streamRef.current = null;
-    }
-  };
-
-  // Setup camera
-  useEffect(() => {
-    if (!isScan || success) return;
-
-    async function setupCamera() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ 
-          video: { facingMode: "environment" } 
-        });
-        streamRef.current = stream;
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
-      } catch (err) {
-        console.error("Error accessing camera:", err);
-      }
-    }
-
-    setupCamera();
-
-    return () => stopCamera();
-  }, [isScan, success]);
-
-  // Mock scanning process
-  useEffect(() => {
-    if (!isScan) return;
-    
-    const timer = setTimeout(() => {
+  const handleScan = (detectedCodes: any) => {
+    if (detectedCodes && detectedCodes.length > 0 && !success) {
       setScanning(false);
       setSuccess(true);
-      stopCamera(); // Stop camera when scan succeeds
       
       // Trigger confetti 🎉
       confetti({
@@ -81,10 +45,8 @@ function ScanQRContent() {
       });
       
       toast.success(lang === "th" ? "สแกนสำเร็จ!" : "Scan Successful!");
-    }, 3500); // Fake scan delay
-
-    return () => clearTimeout(timer);
-  }, [isScan, lang]);
+    }
+  };
 
   if (!isScan) {
     // Fallback if not ?scan=true, just redirect to activities list or show manual form
@@ -121,13 +83,19 @@ function ScanQRContent() {
       <div className="flex-1 relative overflow-hidden flex flex-col items-center justify-center">
         {/* Actual Video Element */}
         {!success && (
-          <video 
-            ref={videoRef}
-            autoPlay 
-            playsInline 
-            muted 
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          <div className="absolute inset-0 w-full h-full [&>div]:!pb-0 [&>div>video]:!object-cover [&>div>video]:!h-full">
+            <Scanner 
+              onScan={handleScan}
+              components={{
+                audio: false,
+                finder: false // We use our own finder UI
+              }}
+              styles={{
+                container: { width: "100%", height: "100%" },
+                video: { width: "100%", height: "100%", objectFit: "cover" }
+              }}
+            />
+          </div>
         )}
 
         {/* Background Image simulating camera (Fallback if camera blocked) */}
