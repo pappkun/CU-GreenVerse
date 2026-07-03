@@ -131,11 +131,8 @@ export default function ProfilePage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={handleShare} className="gap-2">
-            <Share2 className="h-4 w-4" /> {lang === "th" ? "แชร์" : "Share"}
-          </Button>
-          <Button size="sm" onClick={handleExportPassport} className="gap-2">
-            <Download className="h-4 w-4" /> {lang === "th" ? "Export Passport" : "Export Passport"}
+          <Button size="sm" onClick={handleShare} className="gap-2 rounded-lg">
+            <Share2 className="h-4 w-4" /> {lang === "th" ? "แชร์โปรไฟล์" : "Share Profile"}
           </Button>
         </div>
       </div>
