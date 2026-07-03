@@ -142,40 +142,40 @@ export function Navbar() {
             </DropdownMenu>
           )}
 
-          {/* Mobile Nav */}
-          <Sheet>
-            <SheetTrigger render={<Button variant="ghost" size="icon" className="md:hidden" />}>
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle Menu</span>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-              <div className="flex flex-col gap-6 mt-6">
-                <Link href={isPublicPage ? "/" : "/dashboard"} className="flex items-center gap-2">
-                  <Leaf className="h-6 w-6 text-primary" />
-                  <span className="font-bold text-xl">CU GreenVerse</span>
-                </Link>
-                <div className="flex flex-col gap-4">
-                  {navLinks.map((link) => (
-                    <Link 
-                      key={link.name} 
-                      href={link.href}
-                      className={`text-lg font-medium ${
-                        pathname === link.href ? "text-primary" : "text-foreground"
-                      }`}
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
-                  {isPublicPage && (
+          {/* Mobile Nav (Only for public pages) */}
+          {isPublicPage && (
+            <Sheet>
+              <SheetTrigger render={<Button variant="ghost" size="icon" className="md:hidden" />}>
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle Menu</span>
+              </SheetTrigger>
+              <SheetContent side="right">
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                <div className="flex flex-col gap-6 mt-6">
+                  <Link href="/" className="flex items-center gap-2">
+                    <Leaf className="h-6 w-6 text-primary" />
+                    <span className="font-bold text-xl">CU GreenVerse</span>
+                  </Link>
+                  <div className="flex flex-col gap-4">
+                    {navLinks.map((link) => (
+                      <Link 
+                        key={link.name} 
+                        href={link.href}
+                        className={`text-lg font-medium ${
+                          pathname === link.href ? "text-primary" : "text-foreground"
+                        }`}
+                      >
+                        {link.name}
+                      </Link>
+                    ))}
                     <Link href="/login">
                       <Button className="w-full mt-4 rounded-full">เข้าสู่ระบบ</Button>
                     </Link>
-                  )}
+                  </div>
                 </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+              </SheetContent>
+            </Sheet>
+          )}
         </div>
       </div>
     </nav>

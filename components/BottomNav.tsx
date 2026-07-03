@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Leaf, Gift, User, ScanLine } from "lucide-react";
+import { LayoutDashboard, Leaf, Gift, Trophy, ScanLine } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 import { cn } from "@/lib/utils";
 
@@ -15,7 +15,7 @@ export function BottomNav() {
     { name: t("activities"),  href: "/activities",   icon: Leaf },
     { name: lang === "th" ? "สแกน" : "Scan", href: "/activities/submit?scan=true", icon: ScanLine, isSpecial: true },
     { name: t("rewards"),     href: "/rewards",      icon: Gift },
-    { name: t("profile"),     href: "/profile",      icon: User },
+    { name: t("leaderboard"), href: "/leaderboard",  icon: Trophy },
   ];
 
   return (
