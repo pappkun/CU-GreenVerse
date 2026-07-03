@@ -17,7 +17,6 @@ import {
   Recycle,
   Star,
   Share2,
-  Download,
   Lock,
   CheckCircle2,
   Bike,
@@ -117,14 +116,6 @@ export default function ProfilePage() {
         lang === "th" ? "คัดลอกข้อความสำหรับแชร์แล้ว!" : "Copied to clipboard!",
         { description: lang === "th" ? "นำไปวางใน Instagram Story ได้เลย" : "Paste it in your Instagram Story!" }
       );
-    }
-  }
-
-  function handleExportPassport() {
-    toast.success(
-      lang === "th" ? "กำลังสร้าง Green Passport PDF..." : "Generating Green Passport PDF...",
-      { description: lang === "th" ? "ใช้ประกอบการสมัครทุนและฝึกงานได้เลย 📄" : "Use it for internship & scholarship applications 📄" }
-    );
   }
 
   return (
@@ -274,12 +265,9 @@ export default function ProfilePage() {
                   </div>
                 ))}
 
-                <div className="pt-3 flex gap-2">
-                  <Button className="flex-1 gap-2" onClick={handleExportPassport}>
-                    <Download className="h-4 w-4" /> Export PDF
-                  </Button>
-                  <Button variant="outline" className="flex-1 gap-2" onClick={handleShare}>
-                    <Share2 className="h-4 w-4" /> {lang==="th" ? "แชร์" : "Share"}
+                <div className="pt-3">
+                  <Button className="w-full gap-2 rounded-xl h-10 shadow-sm shadow-primary/20" onClick={handleShare}>
+                    <Share2 className="h-4 w-4" /> {lang==="th" ? "แชร์ความสำเร็จ (Share)" : "Share to Social Media"}
                   </Button>
                 </div>
 
