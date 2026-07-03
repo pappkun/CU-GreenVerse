@@ -23,28 +23,34 @@ function ScanQRContent() {
 
   const handleScan = (detectedCodes: any) => {
     if (detectedCodes && detectedCodes.length > 0 && !success) {
-      setScanning(false);
-      setSuccess(true);
+      const qrData = detectedCodes[0].rawValue;
       
-      // Trigger confetti 🎉
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#10b981', '#3b82f6', '#f59e0b'],
-        zIndex: 100
-      });
+      // ถ้ารหัสใน QR Code ตรงกับที่เรากำหนดไว้
+      if (qrData === "MUVMI_CU" || qrData === "RECYCLE_CU") {
+        setScanning(false);
+        setSuccess(true);
+        
+        // Trigger confetti 🎉
+        confetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#10b981', '#3b82f6', '#f59e0b'],
+          zIndex: 100
+        });
 
-      // Randomly pick an activity
-      const isBus = Math.random() > 0.5;
-      setScannedActivity({
-        title: isBus ? (lang === "th" ? "เช็คอินรถป๊อบ (MuvMi)" : "MuvMi Bus Check-in") : (lang === "th" ? "แยกขยะขวดพลาสติก" : "Plastic Bottle Recycling"),
-        points: isBus ? 10 : 30,
-        carbon: isBus ? 0.5 : 0.2,
-        icon: isBus ? Bus : Trash2,
-      });
-      
-      toast.success(lang === "th" ? "สแกนสำเร็จ!" : "Scan Successful!");
+        // ตรวจสอบว่าเป็น QR ของอะไร
+        const isBus = qrData === "MUVMI_CU";
+        setScannedActivity({
+          title: isBus ? (lang === "th" ? "เช็คอินรถป๊อบ (MuvMi)" : "MuvMi Bus Check-in") : (lang === "th" ? "แยกขยะขวดพลาสติก" : "Plastic Bottle Recycling"),
+          points: isBus ? 10 : 30,
+          carbon: isBus ? 0.5 : 0.2,
+          icon: isBus ? Bus : Trash2,
+        });
+        
+        toast.success(lang === "th" ? "สแกนสำเร็จ!" : "Scan Successful!");
+      }
+      // ถ้า QR Code ไม่ตรง จะไม่เกิดอะไรขึ้น (ไม่ให้แอปบั๊กเวลาเผลอไปสแกนอันอื่น)
     }
   };
 
