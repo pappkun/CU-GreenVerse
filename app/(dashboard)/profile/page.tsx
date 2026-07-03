@@ -228,13 +228,15 @@ export default function ProfilePage() {
       </div>
 
       {/* Tabs */}
-      <Tabs defaultValue="passport" onValueChange={setActiveTab}>
-        <TabsList className="w-full sm:w-auto">
-          <TabsTrigger value="passport">🛂 Green Passport</TabsTrigger>
-          <TabsTrigger value="badges">🏅 {lang==="th" ? "Badge" : "Badges"}</TabsTrigger>
-          <TabsTrigger value="history">📋 {lang==="th" ? "ประวัติ" : "History"}</TabsTrigger>
-          <TabsTrigger value="avatar">🎨 Avatar</TabsTrigger>
-        </TabsList>
+      <Tabs defaultValue="passport" onValueChange={setActiveTab} className="w-full">
+        <div className="overflow-x-auto pb-2 scrollbar-hide">
+          <TabsList className="w-full sm:w-auto inline-flex justify-start">
+            <TabsTrigger value="passport" className="whitespace-nowrap">🛂 Green Passport</TabsTrigger>
+            <TabsTrigger value="badges" className="whitespace-nowrap">🏅 {lang==="th" ? "Badge" : "Badges"}</TabsTrigger>
+            <TabsTrigger value="history" className="whitespace-nowrap">📋 {lang==="th" ? "ประวัติ" : "History"}</TabsTrigger>
+            <TabsTrigger value="avatar" className="whitespace-nowrap">🎨 Avatar</TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* GREEN PASSPORT */}
         <TabsContent value="passport" className="mt-6">

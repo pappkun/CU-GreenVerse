@@ -116,9 +116,10 @@ export function LeaderboardTable({ data }: LeaderboardTableProps) {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border bg-card">
-        <Table>
-          <TableHeader>
+      <div className="rounded-xl border bg-card overflow-hidden">
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="hover:bg-transparent">
                 {headerGroup.headers.map((header) => {
@@ -160,6 +161,7 @@ export function LeaderboardTable({ data }: LeaderboardTableProps) {
             )}
           </TableBody>
         </Table>
+        </div>
       </div>
       
       {data.length > pagination.pageSize && (
