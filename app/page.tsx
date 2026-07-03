@@ -103,6 +103,26 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Partners Section */}
+        <section id="partners" className="py-24 bg-muted/30">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{lang === "th" ? "พาร์ทเนอร์รักษ์โลกของเรา" : "Our Green Partners"}</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
+              {lang === "th" 
+                ? "สะสมแต้มและรับสิทธิพิเศษจากร้านค้าและบริการที่เป็นมิตรต่อสิ่งแวดล้อมรอบรั้วมหาวิทยาลัย" 
+                : "Earn points and enjoy exclusive benefits from eco-friendly shops and services around campus."}
+            </p>
+            
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+              {/* Mock partner logos */}
+              <div className="flex items-center gap-2 font-bold text-xl"><Leaf className="text-emerald-500" /> CU Zero Waste</div>
+              <div className="flex items-center gap-2 font-bold text-xl"><Award className="text-amber-500" /> Green Cafe</div>
+              <div className="flex items-center gap-2 font-bold text-xl"><TrendingDown className="text-blue-500" /> MuvMi</div>
+              <div className="flex items-center gap-2 font-bold text-xl">Anywheel</div>
+            </div>
+          </div>
+        </section>
+
       </main>
     </div>
   );
