@@ -18,24 +18,28 @@ export default function RewardsPage() {
   useEffect(() => {
     async function fetchRewards() {
       try {
+        if (!supabase) {
+          setRewards([]);
+          return;
+        }
+
         const { data, error } = await supabase
           .from("rewards")
           .select("*")
           .order("points_required", { ascending: true });
-          
+
         if (error) throw error;
-        
-        // Map Supabase schema to RewardCard props format
-        const mappedData = data.map((item: any) => ({
+
+        const mappedData = (data ?? []).map((item: any) => ({
           id: item.id,
           title: item.name,
           description: item.description || "",
           category: item.category.toLowerCase(),
           cost: item.points_required,
           image: item.image_url || "/rewards/mystery-box.png",
-          stock: item.quantity_available
+          stock: item.quantity_available,
         }));
-        
+
         setRewards(mappedData);
       } catch (error) {
         console.error("Error fetching rewards:", error);
@@ -43,7 +47,7 @@ export default function RewardsPage() {
         setIsLoading(false);
       }
     }
-    
+
     fetchRewards();
   }, []);
 
@@ -55,33 +59,41 @@ export default function RewardsPage() {
     { id: "event", label: lang === "th" ? "กิจกรรม" : "Events" },
   ];
 
-  const filteredRewards = activeTab === "all" 
-    ? rewards 
-    : rewards.filter(r => 
-        (activeTab === "coupon" && r.category === "voucher") ||
-        (activeTab === "merchandise" && r.category === "physical") ||
-        (activeTab === "avatar" && r.category === "digital") ||
-        (activeTab === "event" && r.category === "event") ||
-        (r.category === activeTab)
-      );
+  const filteredRewards =
+    activeTab === "all"
+      ? rewards
+      : rewards.filter(
+          (r) =>
+            (activeTab === "coupon" && r.category === "voucher") ||
+            (activeTab === "merchandise" && r.category === "physical") ||
+            (activeTab === "avatar" && r.category === "digital") ||
+            (activeTab === "event" && r.category === "event") ||
+            r.category === activeTab,
+        );
 
   return (
     <div className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6 max-w-7xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{t("rewardsTitle")}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+            {t("rewardsTitle")}
+          </h1>
           <p className="text-muted-foreground mt-1 text-sm sm:text-base">
             {t("rewardsDesc")}
           </p>
         </div>
-        
+
         <div className="flex items-center gap-3 rounded-2xl border border-border/60 bg-card px-4 py-2.5 w-full sm:w-auto shadow-sm">
           <div className="bg-primary/10 p-2 rounded-xl">
             <Leaf className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{t("yourBalance")}</p>
-            <p className="text-lg font-bold text-primary leading-tight">{currentUser.greenCredits.toLocaleString()} {t("credits")}</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+              {t("yourBalance")}
+            </p>
+            <p className="text-lg font-bold text-primary leading-tight">
+              {currentUser.greenCredits.toLocaleString()} {t("credits")}
+            </p>
           </div>
         </div>
       </div>
@@ -90,8 +102,8 @@ export default function RewardsPage() {
         <div className="overflow-x-auto pb-2 scrollbar-hide">
           <TabsList className="w-full md:w-auto inline-flex h-11 items-center justify-start rounded-xl p-1 bg-muted/50">
             {categories.map((cat) => (
-              <TabsTrigger 
-                key={cat.id} 
+              <TabsTrigger
+                key={cat.id}
                 value={cat.id}
                 className="rounded-lg px-4 py-2"
               >
@@ -100,26 +112,28 @@ export default function RewardsPage() {
             ))}
           </TabsList>
         </div>
-        
+
         <div className="mt-5 sm:mt-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-          {/* Mystery Box - always first */}
-          <MysteryBox userCredits={currentUser.greenCredits} />
+            {/* Mystery Box - always first */}
+            <MysteryBox userCredits={currentUser.greenCredits} />
             {isLoading ? (
               <div className="col-span-full py-12 flex justify-center">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
               </div>
             ) : filteredRewards.length > 0 ? (
               filteredRewards.map((reward) => (
-                <RewardCard 
-                  key={reward.id} 
-                  reward={reward} 
-                  userCredits={currentUser.greenCredits} 
+                <RewardCard
+                  key={reward.id}
+                  reward={reward}
+                  userCredits={currentUser.greenCredits}
                 />
               ))
             ) : (
               <div className="col-span-full py-12 text-center text-muted-foreground">
-                {lang === "th" ? "ไม่พบของรางวัลในหมวดหมู่นี้" : "No rewards found in this category"}
+                {lang === "th"
+                  ? "ไม่พบของรางวัลในหมวดหมู่นี้"
+                  : "No rewards found in this category"}
               </div>
             )}
           </div>

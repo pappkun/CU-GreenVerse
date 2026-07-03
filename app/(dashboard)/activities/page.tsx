@@ -18,24 +18,28 @@ export default function ActivitiesPage() {
   useEffect(() => {
     async function fetchMissions() {
       try {
+        if (!supabase) {
+          setActivities([]);
+          return;
+        }
+
         const { data, error } = await supabase
           .from("missions")
           .select("*")
           .order("created_at", { ascending: false });
-          
+
         if (error) throw error;
-        
-        // Map Supabase schema to ActivityCard props format
-        const mappedData = data.map((item: any) => ({
+
+        const mappedData = (data ?? []).map((item: any) => ({
           id: item.id,
           title: item.title,
           description: item.description || "",
           category: item.category.toLowerCase(),
           points: item.reward_points,
           carbonReduction: item.carbon_offset_estimate || 0,
-          icon: item.image_url || "Leaf"
+          icon: item.image_url || "Leaf",
         }));
-        
+
         setActivities(mappedData);
       } catch (error) {
         console.error("Error fetching missions:", error);
@@ -43,24 +47,34 @@ export default function ActivitiesPage() {
         setIsLoading(false);
       }
     }
-    
+
     fetchMissions();
   }, []);
 
-  const categories = ["all", "transport", "waste", "energy", "food", "education"];
+  const categories = [
+    "all",
+    "transport",
+    "waste",
+    "energy",
+    "food",
+    "education",
+  ];
 
   const filteredActivities = activities.filter((activity) => {
-    const matchesSearch = activity.title.toLowerCase().includes(search.toLowerCase()) || 
-                          activity.description.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch =
+      activity.title.toLowerCase().includes(search.toLowerCase()) ||
+      activity.description.toLowerCase().includes(search.toLowerCase());
     const matchesFilter = filter === "all" || activity.category === filter;
-    
+
     return matchesSearch && matchesFilter;
   });
 
   return (
     <div className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{t("activitiesTitle")}</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+          {t("activitiesTitle")}
+        </h1>
         <p className="text-muted-foreground mt-1 text-sm sm:text-base">
           {t("activitiesDesc")}
         </p>
@@ -76,7 +90,7 @@ export default function ActivitiesPage() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        
+
         <div className="flex gap-1.5 overflow-x-auto w-full sm:w-auto pb-0.5 sm:pb-0 scrollbar-hide">
           <Filter className="h-4 w-4 text-muted-foreground flex-shrink-0 my-auto" />
           {categories.map((cat) => (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/ThemeProvider";
 import {
   Bar,
   BarChart,
@@ -12,7 +12,13 @@ import {
   YAxis,
   CartesianGrid,
 } from "recharts";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const weeklyData = [
   { name: "Mon", carbon: 2.4, activities: 3 },
@@ -25,12 +31,13 @@ const weeklyData = [
 ];
 
 export function ActivityChart() {
-  const { theme } = useTheme();
-  
-  const primaryColor = theme === "dark" ? "hsl(142 70% 45%)" : "hsl(142 76% 36%)";
-  const secondaryColor = theme === "dark" ? "hsl(160 60% 45%)" : "hsl(173 58% 39%)";
-  const gridColor = theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)";
-  const textColor = theme === "dark" ? "#a1a1aa" : "#71717a";
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+
+  const primaryColor = isDark ? "hsl(142 70% 45%)" : "hsl(142 76% 36%)";
+  const secondaryColor = isDark ? "hsl(160 60% 45%)" : "hsl(173 58% 39%)";
+  const gridColor = isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)";
+  const textColor = isDark ? "#a1a1aa" : "#71717a";
 
   return (
     <Card className="col-span-1 md:col-span-2 lg:col-span-4 border-border/50">
@@ -43,16 +50,23 @@ export function ActivityChart() {
       <CardContent className="pl-2">
         <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={weeklyData} margin={{ top: 5, right: 10, left: 10, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
-              <XAxis 
-                dataKey="name" 
+            <BarChart
+              data={weeklyData}
+              margin={{ top: 5, right: 10, left: 10, bottom: 0 }}
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+                stroke={gridColor}
+              />
+              <XAxis
+                dataKey="name"
                 stroke={textColor}
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
               />
-              <YAxis 
+              <YAxis
                 yAxisId="left"
                 stroke={textColor}
                 fontSize={12}
@@ -60,7 +74,7 @@ export function ActivityChart() {
                 axisLine={false}
                 tickFormatter={(value) => `${value}kg`}
               />
-              <YAxis 
+              <YAxis
                 yAxisId="right"
                 orientation="right"
                 stroke={textColor}
@@ -68,27 +82,29 @@ export function ActivityChart() {
                 tickLine={false}
                 axisLine={false}
               />
-              <Tooltip 
-                cursor={{ fill: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' }}
-                contentStyle={{ 
-                  backgroundColor: theme === 'dark' ? '#18181b' : '#ffffff',
-                  borderColor: theme === 'dark' ? '#27272a' : '#e4e4e7',
-                  borderRadius: '8px'
+              <Tooltip
+                cursor={{
+                  fill: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
+                }}
+                contentStyle={{
+                  backgroundColor: isDark ? "#18181b" : "#ffffff",
+                  borderColor: isDark ? "#27272a" : "#e4e4e7",
+                  borderRadius: "8px",
                 }}
               />
-              <Bar 
+              <Bar
                 yAxisId="left"
-                dataKey="carbon" 
-                name="Carbon Saved (kgCO₂)" 
-                fill={primaryColor} 
-                radius={[4, 4, 0, 0]} 
+                dataKey="carbon"
+                name="Carbon Saved (kgCO₂)"
+                fill={primaryColor}
+                radius={[4, 4, 0, 0]}
               />
-              <Bar 
+              <Bar
                 yAxisId="right"
-                dataKey="activities" 
-                name="Green Actions" 
-                fill={secondaryColor} 
-                radius={[4, 4, 0, 0]} 
+                dataKey="activities"
+                name="Green Actions"
+                fill={secondaryColor}
+                radius={[4, 4, 0, 0]}
               />
             </BarChart>
           </ResponsiveContainer>
@@ -108,11 +124,12 @@ const trendData = [
 ];
 
 export function TrendChart() {
-  const { theme } = useTheme();
-  
-  const primaryColor = theme === "dark" ? "hsl(142 70% 45%)" : "hsl(142 76% 36%)";
-  const gridColor = theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)";
-  const textColor = theme === "dark" ? "#a1a1aa" : "#71717a";
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+
+  const primaryColor = isDark ? "hsl(142 70% 45%)" : "hsl(142 76% 36%)";
+  const gridColor = isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)";
+  const textColor = isDark ? "#a1a1aa" : "#71717a";
 
   return (
     <Card className="col-span-1 border-border/50">
@@ -125,37 +142,44 @@ export function TrendChart() {
       <CardContent className="pl-2">
         <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={trendData} margin={{ top: 5, right: 10, left: 10, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
-              <XAxis 
-                dataKey="month" 
+            <LineChart
+              data={trendData}
+              margin={{ top: 5, right: 10, left: 10, bottom: 0 }}
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+                stroke={gridColor}
+              />
+              <XAxis
+                dataKey="month"
                 stroke={textColor}
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
               />
-              <YAxis 
+              <YAxis
                 stroke={textColor}
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(value) => `${value / 1000}k`}
               />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: theme === 'dark' ? '#18181b' : '#ffffff',
-                  borderColor: theme === 'dark' ? '#27272a' : '#e4e4e7',
-                  borderRadius: '8px'
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: isDark ? "#18181b" : "#ffffff",
+                  borderColor: isDark ? "#27272a" : "#e4e4e7",
+                  borderRadius: "8px",
                 }}
               />
-              <Line 
-                type="monotone" 
-                dataKey="actions" 
-                name="Green Actions" 
-                stroke={primaryColor} 
+              <Line
+                type="monotone"
+                dataKey="actions"
+                name="Green Actions"
+                stroke={primaryColor}
                 strokeWidth={3}
-                dot={{ r: 4, fill: primaryColor }} 
-                activeDot={{ r: 6 }} 
+                dot={{ r: 4, fill: primaryColor }}
+                activeDot={{ r: 6 }}
               />
             </LineChart>
           </ResponsiveContainer>
