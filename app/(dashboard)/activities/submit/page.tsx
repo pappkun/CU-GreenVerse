@@ -87,7 +87,6 @@ function ScanQRContent() {
             <Scanner 
               onScan={handleScan}
               components={{
-                audio: false,
                 finder: false // We use our own finder UI
               }}
               styles={{
