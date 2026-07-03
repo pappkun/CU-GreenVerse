@@ -132,7 +132,10 @@ export function Navbar() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   className="cursor-pointer text-destructive focus:text-destructive"
-                  onClick={() => signOut()}
+                  onClick={async () => {
+                    await signOut();
+                    window.location.href = "/";
+                  }}
                 >
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>{t("logout")}</span>
