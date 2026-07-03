@@ -1,3 +1,5 @@
+"use client";
+
 import { DashboardCard } from "@/components/DashboardCard";
 import { TrendChart } from "@/components/Charts";
 import { mockStats } from "@/data/mockStats";
@@ -5,40 +7,47 @@ import { Users, Activity, Leaf, ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useLang } from "@/context/LanguageContext";
 
 export default function AdminDashboardPage() {
+  const { lang, t } = useLang();
+  
   return (
     <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Admin Dashboard</h1>
-          <p className="text-muted-foreground mt-1">Platform overview and management.</p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {lang === "th" ? "แดชบอร์ดผู้ดูแลระบบ" : "Admin Dashboard"}
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            {lang === "th" ? "ภาพรวมและการจัดการแพลตฟอร์ม" : "Platform overview and management."}
+          </p>
         </div>
-        <Button>Generate Report</Button>
+        <Button>{lang === "th" ? "สร้างรายงาน" : "Generate Report"}</Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <DashboardCard 
-          title="Total Users"
+          title={lang === "th" ? "ผู้ใช้งานทั้งหมด" : "Total Users"}
           value={mockStats.totalUsers.toLocaleString()}
           icon={<Users className="h-5 w-5" />}
-          subtitle={`${mockStats.activeUsers.toLocaleString()} active this month`}
+          subtitle={`${mockStats.activeUsers.toLocaleString()} ${lang === "th" ? "ใช้งานเดือนนี้" : "active this month"}`}
         />
         <DashboardCard 
-          title="Total Green Actions"
+          title={lang === "th" ? "กิจกรรมลดคาร์บอนทั้งหมด" : "Total Green Actions"}
           value={mockStats.totalGreenActions.toLocaleString()}
           icon={<Activity className="h-5 w-5" />}
           trend="up"
           trendValue="15%"
-          subtitle="vs last month"
+          subtitle={lang === "th" ? "เทียบกับเดือนก่อน" : "vs last month"}
         />
         <DashboardCard 
-          title="Total Carbon Saved"
+          title={lang === "th" ? "คาร์บอนที่ลดได้ทั้งหมด" : "Total Carbon Saved"}
           value={`${mockStats.totalCarbonSaved.toLocaleString()} kg`}
           icon={<Leaf className="h-5 w-5" />}
         />
         <DashboardCard 
-          title="Credits Issued"
+          title={lang === "th" ? "แจก Credits ไปแล้ว" : "Credits Issued"}
           value={(mockStats.totalCreditsIssued / 1000000).toFixed(2) + "M"}
           icon={<AwardIcon />}
         />
@@ -52,16 +61,16 @@ export default function AdminDashboardPage() {
         <div className="lg:col-span-1">
           <Card className="h-full border-border/50">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle>Pending Verifications</CardTitle>
-              <Badge variant="destructive" className="rounded-full">12 Actions</Badge>
+              <CardTitle>{lang === "th" ? "รอยืนยันกิจกรรม" : "Pending Verifications"}</CardTitle>
+              <Badge variant="destructive" className="rounded-full">12 {lang === "th" ? "รายการ" : "Actions"}</Badge>
             </CardHeader>
             <CardContent>
               <div className="space-y-4 mt-4">
                 {[
-                  { user: "Patarapon W.", action: "MuvMi Ride", time: "10 mins ago" },
-                  { user: "Siriya S.", action: "Waste Separation", time: "1 hour ago" },
-                  { user: "Kittipong M.", action: "Bring Your Own Cup", time: "2 hours ago" },
-                  { user: "Nattapong J.", action: "Public Transport", time: "3 hours ago" },
+                  { user: "Patarapon W.", action: lang === "th" ? "นั่งรถป๊อบ" : "MuvMi Ride", time: lang === "th" ? "10 นาทีที่แล้ว" : "10 mins ago" },
+                  { user: "Siriya S.", action: lang === "th" ? "แยกขยะ" : "Waste Separation", time: lang === "th" ? "1 ชั่วโมงที่แล้ว" : "1 hour ago" },
+                  { user: "Kittipong M.", action: lang === "th" ? "ใช้แก้วส่วนตัว" : "Bring Your Own Cup", time: lang === "th" ? "2 ชั่วโมงที่แล้ว" : "2 hours ago" },
+                  { user: "Nattapong J.", action: lang === "th" ? "ขนส่งสาธารณะ" : "Public Transport", time: lang === "th" ? "3 ชั่วโมงที่แล้ว" : "3 hours ago" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center justify-between p-3 rounded-lg border bg-muted/20">
                     <div>
@@ -79,7 +88,7 @@ export default function AdminDashboardPage() {
                   </div>
                 ))}
               </div>
-              <Button variant="outline" className="w-full mt-4">View All Pending</Button>
+              <Button variant="outline" className="w-full mt-4">{lang === "th" ? "ดูรายการรอยืนยันทั้งหมด" : "View All Pending"}</Button>
             </CardContent>
           </Card>
         </div>

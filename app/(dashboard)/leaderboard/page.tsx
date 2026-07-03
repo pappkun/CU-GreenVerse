@@ -9,8 +9,10 @@ import { Trophy, RefreshCw, Wifi } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useLang } from "@/context/LanguageContext";
 
 export default function LeaderboardPage() {
+  const { lang, t } = useLang();
   const [activeTab, setActiveTab] = useState("faculties");
   const [individuals, setIndividuals] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -76,9 +78,9 @@ export default function LeaderboardPage() {
     <div className="p-6 md:p-8 space-y-8 max-w-5xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">กระดานผู้นำ</h1>
+          <h1 className="text-3xl font-bold tracking-tight">{t("leaderboardTitle")}</h1>
           <p className="text-muted-foreground mt-1">
-            ดูอันดับผู้นำด้านความยั่งยืนของจุฬาลงกรณ์มหาวิทยาลัย
+            {t("leaderboardDesc")}
           </p>
         </div>
 
@@ -107,19 +109,19 @@ export default function LeaderboardPage() {
             className="gap-2"
           >
             <RefreshCw className="h-3.5 w-3.5" />
-            รีเฟรช
+            {t("refresh")}
           </Button>
 
           <div className="hidden md:flex bg-amber-500/10 text-amber-600 dark:text-amber-500 px-4 py-2 rounded-xl items-center gap-2 border border-amber-500/20">
             <Trophy className="h-5 w-5" />
-            <span className="font-semibold text-sm">Season สิ้นสุดใน 14 วัน</span>
+            <span className="font-semibold text-sm">{t("seasonEnds")}</span>
           </div>
         </div>
       </div>
 
       {lastUpdated && (
         <p className="text-xs text-muted-foreground -mt-4">
-          อัปเดตล่าสุด: {lastUpdated.toLocaleTimeString("th-TH")}
+          {lang === "th" ? "อัปเดตล่าสุด: " : "Last updated: "} {lastUpdated.toLocaleTimeString(lang === "th" ? "th-TH" : "en-US")}
         </p>
       )}
 
@@ -127,9 +129,9 @@ export default function LeaderboardPage() {
         <CardHeader className="pb-3 border-b border-border/50 bg-muted/20">
           <Tabs defaultValue="faculties" className="w-full" onValueChange={setActiveTab}>
             <TabsList className="grid w-full grid-cols-2 max-w-sm h-12">
-              <TabsTrigger value="faculties">คณะ</TabsTrigger>
+              <TabsTrigger value="faculties">{t("faculties")}</TabsTrigger>
               <TabsTrigger value="individuals" className="relative">
-                บุคคล
+                {t("individuals")}
                 <span className="ml-1.5 inline-flex items-center justify-center rounded-full bg-primary/10 text-primary text-[10px] font-bold px-1.5 py-0.5 min-w-[18px]">
                   LIVE
                 </span>
@@ -142,8 +144,8 @@ export default function LeaderboardPage() {
           {activeTab === "faculties" && (
             <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
               <div className="mb-4">
-                <h3 className="font-bold text-lg">อันดับคณะ</h3>
-                <p className="text-sm text-muted-foreground">จัดอันดับตาม Green Credits รวมทั้งคณะ</p>
+                <h3 className="font-bold text-lg">{lang === "th" ? "อันดับคณะ" : "Faculty Ranking"}</h3>
+                <p className="text-sm text-muted-foreground">{lang === "th" ? "จัดอันดับตาม Green Credits รวมทั้งคณะ" : "Ranked by total Green Credits of the faculty"}</p>
               </div>
               <LeaderboardTable data={mockFacultyLeaderboard} />
             </div>
@@ -153,9 +155,9 @@ export default function LeaderboardPage() {
             <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="font-bold text-lg">อันดับบุคคล</h3>
+                  <h3 className="font-bold text-lg">{lang === "th" ? "อันดับบุคคล" : "Individual Ranking"}</h3>
                   <p className="text-sm text-muted-foreground">
-                    อัปเดตแบบ Real-time จากฐานข้อมูลจริง
+                    {lang === "th" ? "อัปเดตแบบ Real-time จากฐานข้อมูลจริง" : "Real-time updates from live database"}
                   </p>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1">
@@ -179,8 +181,8 @@ export default function LeaderboardPage() {
               ) : (
                 <div className="py-12 text-center text-muted-foreground">
                   <Trophy className="h-12 w-12 mx-auto mb-3 opacity-20" />
-                  <p className="font-medium">ยังไม่มีผู้เข้าร่วม</p>
-                  <p className="text-sm mt-1">เป็นคนแรกที่ล็อกอินและทำกิจกรรมเพื่อขึ้นกระดานนี้!</p>
+                  <p className="font-medium">{lang === "th" ? "ยังไม่มีผู้เข้าร่วม" : "No participants yet"}</p>
+                  <p className="text-sm mt-1">{lang === "th" ? "เป็นคนแรกที่ล็อกอินและทำกิจกรรมเพื่อขึ้นกระดานนี้!" : "Be the first to login and earn credits to get on the board!"}</p>
                 </div>
               )}
             </div>

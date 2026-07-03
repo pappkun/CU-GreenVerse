@@ -11,11 +11,13 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { signInWithEmail, signUpWithEmail } from "@/lib/supabase";
 import { useAuth } from "@/context/AuthContext";
+import { useLang } from "@/context/LanguageContext";
 import { toast } from "sonner";
 
 export default function LoginPage() {
   const router = useRouter();
   const { session } = useAuth();
+  const { lang } = useLang();
   const [isLoading, setIsLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
 
@@ -68,7 +70,7 @@ export default function LoginPage() {
       
       <Link href="/" className="absolute top-8 left-8 flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
         <ArrowLeft className="mr-2 h-4 w-4" />
-        กลับหน้าหลัก
+        {lang === "th" ? "กลับหน้าหลัก" : "Back to Home"}
       </Link>
 
       <div className="w-full max-w-md">
@@ -77,18 +79,18 @@ export default function LoginPage() {
             <Leaf className="h-8 w-8 text-primary" />
           </div>
           <h1 className="text-3xl font-bold tracking-tight">CU GreenVerse</h1>
-          <p className="text-muted-foreground mt-2">ร่วมสร้างจุฬาฯ ที่ยั่งยืนด้วยกัน</p>
+          <p className="text-muted-foreground mt-2">{lang === "th" ? "ร่วมสร้างจุฬาฯ ที่ยั่งยืนด้วยกัน" : "Building a sustainable Chula together"}</p>
         </div>
 
         <Card className="border-border/50 shadow-lg backdrop-blur-sm bg-background/95">
           <Tabs defaultValue="login">
             <CardHeader className="space-y-1 text-center pb-2">
               <TabsList className="w-full">
-                <TabsTrigger value="login" className="flex-1">เข้าสู่ระบบ</TabsTrigger>
-                <TabsTrigger value="register" className="flex-1">สมัครสมาชิก</TabsTrigger>
+                <TabsTrigger value="login" className="flex-1">{lang === "th" ? "เข้าสู่ระบบ" : "Login"}</TabsTrigger>
+                <TabsTrigger value="register" className="flex-1">{lang === "th" ? "สมัครสมาชิก" : "Register"}</TabsTrigger>
               </TabsList>
               <CardDescription className="pt-2">
-                ใช้อีเมลจุฬาลงกรณ์มหาวิทยาลัยเท่านั้น
+                {lang === "th" ? "ใช้อีเมลจุฬาลงกรณ์มหาวิทยาลัยเท่านั้น" : "Use Chulalongkorn University email only"}
               </CardDescription>
             </CardHeader>
 
@@ -97,7 +99,7 @@ export default function LoginPage() {
               <form onSubmit={handleLogin}>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email">อีเมล</Label>
+                    <Label htmlFor="email">{lang === "th" ? "อีเมล" : "Email"}</Label>
                     <Input
                       id="email"
                       type="email"
@@ -108,7 +110,7 @@ export default function LoginPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password">รหัสผ่าน</Label>
+                    <Label htmlFor="password">{lang === "th" ? "รหัสผ่าน" : "Password"}</Label>
                     <div className="relative">
                       <Input
                         id="password"
@@ -137,7 +139,7 @@ export default function LoginPage() {
                 <CardFooter className="flex flex-col space-y-3 pt-0">
                   <Button className="w-full h-11" type="submit" disabled={isLoading}>
                     {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                    เข้าสู่ระบบด้วย CU Account
+                    {lang === "th" ? "เข้าสู่ระบบด้วย CU Account" : "Login with CU Account"}
                   </Button>
 
                   <div className="relative w-full">

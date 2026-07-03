@@ -7,8 +7,10 @@ import { currentUser } from "@/data/mockUsers";
 import { Leaf, Loader2, Gift } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/lib/supabase";
+import { useLang } from "@/context/LanguageContext";
 
 export default function RewardsPage() {
+  const { lang, t } = useLang();
   const [activeTab, setActiveTab] = useState("all");
   const [rewards, setRewards] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,11 +48,11 @@ export default function RewardsPage() {
   }, []);
 
   const categories = [
-    { id: "all", label: "ทั้งหมด" },
-    { id: "coupon", label: "คูปอง" },
-    { id: "merchandise", label: "สินค้า" },
+    { id: "all", label: lang === "th" ? "ทั้งหมด" : "All" },
+    { id: "coupon", label: lang === "th" ? "คูปอง" : "Coupons" },
+    { id: "merchandise", label: lang === "th" ? "สินค้า" : "Merch" },
     { id: "avatar", label: "Avatar" },
-    { id: "event", label: "กิจกรรม" },
+    { id: "event", label: lang === "th" ? "กิจกรรม" : "Events" },
   ];
 
   const filteredRewards = activeTab === "all" 
@@ -67,9 +69,9 @@ export default function RewardsPage() {
     <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">ร้านค้าของรางวัล</h1>
+          <h1 className="text-3xl font-bold tracking-tight">{t("rewardsTitle")}</h1>
           <p className="text-muted-foreground mt-1">
-            แลก Green Credits เพื่อรับของรางวัลและสิทธิพิเศษได้
+            {t("rewardsDesc")}
           </p>
         </div>
         
@@ -78,8 +80,8 @@ export default function RewardsPage() {
             <Leaf className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">ยอดคงเหลือ</p>
-            <p className="text-lg font-bold text-primary leading-none">{currentUser.greenCredits.toLocaleString()} Credits</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t("yourBalance")}</p>
+            <p className="text-lg font-bold text-primary leading-none">{currentUser.greenCredits.toLocaleString()} {t("credits")}</p>
           </div>
         </div>
       </div>
@@ -117,7 +119,7 @@ export default function RewardsPage() {
               ))
             ) : (
               <div className="col-span-full py-12 text-center text-muted-foreground">
-                ไม่พบของรางวัลในหมวดหมู่นี้
+                {lang === "th" ? "ไม่พบของรางวัลในหมวดหมู่นี้" : "No rewards found in this category"}
               </div>
             )}
           </div>

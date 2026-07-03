@@ -6,8 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Search, Filter, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
+import { useLang } from "@/context/LanguageContext";
 
 export default function ActivitiesPage() {
+  const { t } = useLang();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
   const [activities, setActivities] = useState<any[]>([]);
@@ -58,9 +60,9 @@ export default function ActivitiesPage() {
   return (
     <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Green Actions</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t("activitiesTitle")}</h1>
         <p className="text-muted-foreground mt-1">
-          Discover activities you can do to reduce carbon emissions and earn Green Credits.
+          {t("activitiesDesc")}
         </p>
       </div>
 
@@ -68,7 +70,7 @@ export default function ActivitiesPage() {
         <div className="relative w-full md:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input 
-            placeholder="Search activities..." 
+            placeholder={t("searchPlaceholder")} 
             className="pl-9 bg-background"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -104,7 +106,7 @@ export default function ActivitiesPage() {
           ))
         ) : (
           <div className="col-span-full py-12 text-center text-muted-foreground">
-            ไม่พบกิจกรรมที่ตรงกับเงื่อนไขการค้นหา
+            {t("noActivities")}
           </div>
         )}
       </div>
