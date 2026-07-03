@@ -97,7 +97,6 @@ export default function ProfilePage() {
   const displayFaculty = profile?.faculty || currentUser.faculty;
   const credits       = profile?.green_credits    ?? currentUser.greenCredits;
   const carbonSaved   = profile?.carbon_saved_kg  ?? currentUser.carbonSaved;
-  const level         = profile?.level ?? currentUser.level;
 
   const currentTier   = getCurrentTier(credits);
   const nextTier      = getNextTier(credits);

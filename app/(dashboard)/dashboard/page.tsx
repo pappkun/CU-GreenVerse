@@ -19,11 +19,6 @@ export default function DashboardPage() {
   const carbon      = profile?.carbon_saved_kg ?? currentUser.carbonSaved;
   const actions     = currentUser.greenActions;
 
-  const xpForNextLevel = 5000;
-  const currentXp  = credits % 5000;
-  const progress   = (currentXp / xpForNextLevel) * 100;
-  const toNextLevel = Math.ceil((xpForNextLevel - currentXp) / 50);
-
   const recentActivities = lang === "th"
     ? [
         { action: "ใช้ MuvMi (รถป๊อบ)",      pts: "+10",  time: "2 ชั่วโมงที่แล้ว" },
@@ -66,43 +61,6 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Level Progress — Hero Card */}
-      <div className="relative rounded-2xl overflow-hidden border border-border/60 bg-card shadow-sm">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-emerald-500/5 pointer-events-none" />
-        <div className="relative p-4 sm:p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
-          {/* Avatar */}
-          <div className="relative h-20 w-20 sm:h-24 sm:w-24 flex-shrink-0">
-            <div className="h-full w-full rounded-2xl overflow-hidden ring-4 ring-primary/20 shadow-xl">
-              <img src={profile?.avatar_url || currentUser.avatar} alt="Avatar" className="w-full h-full object-cover" />
-            </div>
-            <div className="absolute -bottom-1 -right-1 bg-primary text-primary-foreground text-xs font-bold h-7 w-7 rounded-full flex items-center justify-center shadow-md border-2 border-background">
-              {currentUser.level}
-            </div>
-          </div>
-
-          {/* Level info */}
-          <div className="flex-1 w-full min-w-0 text-center sm:text-left">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                  {lang === "th" ? "เลเวล" : "Level"}
-                </p>
-                <h2 className="text-xl sm:text-2xl font-bold">
-                  {lang === "th" ? `เลเวล ${currentUser.level}` : `Level ${currentUser.level}`}
-                </h2>
-              </div>
-              <span className="text-sm font-medium text-muted-foreground tabular-nums">{currentXp.toLocaleString()} / {xpForNextLevel.toLocaleString()} XP</span>
-            </div>
-            <Progress value={progress} className="h-2.5 rounded-full" />
-            <p className="text-xs text-muted-foreground mt-2">
-              {lang === "th"
-                ? `ทำกิจกรรมอีก ${toNextLevel} ครั้ง เพื่อเลื่อนเป็น เลเวล ${currentUser.level + 1}!`
-                : `Complete ${toNextLevel} more activities to reach Level ${currentUser.level + 1}!`}
-            </p>
-          </div>
-        </div>
-      </div>
 
       {/* Stats grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
