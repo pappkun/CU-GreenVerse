@@ -43,14 +43,14 @@ export function Navbar() {
       ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 shadow-sm">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href={isPublicPage ? "/" : "/dashboard"} className="flex items-center gap-2">
-            <div className="bg-primary/10 p-2 rounded-full">
-              <Leaf className="h-6 w-6 text-primary" />
+            <div className="border border-emerald-200 bg-emerald-50/90 p-2 rounded-2xl">
+              <Leaf className="h-6 w-6 text-emerald-700" />
             </div>
-            <span className="font-bold text-xl tracking-tight hidden sm:inline-block">CU GreenVerse</span>
+            <span className="font-semibold text-xl tracking-tight hidden sm:inline-block text-slate-900">CU GreenVerse</span>
           </Link>
         </div>
 

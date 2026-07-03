@@ -51,25 +51,25 @@
 
 @layer base {
   :root {
-    --background: hsl(0 0% 100%);
-    --foreground: hsl(0 0% 15%);
+    --background: hsl(145 55% 97%);
+    --foreground: hsl(148 18% 18%);
     --card: hsl(0 0% 100%);
-    --card-foreground: hsl(0 0% 15%);
+    --card-foreground: hsl(148 18% 18%);
     --popover: hsl(0 0% 100%);
-    --popover-foreground: hsl(0 0% 15%);
-    --primary: hsl(142.1 76.2% 36.3%);
-    --primary-foreground: hsl(355.7 100% 97.3%);
-    --secondary: hsl(142 10% 96%);
-    --secondary-foreground: hsl(0 0% 15%);
-    --muted: hsl(240 4.8% 95.9%);
-    --muted-foreground: hsl(240 3.8% 46.1%);
-    --accent: hsl(240 4.8% 95.9%);
-    --accent-foreground: hsl(240 5.9% 10%);
+    --popover-foreground: hsl(148 18% 18%);
+    --primary: hsl(148 58% 34%);
+    --primary-foreground: hsl(0 0% 98%);
+    --secondary: hsl(146 35% 88%);
+    --secondary-foreground: hsl(148 18% 18%);
+    --muted: hsl(146 28% 93%);
+    --muted-foreground: hsl(148 18% 45%);
+    --accent: hsl(39 100% 91%);
+    --accent-foreground: hsl(31 98% 20%);
     --destructive: hsl(0 84.2% 60.2%);
     --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(240 5.9% 90%);
-    --input: hsl(240 5.9% 90%);
-    --ring: hsl(142.1 76.2% 36.3%);
+    --border: hsl(147 40% 89%);
+    --input: hsl(147 31% 93%);
+    --ring: hsl(148 58% 34%);
     
     /* Charts */
     --chart-1: hsl(142.1 76.2% 36.3%);
@@ -137,6 +137,9 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background-image:
+      radial-gradient(circle at top left, rgba(16,185,129,0.08), transparent 25%),
+      radial-gradient(circle at bottom right, rgba(234,179,8,0.08), transparent 18%);
   }
   html {
     scroll-behavior: smooth;
@@ -163,13 +166,13 @@
   
   /* Glass morphism */
   .glass {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(16, 185, 129, 0.12);
   }
   .dark .glass {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(15, 23, 42, 0.88);
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
   
@@ -178,7 +181,7 @@
     transition: box-shadow 0.3s ease, transform 0.2s ease;
   }
   .card-glow:hover {
-    box-shadow: 0 0 0 1px hsl(142.1 76.2% 36.3% / 0.3), 0 8px 32px hsl(142.1 76.2% 36.3% / 0.15);
+    box-shadow: 0 30px 80px rgba(16, 185, 129, 0.12);
     transform: translateY(-2px);
   }
   

@@ -15,37 +15,37 @@ export default function LandingPage() {
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20 lg:py-32">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/10 -z-10" />
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10" />
-          <div className="absolute top-1/2 -left-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl -z-10" />
-          
+        <section className="relative overflow-hidden py-20 lg:py-28 bg-gradient-to-b from-emerald-50 via-white to-white">
+          <div className="absolute inset-x-0 top-0 h-60 bg-emerald-100/60 blur-3xl -z-10" />
+          <div className="absolute right-0 top-10 w-72 h-72 rounded-[48%] bg-amber-100/55 blur-3xl -z-10" />
+          <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-96 h-72 rounded-full bg-emerald-50/60 blur-3xl -z-10" />
+
           <div className="container mx-auto px-4 text-center">
             <Badge />
-            <h1 className="mt-8 text-5xl md:text-7xl font-extrabold tracking-tight max-w-4xl mx-auto leading-tight">
+            <h1 className="mt-8 text-5xl md:text-6xl font-semibold tracking-tight max-w-4xl mx-auto leading-tight text-slate-900">
               {lang === "th" ? (
                 <>ก้าวเล็กๆ ของคุณ <br className="hidden md:block" /></>
               ) : (
                 <>Your small steps <br className="hidden md:block" /></>
               )}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-500">
+              <span className="block text-emerald-700 mt-2">
                 {lang === "th" ? "สู่ก้าวที่ยิ่งใหญ่เพื่อโลกของเรา" : "towards a giant leap for our planet"}
               </span>
             </h1>
-            <p className="mt-6 text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-6 text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
               {lang === "th" 
                 ? "ร่วมเป็นส่วนหนึ่งกับ CU GreenVerse เพื่อติดตามการเดินทางสู่ความยั่งยืนของคุณ สะสม Green Credits แข่งขันกับเพื่อน และช่วยจุฬาลงกรณ์มหาวิทยาลัยก้าวสู่ความเป็นกลางทางคาร์บอน" 
                 : "Join CU GreenVerse to track your sustainability journey. Earn Green Credits, compete with friends, and help Chulalongkorn University achieve carbon neutrality."}
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/login">
-                <Button size="lg" className="rounded-full h-14 px-8 text-lg w-full sm:w-auto shadow-lg shadow-primary/20">
+                <Button size="lg" className="rounded-full h-14 px-8 text-lg w-full sm:w-auto shadow-lg shadow-emerald-200/60">
                   {lang === "th" ? "เริ่มการเดินทางสีเขียว" : "Start Green Journey"}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link href="#features">
-                <Button size="lg" variant="outline" className="rounded-full h-14 px-8 text-lg w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="rounded-full h-14 px-8 text-lg w-full sm:w-auto border-emerald-200 text-slate-700 hover:border-emerald-300 hover:text-slate-900">
                   {lang === "th" ? "เรียนรู้เพิ่มเติม" : "Learn More"}
                 </Button>
               </Link>
@@ -111,8 +111,8 @@ export default function LandingPage() {
 
 function Badge() {
   return (
-    <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
-      <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
+    <div className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50/90 px-4 py-2 text-sm font-semibold text-emerald-700 shadow-sm shadow-emerald-200/40">
+      <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
       CU Sustainability Initiative
     </div>
   );
@@ -120,12 +120,12 @@ function Badge() {
 
 function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
   return (
-    <div className="flex flex-col items-center text-center p-8 rounded-3xl bg-card border shadow-sm transition-all hover:shadow-md">
-      <div className="h-20 w-20 rounded-2xl bg-muted/50 flex items-center justify-center mb-6">
+    <div className="flex flex-col items-center text-center p-8 rounded-[2rem] border border-emerald-100 bg-white shadow-[0_18px_50px_-32px_rgba(16,185,129,0.25)] transition-all hover:shadow-[0_20px_55px_-28px_rgba(16,185,129,0.2)]">
+      <div className="h-20 w-20 rounded-[1.5rem] bg-emerald-50 flex items-center justify-center mb-6 shadow-sm shadow-emerald-100/80">
         {icon}
       </div>
-      <h3 className="text-xl font-bold mb-3">{title}</h3>
-      <p className="text-muted-foreground leading-relaxed">{description}</p>
+      <h3 className="text-xl font-semibold mb-3 text-slate-900">{title}</h3>
+      <p className="text-slate-600 leading-relaxed">{description}</p>
     </div>
   );
 }
