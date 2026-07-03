@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Leaf, ScanLine, ArrowLeft, CheckCircle2, Bus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useLang } from "@/context/LanguageContext";
 import { toast } from "sonner";
 import Link from "next/link";
+import confetti from "canvas-confetti";
 
 function ScanQRContent() {
   const router = useRouter();
@@ -18,6 +19,39 @@ function ScanQRContent() {
   const [scanning, setScanning] = useState(true);
   const [success, setSuccess] = useState(false);
   const [scannedActivity, setScannedActivity] = useState<any>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  // Stop camera function
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+  };
+
+  // Setup camera
+  useEffect(() => {
+    if (!isScan || success) return;
+
+    async function setupCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+          video: { facingMode: "environment" } 
+        });
+        streamRef.current = stream;
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      } catch (err) {
+        console.error("Error accessing camera:", err);
+      }
+    }
+
+    setupCamera();
+
+    return () => stopCamera();
+  }, [isScan, success]);
 
   // Mock scanning process
   useEffect(() => {
@@ -26,6 +60,17 @@ function ScanQRContent() {
     const timer = setTimeout(() => {
       setScanning(false);
       setSuccess(true);
+      stopCamera(); // Stop camera when scan succeeds
+      
+      // Trigger confetti 🎉
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#10b981', '#3b82f6', '#f59e0b'],
+        zIndex: 100
+      });
+
       // Randomly pick an activity
       const isBus = Math.random() > 0.5;
       setScannedActivity({
@@ -36,7 +81,7 @@ function ScanQRContent() {
       });
       
       toast.success(lang === "th" ? "สแกนสำเร็จ!" : "Scan Successful!");
-    }, 2500); // Fake scan delay
+    }, 3500); // Fake scan delay
 
     return () => clearTimeout(timer);
   }, [isScan, lang]);
@@ -72,14 +117,25 @@ function ScanQRContent() {
         </h1>
       </div>
 
-      {/* Camera Viewport Mockup */}
+      {/* Camera Viewport */}
       <div className="flex-1 relative overflow-hidden flex flex-col items-center justify-center">
-        {/* Background Image simulating camera */}
+        {/* Actual Video Element */}
+        {!success && (
+          <video 
+            ref={videoRef}
+            autoPlay 
+            playsInline 
+            muted 
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )}
+
+        {/* Background Image simulating camera (Fallback if camera blocked) */}
         <div 
-          className="absolute inset-0 opacity-40 bg-cover bg-center"
+          className={`absolute inset-0 opacity-40 bg-cover bg-center ${!success ? '-z-10' : ''}`}
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1590240402855-32e67df1488c?auto=format&fit=crop&q=80&w=600')" }}
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className={`absolute inset-0 bg-black/40 ${!success ? '-z-10' : ''}`} />
 
         {!success ? (
           <>
