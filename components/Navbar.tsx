@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Leaf, Menu, Moon, Sun, User as UserIcon, LogOut, Settings } from "lucide-react";
+import { Leaf, Moon, Sun, User as UserIcon, LogOut, Settings } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +12,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/context/AuthContext";
 import { useLang } from "@/context/LanguageContext";
@@ -95,15 +94,15 @@ export function Navbar() {
           </Button>
 
           {isPublicPage ? (
-            <div className="hidden md:block">
+            <div>
               <Link href="/login">
-                <Button className="rounded-full px-6">{t("login")}</Button>
+                <Button className="rounded-full px-4 md:px-6 h-9 md:h-10 text-xs md:text-sm">{t("login")}</Button>
               </Link>
             </div>
           ) : (
             <DropdownMenu>
-              <DropdownMenuTrigger render={<Button variant="ghost" className="relative h-10 w-10 rounded-full" />}>
-                <Avatar className="h-10 w-10 border-2 border-primary/20">
+              <DropdownMenuTrigger render={<Button variant="ghost" className="relative h-9 w-9 md:h-10 md:w-10 rounded-full" />}>
+                <Avatar className="h-9 w-9 md:h-10 md:w-10 border-2 border-primary/20">
                   <AvatarImage src={displayAvatar} alt={displayName} />
                   <AvatarFallback>{displayName.substring(0, 2).toUpperCase()}</AvatarFallback>
                 </Avatar>
@@ -140,41 +139,6 @@ export function Navbar() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          )}
-
-          {/* Mobile Nav (Only for public pages) */}
-          {isPublicPage && (
-            <Sheet>
-              <SheetTrigger render={<Button variant="ghost" size="icon" className="md:hidden" />}>
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle Menu</span>
-              </SheetTrigger>
-              <SheetContent side="right">
-                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                <div className="flex flex-col gap-6 mt-6">
-                  <Link href="/" className="flex items-center gap-2">
-                    <Leaf className="h-6 w-6 text-primary" />
-                    <span className="font-bold text-xl">CU GreenVerse</span>
-                  </Link>
-                  <div className="flex flex-col gap-4">
-                    {navLinks.map((link) => (
-                      <Link 
-                        key={link.name} 
-                        href={link.href}
-                        className={`text-lg font-medium ${
-                          pathname === link.href ? "text-primary" : "text-foreground"
-                        }`}
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
-                    <Link href="/login">
-                      <Button className="w-full mt-4 rounded-full">เข้าสู่ระบบ</Button>
-                    </Link>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
           )}
         </div>
       </div>
