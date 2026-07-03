@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Leaf, Award, TrendingDown, ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
 import { useLang } from "@/context/LanguageContext";
 
 export default function LandingPage() {
@@ -105,7 +104,6 @@ export default function LandingPage() {
         </section>
 
       </main>
-      <Footer />
     </div>
   );
 }
