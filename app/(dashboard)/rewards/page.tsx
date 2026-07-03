@@ -66,22 +66,22 @@ export default function RewardsPage() {
       );
 
   return (
-    <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+    <div className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6 max-w-7xl mx-auto">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">{t("rewardsTitle")}</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{t("rewardsTitle")}</h1>
+          <p className="text-muted-foreground mt-1 text-sm sm:text-base">
             {t("rewardsDesc")}
           </p>
         </div>
         
-        <div className="bg-primary/10 border border-primary/20 px-4 py-2 rounded-xl flex items-center gap-3 w-full md:w-auto">
-          <div className="bg-background p-1.5 rounded-full shadow-sm">
+        <div className="flex items-center gap-3 rounded-2xl border border-border/60 bg-card px-4 py-2.5 w-full sm:w-auto shadow-sm">
+          <div className="bg-primary/10 p-2 rounded-xl">
             <Leaf className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t("yourBalance")}</p>
-            <p className="text-lg font-bold text-primary leading-none">{currentUser.greenCredits.toLocaleString()} {t("credits")}</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{t("yourBalance")}</p>
+            <p className="text-lg font-bold text-primary leading-tight">{currentUser.greenCredits.toLocaleString()} {t("credits")}</p>
           </div>
         </div>
       </div>
@@ -101,8 +101,8 @@ export default function RewardsPage() {
           </TabsList>
         </div>
         
-        <div className="mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="mt-5 sm:mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
           {/* Mystery Box - always first */}
           <MysteryBox userCredits={currentUser.greenCredits} />
             {isLoading ? (

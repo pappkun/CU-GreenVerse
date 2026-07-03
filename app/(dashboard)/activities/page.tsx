@@ -58,46 +58,46 @@ export default function ActivitiesPage() {
   });
 
   return (
-    <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">{t("activitiesTitle")}</h1>
-        <p className="text-muted-foreground mt-1">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{t("activitiesTitle")}</h1>
+        <p className="text-muted-foreground mt-1 text-sm sm:text-base">
           {t("activitiesDesc")}
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-card p-4 rounded-xl border shadow-sm">
-        <div className="relative w-full md:w-96">
+      <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between rounded-2xl border border-border/60 bg-card p-3.5 shadow-sm">
+        <div className="relative w-full sm:w-72 md:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder={t("searchPlaceholder")} 
-            className="pl-9 bg-background"
+          <Input
+            placeholder={t("searchPlaceholder")}
+            className="pl-9 bg-background rounded-xl h-9 text-sm"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         
-        <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-hide">
-          <div className="flex items-center gap-2">
-            <Filter className="h-4 w-4 text-muted-foreground mr-1" />
-            {categories.map((cat) => (
-              <Button
-                key={cat}
-                variant={filter === cat ? "default" : "outline"}
-                size="sm"
-                className="capitalize whitespace-nowrap rounded-full"
-                onClick={() => setFilter(cat)}
-              >
-                {cat}
-              </Button>
-            ))}
-          </div>
+        <div className="flex gap-1.5 overflow-x-auto w-full sm:w-auto pb-0.5 sm:pb-0 scrollbar-hide">
+          <Filter className="h-4 w-4 text-muted-foreground flex-shrink-0 my-auto" />
+          {categories.map((cat) => (
+            <Button
+              key={cat}
+              variant={filter === cat ? "default" : "ghost"}
+              size="sm"
+              className={`capitalize whitespace-nowrap rounded-full h-8 text-xs font-semibold flex-shrink-0 transition-all ${
+                filter === cat ? "shadow-sm" : "hover:bg-muted"
+              }`}
+              onClick={() => setFilter(cat)}
+            >
+              {cat}
+            </Button>
+          ))}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
         {isLoading ? (
-          <div className="col-span-full py-12 flex justify-center">
+          <div className="col-span-full py-16 flex justify-center">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
           </div>
         ) : filteredActivities.length > 0 ? (
@@ -105,7 +105,10 @@ export default function ActivitiesPage() {
             <ActivityCard key={activity.id} activity={activity} />
           ))
         ) : (
-          <div className="col-span-full py-12 text-center text-muted-foreground">
+          <div className="col-span-full py-16 text-center text-muted-foreground">
+            <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-muted/50 flex items-center justify-center">
+              <Search className="h-7 w-7 opacity-40" />
+            </div>
             {t("noActivities")}
           </div>
         )}
