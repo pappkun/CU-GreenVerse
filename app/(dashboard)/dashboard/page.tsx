@@ -74,27 +74,7 @@ export default function DashboardPage() {
               : `Welcome back, ${displayName} 🌱`}
           </p>
         </div>
-        <div className="flex md:hidden items-center gap-2 sm:gap-3 flex-shrink-0">
-          <Link href="/activities">
-            <Button className="h-9 sm:h-10 rounded-xl font-semibold text-sm gap-1.5 shadow-sm shadow-primary/20">
-              <Leaf className="h-4 w-4" />
-              <span className="hidden xs:inline">
-                {lang === "th" ? "บันทึกกิจกรรม" : "Log Activity"}
-              </span>
-              <span className="xs:hidden">
-                {lang === "th" ? "บันทึก" : "Log"}
-              </span>
-            </Button>
-          </Link>
-          <Link href="/activities/submit?scan=true">
-            <Button
-              variant="outline"
-              className="h-9 sm:h-10 rounded-xl font-semibold text-sm gap-1.5"
-            >
-              <span>{lang === "th" ? "สแกน QR" : "Scan QR"}</span>
-            </Button>
-          </Link>
-        </div>
+
       </div>
 
       {/* Stats grid */}
