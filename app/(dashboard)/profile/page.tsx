@@ -273,50 +273,7 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
 
-            {/* Carbon Achievement Card */}
-            <Card className="border-border/50 shadow-sm">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg">
-                  {lang==="th" ? "🌳 ผลกระทบของคุณ" : "🌳 Your Impact"}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground">
-                  {lang==="th" ? "คุณมีส่วนร่วมในการลดคาร์บอนเท่ากับ..." : "Your actions are equivalent to..."}
-                </p>
 
-                {(lang==="th" ? [
-                  { emoji: "🌳", label: "ต้นไม้ที่ช่วยดูดคาร์บอน", value: Math.round(carbonSaved / 21.77), unit: "ต้น/ปี" },
-                  { emoji: "🚗", label: "ระยะทางที่ไม่ขับรถ",       value: Math.round(carbonSaved / 0.21), unit: "กม." },
-                  { emoji: "💡", label: "ชั่วโมงไฟ LED ที่ประหยัด",  value: Math.round(carbonSaved * 100), unit: "ชั่วโมง" },
-                  { emoji: "🍔", label: "มื้อเนื้อสัตว์ที่งดได้",    value: Math.round(carbonSaved / 6.6), unit: "มื้อ" },
-                ] : [
-                  { emoji: "🌳", label: "Trees absorbing carbon",  value: Math.round(carbonSaved / 21.77), unit: "trees/yr" },
-                  { emoji: "🚗", label: "Car-free distance",         value: Math.round(carbonSaved / 0.21), unit: "km" },
-                  { emoji: "💡", label: "LED light hours saved",     value: Math.round(carbonSaved * 100),  unit: "hrs" },
-                  { emoji: "🍔", label: "Meat meals avoided",        value: Math.round(carbonSaved / 6.6),  unit: "meals" },
-                ]).map((item) => (
-                  <div key={item.label} className="flex items-center gap-3 p-3 rounded-xl bg-muted/40">
-                    <div className="text-3xl">{item.emoji}</div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-muted-foreground">{item.label}</p>
-                      <p className="font-bold text-lg leading-tight">
-                        {item.value.toLocaleString()} <span className="text-sm font-normal text-muted-foreground">{item.unit}</span>
-                      </p>
-                    </div>
-                  </div>
-                ))}
-
-                <div className="pt-2">
-                  <div className="bg-primary/10 border border-primary/20 rounded-xl p-4 text-center">
-                    <p className="text-2xl font-black text-primary">{carbonSaved} kgCO₂e</p>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {lang==="th" ? "คาร์บอนรวมที่คุณลดได้ตั้งแต่เริ่มต้น" : "Total carbon you've reduced since joining"}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </TabsContent>
 
