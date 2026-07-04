@@ -146,7 +146,7 @@ export default function DashboardPage() {
               ))}
             </div>
             <div className="p-4 border-t border-slate-200/70 bg-slate-50">
-              <Link href="/passport">
+              <Link href="/history">
                 <Button
                   variant="ghost"
                   className="w-full text-sm text-slate-900 h-11 rounded-[1.5rem] font-semibold border border-slate-200 bg-white shadow-sm hover:bg-slate-100"

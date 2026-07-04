@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, Suspense } from "react";
+import Link from "next/link";
 import { useLang } from "@/context/LanguageContext";
 import { useSearchParams } from "next/navigation";
 import { currentUser } from "@/data/mockUsers";
@@ -722,9 +723,11 @@ function ProfilePageContent() {
                 </div>
               ))}
 
-              <Button variant="outline" className="w-full mt-2">
-                {lang === "th" ? "ดูประวัติทั้งหมด" : "View All History"}
-              </Button>
+              <Link href="/history">
+                <Button variant="outline" className="w-full mt-2">
+                  {lang === "th" ? "ดูประวัติทั้งหมด" : "View All History"}
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </TabsContent>

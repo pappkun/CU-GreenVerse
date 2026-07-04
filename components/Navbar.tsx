@@ -131,10 +131,10 @@ export function Navbar() {
                   <span>{t("profile")}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  render={<Link href="/passport" className="cursor-pointer" />}
+                  render={<Link href="/history" className="cursor-pointer" />}
                 >
                   <Leaf className="mr-2 h-4 w-4" />
-                  <span>{t("passport")}</span>
+                  <span>{lang === "th" ? "ประวัติการใช้งาน" : "History"}</span>
                 </DropdownMenuItem>
                 {isAdmin && (
                   <>
