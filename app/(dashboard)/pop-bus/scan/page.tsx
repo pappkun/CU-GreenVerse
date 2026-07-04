@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useLang } from "@/context/LanguageContext";
 import { startTrip, getUserLocation } from "@/lib/popbus";
@@ -15,6 +15,8 @@ export default function PopBusScanPage() {
   const { user } = useAuth();
   const { lang } = useLang();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const mockBusId = searchParams.get("mock_bus_id"); // mock mode
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -25,8 +27,21 @@ export default function PopBusScanPage() {
   const [errorMsg, setErrorMsg] = useState("");
   const [scannedBus, setScannedBus] = useState("");
 
-  // ─── Start Camera ──────────────────────────────────────────────────────
+  // ─── Mock Scan Mode ────────────────────────────────────────────────────
   useEffect(() => {
+    if (mockBusId) {
+      // ใช้ GPS ของ CU เป็น mock location (13.7367, 100.5320)
+      handleQRCode(`popbus://board?bus_id=${mockBusId}`, {
+        latitude: 13.7367,
+        longitude: 100.532,
+      } as GeolocationCoordinates);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mockBusId]);
+
+  // ─── Start Camera (ข้ามถ้าเป็น mock mode) ─────────────────────────────
+  useEffect(() => {
+    if (mockBusId) return; // ไม่เปิดกล้องถ้าเป็น mock
     async function startCamera() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -78,7 +93,10 @@ export default function PopBusScanPage() {
   }
 
   // ─── Handle QR Code ────────────────────────────────────────────────────
-  async function handleQRCode(raw: string) {
+  async function handleQRCode(
+    raw: string,
+    mockCoords?: Pick<GeolocationCoordinates, "latitude" | "longitude">
+  ) {
     if (!user) return;
     setScanState("processing");
 
@@ -103,10 +121,12 @@ export default function PopBusScanPage() {
 
     setScannedBus(busId);
 
-    // Get user GPS
+    // Get user GPS (หรือใช้ mockCoords)
     let coords: GeolocationCoordinates;
     try {
-      coords = await getUserLocation();
+      coords = mockCoords
+        ? ({ ...mockCoords, accuracy: 10, altitude: null, altitudeAccuracy: null, heading: null, speed: null } as GeolocationCoordinates)
+        : await getUserLocation();
     } catch {
       setErrorMsg(
         lang === "th"

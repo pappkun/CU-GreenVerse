@@ -13,6 +13,7 @@ import {
   BookOpen,
   ChevronRight,
   Bus,
+  QrCode,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useLang } from "@/context/LanguageContext";
@@ -41,6 +42,7 @@ export function Sidebar({ className }: SidebarProps) {
   const adminLinks = [
     { name: t("dashboard"),    href: "/dashboard",   icon: LayoutDashboard },
     { name: t("admin"),        href: "/admin",        icon: Settings },
+    { name: "QR Codes",        href: "/admin/qr",    icon: QrCode },
   ];
 
   const mainLinks = isAdmin ? adminLinks.filter(l => l.href !== "/admin") : userLinks;
