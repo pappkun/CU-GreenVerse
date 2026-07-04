@@ -232,7 +232,7 @@ function ProfilePageContent() {
   const { lang } = useLang();
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab");
-  const [activeTab, setActiveTab] = useState(tabParam || "badges");
+  const [activeTab, setActiveTab] = useState(tabParam || "history");
 
   // Use real user if logged in, else fallback to mock
   const displayName =
@@ -432,20 +432,17 @@ function ProfilePageContent() {
 
       {/* Tabs */}
       <Tabs
-        defaultValue="badges"
+        defaultValue="history"
         onValueChange={setActiveTab}
         className="w-full"
       >
         <div className="overflow-x-auto pb-2 scrollbar-hide">
           <TabsList className="w-full sm:w-auto inline-flex justify-start">
-            <TabsTrigger value="badges" className="whitespace-nowrap">
-              {lang === "th" ? "Badge" : "Badges"}
-            </TabsTrigger>
             <TabsTrigger value="history" className="whitespace-nowrap">
               {lang === "th" ? "ประวัติ" : "History"}
             </TabsTrigger>
-            <TabsTrigger value="avatar" className="whitespace-nowrap">
-              Avatar
+            <TabsTrigger value="badges" className="whitespace-nowrap">
+              {lang === "th" ? "Badge" : "Badges"}
             </TabsTrigger>
           </TabsList>
         </div>
