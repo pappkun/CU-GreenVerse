@@ -88,14 +88,24 @@ export function RewardCard({ reward, userCredits }: RewardCardProps) {
           colors.bg,
         )}
       >
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.95),transparent_55%),radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.7),transparent_40%)]" />
-        <div className="absolute right-4 top-4 h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-white/80 shadow-sm" />
-        <CatIcon
-          className={cn(
-            "relative h-12 w-12 sm:h-16 sm:w-16 opacity-70 transition-transform duration-500 group-hover:scale-110",
-            colors.text,
-          )}
-        />
+        {reward.image ? (
+          <img 
+            src={reward.image} 
+            alt={reward.title} 
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+          />
+        ) : (
+          <>
+            <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.95),transparent_55%),radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.7),transparent_40%)]" />
+            <div className="absolute right-4 top-4 h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-white/80 shadow-sm" />
+            <CatIcon
+              className={cn(
+                "relative h-12 w-12 sm:h-16 sm:w-16 opacity-70 transition-transform duration-500 group-hover:scale-110",
+                colors.text,
+              )}
+            />
+          </>
+        )}
 
         {/* Top badges */}
         <div className="absolute top-2 left-2 right-2 sm:top-3 sm:left-3 sm:right-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-2">
