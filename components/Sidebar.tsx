@@ -34,7 +34,6 @@ export function Sidebar({ className }: SidebarProps) {
     { name: t("activities"),   href: "/activities",  icon: Leaf },
     { name: t("rewards"),      href: "/rewards",     icon: Gift },
     { name: t("leaderboard"),  href: "/leaderboard", icon: Trophy },
-    { name: t("passport_side"),href: "/passport",    icon: BookOpen },
     { name: t("profile"),      href: "/profile",     icon: User },
   ];
 
