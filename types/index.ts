@@ -76,3 +76,26 @@ export type StatSummary = {
   totalCarbonSaved: number;
   totalCreditsIssued: number;
 };
+
+export type PopBusTrip = {
+  id: string;
+  userId: string;
+  busId: string;
+  boardedAt: string;
+  alightedAt?: string;
+  boardedLat: number;
+  boardedLng: number;
+  alightedLat?: number;
+  alightedLng?: number;
+  distanceKm: number;
+  greenCredits: number;
+  status: "ongoing" | "completed" | "cancelled";
+};
+
+export type PopBus = {
+  busId: string;
+  currentLat: number | null;
+  currentLng: number | null;
+  updatedAt: string;
+  isActive: boolean;
+};

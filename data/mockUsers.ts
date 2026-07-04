@@ -13,8 +13,22 @@ export const currentUser: User = {
   role: "user",
 };
 
+export const adminUser: User = {
+  id: "u_admin",
+  name: "System Admin",
+  email: "admin@cu-greenverse.com",
+  faculty: "Central Administration",
+  avatar: "/img/blank-profile-picture-973460_960_720.png",
+  level: 99,
+  greenCredits: 9999,
+  carbonSaved: 999.9,
+  greenActions: 999,
+  role: "admin",
+};
+
 export const mockUsers: User[] = [
   currentUser,
+  adminUser,
   {
     id: "u_2",
     name: "Siriya S.",

@@ -1,19 +1,98 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { DashboardCard } from "@/components/DashboardCard";
 import { TrendChart } from "@/components/Charts";
 import { mockStats } from "@/data/mockStats";
-import { Users, Activity, Leaf, ShieldAlert } from "lucide-react";
+import { Users, Activity, Leaf, Bus, Route, UserCheck, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/lib/supabase";
 import { useLang } from "@/context/LanguageContext";
+
+interface PopBusStats {
+  totalKm: number;
+  totalTrips: number;
+  uniqueRiders: number;
+  ongoingTrips: number;
+}
+
+interface ActivityStat {
+  category: string;
+  count: number;
+}
 
 export default function AdminDashboardPage() {
   const { lang, t } = useLang();
-  
+  const [popStats, setPopStats] = useState<PopBusStats>({
+    totalKm: 0,
+    totalTrips: 0,
+    uniqueRiders: 0,
+    ongoingTrips: 0,
+  });
+  const [activityStats, setActivityStats] = useState<ActivityStat[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchStats() {
+      if (!supabase) { setIsLoading(false); return; }
+
+      // POP BUS stats
+      const { data: trips } = await supabase
+        .from("pop_bus_trips")
+        .select("distance_km, user_id, status");
+
+      if (trips) {
+        const completed = trips.filter((t) => t.status === "completed");
+        const ongoing = trips.filter((t) => t.status === "ongoing");
+        setPopStats({
+          totalKm: completed.reduce((sum, t) => sum + (t.distance_km || 0), 0),
+          totalTrips: completed.length,
+          uniqueRiders: new Set(completed.map((t) => t.user_id)).size,
+          ongoingTrips: ongoing.length,
+        });
+      }
+
+      // Activity breakdown by category
+      const { data: acts } = await supabase
+        .from("activity_logs")
+        .select("category");
+
+      if (acts) {
+        const grouped: Record<string, number> = {};
+        acts.forEach((a: any) => {
+          const cat = a.category || "other";
+          grouped[cat] = (grouped[cat] || 0) + 1;
+        });
+        setActivityStats(
+          Object.entries(grouped)
+            .map(([category, count]) => ({ category, count }))
+            .sort((a, b) => b.count - a.count)
+        );
+      }
+
+      setIsLoading(false);
+    }
+
+    fetchStats();
+    // Real-time: refresh ongoing trips every 30s
+    const interval = setInterval(fetchStats, 30_000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const categoryEmoji: Record<string, string> = {
+    transport: "🚌",
+    waste: "♻️",
+    energy: "⚡",
+    food: "🥗",
+    education: "📚",
+    other: "🌿",
+  };
+
   return (
     <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto">
+      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
@@ -26,69 +105,153 @@ export default function AdminDashboardPage() {
         <Button>{lang === "th" ? "สร้างรายงาน" : "Generate Report"}</Button>
       </div>
 
+      {/* Platform Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <DashboardCard 
+        <DashboardCard
           title={lang === "th" ? "ผู้ใช้งานทั้งหมด" : "Total Users"}
           value={mockStats.totalUsers.toLocaleString()}
           icon={<Users className="h-5 w-5" />}
           subtitle={`${mockStats.activeUsers.toLocaleString()} ${lang === "th" ? "ใช้งานเดือนนี้" : "active this month"}`}
         />
-        <DashboardCard 
-          title={lang === "th" ? "กิจกรรมลดคาร์บอนทั้งหมด" : "Total Green Actions"}
+        <DashboardCard
+          title={lang === "th" ? "กิจกรรมทั้งหมด" : "Total Green Actions"}
           value={mockStats.totalGreenActions.toLocaleString()}
           icon={<Activity className="h-5 w-5" />}
           trend="up"
           trendValue="15%"
           subtitle={lang === "th" ? "เทียบกับเดือนก่อน" : "vs last month"}
         />
-        <DashboardCard 
-          title={lang === "th" ? "คาร์บอนที่ลดได้ทั้งหมด" : "Total Carbon Saved"}
+        <DashboardCard
+          title={lang === "th" ? "คาร์บอนที่ลดได้" : "Total Carbon Saved"}
           value={`${mockStats.totalCarbonSaved.toLocaleString()} kg`}
           icon={<Leaf className="h-5 w-5" />}
         />
-        <DashboardCard 
-          title={lang === "th" ? "แจก Credits ไปแล้ว" : "Credits Issued"}
-          value={(mockStats.totalCreditsIssued / 1000000).toFixed(2) + "M"}
+        <DashboardCard
+          title={lang === "th" ? "Credits ที่แจก" : "Credits Issued"}
+          value={(mockStats.totalCreditsIssued / 1_000_000).toFixed(2) + "M"}
           icon={<AwardIcon />}
         />
       </div>
 
+      {/* POP BUS Section */}
+      <div>
+        <div className="flex items-center gap-2 mb-4">
+          <Bus className="h-5 w-5 text-emerald-500" />
+          <h2 className="text-xl font-bold">{lang === "th" ? "POP BUS Overview" : "POP BUS Overview"}</h2>
+          {popStats.ongoingTrips > 0 && (
+            <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800 text-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse inline-block" />
+              {popStats.ongoingTrips} {lang === "th" ? "เที่ยวกำลังดำเนินอยู่" : "trips in progress"}
+            </Badge>
+          )}
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="border-border/50">
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="h-9 w-9 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                  <Route className="h-4 w-4 text-blue-500" />
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {lang === "th" ? "ระยะทางรวม" : "Total Distance"}
+                </p>
+              </div>
+              <p className="text-2xl font-bold">
+                {isLoading ? "—" : popStats.totalKm.toFixed(1)}
+                <span className="text-sm font-normal text-muted-foreground ml-1">km</span>
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border/50">
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="h-9 w-9 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                  <Bus className="h-4 w-4 text-emerald-500" />
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {lang === "th" ? "เที่ยวทั้งหมด" : "Total Trips"}
+                </p>
+              </div>
+              <p className="text-2xl font-bold">
+                {isLoading ? "—" : popStats.totalTrips.toLocaleString()}
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border/50">
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="h-9 w-9 rounded-xl bg-purple-500/10 flex items-center justify-center">
+                  <UserCheck className="h-4 w-4 text-purple-500" />
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {lang === "th" ? "ผู้ใช้ที่เคยนั่ง" : "Unique Riders"}
+                </p>
+              </div>
+              <p className="text-2xl font-bold">
+                {isLoading ? "—" : popStats.uniqueRiders.toLocaleString()}
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border/50">
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="h-9 w-9 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                  <Timer className="h-4 w-4 text-orange-500" />
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {lang === "th" ? "กำลังนั่งอยู่" : "Ongoing Now"}
+                </p>
+              </div>
+              <p className="text-2xl font-bold text-orange-500">
+                {isLoading ? "—" : popStats.ongoingTrips}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Charts + Activity Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <TrendChart />
         </div>
-        
-        <div className="lg:col-span-1">
-          <Card className="h-full border-border/50">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle>{lang === "th" ? "รอยืนยันกิจกรรม" : "Pending Verifications"}</CardTitle>
-              <Badge variant="destructive" className="rounded-full">12 {lang === "th" ? "รายการ" : "Actions"}</Badge>
+
+        <div className="lg:col-span-1 space-y-4">
+          {/* Activity Breakdown */}
+          <Card className="border-border/50">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-semibold">
+                {lang === "th" ? "กิจกรรมแยกตามหมวด" : "Activity by Category"}
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4 mt-4">
-                {[
-                  { user: "Patarapon W.", action: lang === "th" ? "นั่งรถป๊อบ" : "POP-BUS Ride", time: lang === "th" ? "10 นาทีที่แล้ว" : "10 mins ago" },
-                  { user: "Siriya S.", action: lang === "th" ? "แยกขยะ" : "Waste Separation", time: lang === "th" ? "1 ชั่วโมงที่แล้ว" : "1 hour ago" },
-                  { user: "Kittipong M.", action: lang === "th" ? "ใช้แก้วส่วนตัว" : "Bring Your Own Cup", time: lang === "th" ? "2 ชั่วโมงที่แล้ว" : "2 hours ago" },
-                  { user: "Nattapong J.", action: lang === "th" ? "ขนส่งสาธารณะ" : "Public Transport", time: lang === "th" ? "3 ชั่วโมงที่แล้ว" : "3 hours ago" },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center justify-between p-3 rounded-lg border bg-muted/20">
-                    <div>
-                      <p className="text-sm font-medium">{item.user}</p>
-                      <p className="text-xs text-muted-foreground">{item.action} • {item.time}</p>
+              {isLoading ? (
+                <div className="space-y-2">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="h-8 rounded-lg bg-muted animate-pulse" />
+                  ))}
+                </div>
+              ) : activityStats.length > 0 ? (
+                <div className="space-y-2">
+                  {activityStats.map(({ category, count }) => (
+                    <div key={category} className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <span className="text-base">{categoryEmoji[category] ?? "🌿"}</span>
+                        <span className="text-sm capitalize">{category}</span>
+                      </div>
+                      <Badge variant="secondary" className="text-xs">{count}</Badge>
                     </div>
-                    <div className="flex gap-1">
-                      <Button size="icon" variant="ghost" className="h-7 w-7 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/30">
-                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.4669 3.72684C11.7558 3.91574 11.8369 4.30308 11.648 4.59198L7.39799 11.092C7.29783 11.2452 7.13556 11.3467 6.95402 11.3699C6.77247 11.3931 6.58989 11.3355 6.45446 11.2124L3.70446 8.71241C3.44905 8.48022 3.43023 8.08494 3.66242 7.82953C3.89461 7.57412 4.28989 7.55529 4.5453 7.78749L6.75292 9.79441L10.6018 3.90792C10.7907 3.61902 11.178 3.53795 11.4669 3.72684Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg>
-                      </Button>
-                      <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive hover:text-destructive hover:bg-destructive/10">
-                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg>
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Button variant="outline" className="w-full mt-4">{lang === "th" ? "ดูรายการรอยืนยันทั้งหมด" : "View All Pending"}</Button>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-muted-foreground text-center py-4">
+                  {lang === "th" ? "ยังไม่มีข้อมูล" : "No data yet"}
+                </p>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -99,6 +262,8 @@ export default function AdminDashboardPage() {
 
 function AwardIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-award h-5 w-5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-award h-5 w-5">
+      <circle cx="12" cy="8" r="6" /><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+    </svg>
   );
 }

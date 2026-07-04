@@ -9,12 +9,12 @@ import {
   Gift,
   Trophy,
   User,
-  Users,
   Settings,
   BookOpen,
   ChevronRight,
+  Bus,
 } from "lucide-react";
-import { currentUser } from "@/data/mockUsers";
+import { useAuth } from "@/context/AuthContext";
 import { useLang } from "@/context/LanguageContext";
 
 interface SidebarProps {
@@ -24,10 +24,14 @@ interface SidebarProps {
 export function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname();
   const { t } = useLang();
+  const { profile } = useAuth();
+
+  const isAdmin = profile?.role === "admin";
 
   const userLinks = [
     { name: t("dashboard"),    href: "/dashboard",   icon: LayoutDashboard },
     { name: t("activities"),   href: "/activities",  icon: Leaf },
+    { name: "POP BUS",         href: "/pop-bus",     icon: Bus },
     { name: t("rewards"),      href: "/rewards",     icon: Gift },
     { name: t("leaderboard"),  href: "/leaderboard", icon: Trophy },
     { name: t("passport_side"),href: "/passport",    icon: BookOpen },
@@ -35,13 +39,13 @@ export function Sidebar({ className }: SidebarProps) {
   ];
 
   const adminLinks = [
-    { name: t("admin"), href: "/admin", icon: Settings },
+    { name: t("dashboard"),    href: "/dashboard",   icon: LayoutDashboard },
+    { name: t("admin"),        href: "/admin",        icon: Settings },
   ];
 
-  const links = currentUser.role === "admin" ? [...userLinks, ...adminLinks] : userLinks;
+  const mainLinks = isAdmin ? adminLinks.filter(l => l.href !== "/admin") : userLinks;
+  const adminOnlyLinks = isAdmin ? adminLinks.filter(l => l.href === "/admin") : [];
 
-  const mainLinks = links.filter(l => l.href !== "/admin");
-  const adminOnlyLinks = links.filter(l => l.href === "/admin");
 
   return (
     <aside className={cn("hidden lg:flex flex-col w-60 xl:w-64 border-r border-border/60 min-h-[calc(100vh-4rem)] bg-sidebar/80 backdrop-blur-sm", className)}>
