@@ -3,7 +3,7 @@
 import { useLang } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Leaf, Footprints, Bus, Recycle, Coffee, Users, Bike } from "lucide-react";
+import { Leaf, Bus, Recycle, Coffee, Users, Bike } from "lucide-react";
 
 export default function AdminDashboardPage() {
   const { lang } = useLang();
@@ -11,23 +11,13 @@ export default function AdminDashboardPage() {
   // Mock aggregated data for all users separated by activity
   const activitiesData = [
     {
-      id: "walk",
-      title: lang === "th" ? "เดินเท้าเข้ามหาวิทยาลัย" : "Walk to Campus",
-      icon: Footprints,
-      color: "text-emerald-500",
-      bg: "bg-emerald-500/10",
-      count: 4100,
-      points: 205000,
-      carbon: 0,
-    },
-    {
       id: "popbus",
       title: lang === "th" ? "เช็คอินรถป๊อบ (POP-BUS)" : "POP-BUS Check-in",
       icon: Bus,
       color: "text-blue-500",
       bg: "bg-blue-500/10",
       count: 3240,
-      points: 16200,
+      usage: lang === "th" ? "รวม 16,200 กิโลเมตร" : "16,200 km total",
       carbon: 1620,
     },
     {
@@ -37,7 +27,7 @@ export default function AdminDashboardPage() {
       color: "text-orange-500",
       bg: "bg-orange-500/10",
       count: 2800,
-      points: 84000,
+      usage: lang === "th" ? "แยกขยะ 2,800 ครั้ง" : "2,800 times",
       carbon: 140,
     },
     {
@@ -47,7 +37,7 @@ export default function AdminDashboardPage() {
       color: "text-teal-500",
       bg: "bg-teal-500/10",
       count: 1850,
-      points: 148000,
+      usage: lang === "th" ? "รวม 5,550 กิโลเมตร" : "5,550 km total",
       carbon: 462.5,
     },
     {
@@ -57,7 +47,7 @@ export default function AdminDashboardPage() {
       color: "text-amber-600",
       bg: "bg-amber-600/10",
       count: 1520,
-      points: 60800,
+      usage: lang === "th" ? "พกแก้ว 1,520 ใบ" : "1,520 cups",
       carbon: 15.2,
     },
     {
@@ -67,7 +57,7 @@ export default function AdminDashboardPage() {
       color: "text-purple-500",
       bg: "bg-purple-500/10",
       count: 450,
-      points: 90000,
+      usage: lang === "th" ? "เข้าร่วม 450 ครั้ง" : "450 participations",
       carbon: 0,
     },
   ];
@@ -98,7 +88,7 @@ export default function AdminDashboardPage() {
                 <TableRow className="hover:bg-transparent bg-slate-50 dark:bg-slate-900/50">
                   <TableHead className="w-[300px] text-base font-semibold">{lang === "th" ? "ชื่อกิจกรรม" : "Activity Name"}</TableHead>
                   <TableHead className="text-right text-base font-semibold">{lang === "th" ? "จำนวนครั้งที่ทำ (รวม)" : "Total Count"}</TableHead>
-                  <TableHead className="text-right text-base font-semibold">{lang === "th" ? "แต้มที่แจกไป (รวม)" : "Total Points Issued"}</TableHead>
+                  <TableHead className="text-right text-base font-semibold">{lang === "th" ? "ข้อมูลการใช้งาน" : "Usage Data"}</TableHead>
                   <TableHead className="text-right text-base font-semibold">{lang === "th" ? "คาร์บอนที่ลดได้ (รวม)" : "Total Carbon Saved"}</TableHead>
                 </TableRow>
               </TableHeader>
@@ -117,7 +107,7 @@ export default function AdminDashboardPage() {
                       {act.count.toLocaleString()}
                     </TableCell>
                     <TableCell className="text-right font-bold text-primary text-lg">
-                      +{act.points.toLocaleString()} pts
+                      {act.usage}
                     </TableCell>
                     <TableCell className="text-right font-bold text-emerald-600 dark:text-emerald-400 text-lg">
                       {act.carbon > 0 ? `-${act.carbon.toLocaleString()} kgCO₂e` : "-"}
