@@ -58,7 +58,7 @@ export function LeaderboardTable({ data }: LeaderboardTableProps) {
       cell: ({ row }) => {
         const name = row.getValue("name") as string;
         const avatar = row.original.avatar;
-        
+
         return (
           <div className="flex items-center gap-3 font-medium">
             {avatar && (
@@ -67,9 +67,11 @@ export function LeaderboardTable({ data }: LeaderboardTableProps) {
                 <AvatarFallback>{name.substring(0, 2)}</AvatarFallback>
               </Avatar>
             )}
-            {!avatar && row.original.type !== 'individual' && (
+            {!avatar && row.original.type !== "individual" && (
               <div className="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center">
-                <span className="text-xs text-primary font-bold">{name.substring(0, 1)}</span>
+                <span className="text-xs text-primary font-bold">
+                  {name.substring(0, 1)}
+                </span>
               </div>
             )}
             {name}
@@ -96,7 +98,8 @@ export function LeaderboardTable({ data }: LeaderboardTableProps) {
         const carbon = parseFloat(row.getValue("carbonSaved"));
         return (
           <div className="text-right font-medium text-emerald-600 dark:text-emerald-400">
-            {carbon.toLocaleString()} <span className="text-xs text-muted-foreground ml-1">kgCO₂</span>
+            {carbon.toLocaleString()}{" "}
+            <span className="text-xs text-muted-foreground ml-1">kgCO₂</span>
           </div>
         );
       },
@@ -124,12 +127,15 @@ export function LeaderboardTable({ data }: LeaderboardTableProps) {
                 <TableRow key={headerGroup.id} className="hover:bg-transparent">
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id} className="font-semibold text-muted-foreground">
+                      <TableHead
+                        key={header.id}
+                        className="font-semibold text-muted-foreground"
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
                               header.column.columnDef.header,
-                              header.getContext()
+                              header.getContext(),
                             )}
                       </TableHead>
                     );
@@ -147,14 +153,20 @@ export function LeaderboardTable({ data }: LeaderboardTableProps) {
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className="py-3">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length} className="h-24 text-center">
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
                     No results.
                   </TableCell>
                 </TableRow>
@@ -173,7 +185,10 @@ export function LeaderboardTable({ data }: LeaderboardTableProps) {
               const avatar = row.original.avatar;
 
               return (
-                <div key={row.id} className="flex items-center justify-between gap-3 px-4 py-3">
+                <div
+                  key={row.id}
+                  className="flex items-center justify-between gap-3 px-4 py-3"
+                >
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-sm font-bold">
                       {rank === 1 ? (
@@ -191,17 +206,22 @@ export function LeaderboardTable({ data }: LeaderboardTableProps) {
                         {avatar ? (
                           <Avatar className="h-7 w-7">
                             <AvatarImage src={avatar} alt={name} />
-                            <AvatarFallback>{name.substring(0, 2)}</AvatarFallback>
+                            <AvatarFallback>
+                              {name.substring(0, 2)}
+                            </AvatarFallback>
                           </Avatar>
                         ) : row.original.type !== "individual" ? (
                           <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-                            <span className="text-[11px] font-bold text-primary">{name.substring(0, 1)}</span>
+                            <span className="text-[11px] font-bold text-primary">
+                              {name.substring(0, 1)}
+                            </span>
                           </div>
                         ) : null}
                         <p className="truncate text-sm font-semibold">{name}</p>
                       </div>
                       <p className="mt-1 text-xs text-muted-foreground">
-                        {credits.toLocaleString()} pts • {carbon.toLocaleString()} kgCO₂
+                        {credits.toLocaleString()} pts •{" "}
+                        {carbon.toLocaleString()} kgCO₂
                       </p>
                     </div>
                   </div>
