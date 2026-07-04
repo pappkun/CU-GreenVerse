@@ -36,10 +36,8 @@ export function Sidebar({ className }: SidebarProps) {
     { name: t("leaderboard"),  href: "/leaderboard", icon: Trophy },
     { name: t("profile"),      href: "/profile",     icon: User },
   ];
-
   const adminLinks = [
     { name: t("admin"),        href: "/admin",        icon: LayoutDashboard },
-    { name: "QR Codes",        href: "/admin/qr",    icon: QrCode },
   ];
 
   const mainLinks = isAdmin ? adminLinks : userLinks;

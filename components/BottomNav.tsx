@@ -24,7 +24,6 @@ export function BottomNav() {
 
   const adminNavItems = [
     { name: t("admin"),       href: "/admin",        icon: LayoutDashboard },
-    { name: "QR Codes",       href: "/admin/qr",     icon: QrCode },
   ];
 
   const navItems = isAdmin ? adminNavItems : userNavItems;
