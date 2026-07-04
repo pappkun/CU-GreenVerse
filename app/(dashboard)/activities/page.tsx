@@ -30,15 +30,17 @@ export default function ActivitiesPage() {
 
         if (error) throw error;
 
-        const mappedData = (data ?? []).map((item: any) => ({
-          id: item.id,
-          title: item.title,
-          description: item.description || "",
-          category: item.category.toLowerCase(),
-          points: item.reward_points,
-          carbonReduction: item.carbon_offset_estimate || 0,
-          icon: item.image_url || "Leaf",
-        }));
+        const mappedData = (data ?? [])
+          .filter((item: any) => !item.title.toLowerCase().includes("walk"))
+          .map((item: any) => ({
+            id: item.id,
+            title: item.title,
+            description: item.description || "",
+            category: item.category.toLowerCase(),
+            points: item.reward_points,
+            carbonReduction: item.carbon_offset_estimate || 0,
+            icon: item.image_url || "Leaf",
+          }));
 
         setActivities(mappedData);
       } catch (error) {
