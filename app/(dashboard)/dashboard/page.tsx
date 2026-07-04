@@ -36,7 +36,7 @@ export default function DashboardPage() {
   const carbon = profile?.carbon_saved_kg ?? 0;
   const actions = profile?.green_actions ?? 0;
 
-  const recentActivities =
+  const mockActivities =
     lang === "th"
       ? [
           {
@@ -58,6 +58,8 @@ export default function DashboardPage() {
           { action: "Waste Separation", pts: "+30", time: "2 days ago" },
           { action: "Walk to Campus", pts: "+50", time: "3 days ago" },
         ];
+
+  const recentActivities = actions > 0 ? mockActivities : [];
 
   return (
     <div className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6 max-w-7xl mx-auto">
@@ -118,7 +120,7 @@ export default function DashboardPage() {
       {/* Chart + Recent Activities */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
         <div className="lg:col-span-3">
-          <ActivityChart />
+          <ActivityChart hasData={actions > 0} />
         </div>
         <div className="lg:col-span-1">
           <div className="rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_-44px_rgba(15,23,42,0.2)] overflow-hidden h-full flex flex-col">
@@ -128,22 +130,29 @@ export default function DashboardPage() {
               </h3>
             </div>
             <div className="divide-y divide-slate-200/70 flex-1">
-              {recentActivities.map((act, i) => (
-                <div
-                  key={i}
-                  className="p-4 flex items-center justify-between gap-3 hover:bg-slate-50 transition-colors"
-                >
-                  <div className="min-w-0 space-y-0.5">
-                    <p className="text-sm font-semibold leading-none truncate text-slate-900">
-                      {act.action}
-                    </p>
-                    <p className="text-xs text-slate-500">{act.time}</p>
+              {recentActivities.length > 0 ? (
+                recentActivities.map((act, i) => (
+                  <div
+                    key={i}
+                    className="p-4 flex items-center justify-between gap-3 hover:bg-slate-50 transition-colors"
+                  >
+                    <div className="min-w-0 space-y-0.5">
+                      <p className="text-sm font-semibold leading-none truncate text-slate-900">
+                        {act.action}
+                      </p>
+                      <p className="text-xs text-slate-500">{act.time}</p>
+                    </div>
+                    <div className="text-xs font-semibold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full flex-shrink-0 ml-2">
+                      {act.pts}
+                    </div>
                   </div>
-                  <div className="text-xs font-semibold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full flex-shrink-0 ml-2">
-                    {act.pts}
-                  </div>
+                ))
+              ) : (
+                <div className="p-8 flex flex-col items-center justify-center text-center text-slate-400 h-full">
+                  <Leaf className="h-8 w-8 mb-2 opacity-20" />
+                  <p className="text-sm">{lang === "th" ? "ยังไม่มีกิจกรรม" : "No recent activities"}</p>
                 </div>
-              ))}
+              )}
             </div>
             <div className="p-4 border-t border-slate-200/70 bg-slate-50">
               <Link href="/history">

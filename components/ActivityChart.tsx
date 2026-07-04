@@ -19,19 +19,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const getWeeklyData = (lang: string) => [
-  { name: lang === "th" ? "จ." : "Mon", carbon: 2.4, activities: 3 },
-  { name: lang === "th" ? "อ." : "Tue", carbon: 1.8, activities: 2 },
-  { name: lang === "th" ? "พ." : "Wed", carbon: 3.2, activities: 4 },
-  { name: lang === "th" ? "พฤ." : "Thu", carbon: 0.5, activities: 1 },
-  { name: lang === "th" ? "ศ." : "Fri", carbon: 4.1, activities: 5 },
-  { name: lang === "th" ? "ส." : "Sat", carbon: 5.5, activities: 6 },
-  { name: lang === "th" ? "อา." : "Sun", carbon: 2.0, activities: 2 },
+const getWeeklyData = (lang: string, hasData: boolean) => [
+  { name: lang === "th" ? "จ." : "Mon", carbon: hasData ? 2.4 : 0, activities: hasData ? 3 : 0 },
+  { name: lang === "th" ? "อ." : "Tue", carbon: hasData ? 1.8 : 0, activities: hasData ? 2 : 0 },
+  { name: lang === "th" ? "พ." : "Wed", carbon: hasData ? 3.2 : 0, activities: hasData ? 4 : 0 },
+  { name: lang === "th" ? "พฤ." : "Thu", carbon: hasData ? 0.5 : 0, activities: hasData ? 1 : 0 },
+  { name: lang === "th" ? "ศ." : "Fri", carbon: hasData ? 4.1 : 0, activities: hasData ? 5 : 0 },
+  { name: lang === "th" ? "ส." : "Sat", carbon: hasData ? 5.5 : 0, activities: hasData ? 6 : 0 },
+  { name: lang === "th" ? "อา." : "Sun", carbon: hasData ? 2.0 : 0, activities: hasData ? 2 : 0 },
 ];
 
 import { useMemo } from "react";
 
-export function ActivityChart() {
+export function ActivityChart({ hasData = true }: { hasData?: boolean }) {
   const { resolvedTheme } = useTheme();
   const { lang } = useLang();
   const isDark = resolvedTheme === "dark";
@@ -40,7 +40,7 @@ export function ActivityChart() {
   const secondaryColor = isDark ? "hsl(160 60% 45%)" : "hsl(173 58% 39%)";
   const gridColor = isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)";
   const textColor = isDark ? "#a1a1aa" : "#71717a";
-  const data = useMemo(() => getWeeklyData(lang), [lang]);
+  const data = useMemo(() => getWeeklyData(lang, hasData), [lang, hasData]);
 
   return (
     <Card className="col-span-1 md:col-span-2 lg:col-span-4 border-border/50">
