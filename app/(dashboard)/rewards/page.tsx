@@ -8,6 +8,7 @@ import { Leaf, Loader2, Gift } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/lib/supabase";
 import { useLang } from "@/context/LanguageContext";
+import { mockRewards } from "@/data/mockRewards";
 
 export default function RewardsPage() {
   const { lang, t } = useLang();
@@ -28,9 +29,13 @@ export default function RewardsPage() {
           .select("*")
           .order("points_required", { ascending: true });
 
-        if (error) throw error;
+        if (error || !data || data.length === 0) {
+          console.log("Using mock rewards as fallback");
+          setRewards(mockRewards);
+          return;
+        }
 
-        const mappedData = (data ?? []).map((item: any) => ({
+        const mappedData = data.map((item: any) => ({
           id: item.id,
           title: item.name,
           description: item.description || "",
@@ -43,6 +48,7 @@ export default function RewardsPage() {
         setRewards(mappedData);
       } catch (error) {
         console.error("Error fetching rewards:", error);
+        setRewards(mockRewards);
       } finally {
         setIsLoading(false);
       }
@@ -64,9 +70,9 @@ export default function RewardsPage() {
       ? rewards
       : rewards.filter(
           (r) =>
-            (activeTab === "coupon" && r.category === "voucher") ||
-            (activeTab === "merchandise" && r.category === "physical") ||
-            (activeTab === "avatar" && r.category === "digital") ||
+            (activeTab === "coupon" && (r.category === "voucher" || r.category === "coupon")) ||
+            (activeTab === "merchandise" && (r.category === "physical" || r.category === "merchandise")) ||
+            (activeTab === "avatar" && (r.category === "digital" || r.category === "avatar")) ||
             (activeTab === "event" && r.category === "event") ||
             r.category === activeTab,
         );
@@ -113,8 +119,8 @@ export default function RewardsPage() {
           </TabsList>
         </div>
 
-        <div className="mt-5 sm:mt-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+        <div className="mt-4 sm:mt-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
             {/* Mystery Box - always first */}
             <MysteryBox userCredits={currentUser.greenCredits} />
             {isLoading ? (

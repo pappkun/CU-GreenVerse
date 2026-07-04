@@ -10,6 +10,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
+import { OnboardingModal } from "@/components/OnboardingModal";
+import { Card, CardContent } from "@/components/ui/card";
+import { TreePine, Droplets } from "lucide-react";
 
 export default function DashboardPage() {
   const { profile, user } = useAuth();
@@ -58,6 +61,7 @@ export default function DashboardPage() {
 
   return (
     <div className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6 max-w-7xl mx-auto">
+      <OnboardingModal />
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <div className="min-w-0">
@@ -128,6 +132,8 @@ export default function DashboardPage() {
           accentColor="orange"
         />
       </div>
+
+
 
       {/* Chart + Recent Activities */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">

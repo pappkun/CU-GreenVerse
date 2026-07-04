@@ -2,9 +2,10 @@
 
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Leaf, ScanLine, ArrowLeft, CheckCircle2, Bus, Trash2 } from "lucide-react";
+import { Leaf, ScanLine, ArrowLeft, CheckCircle2, Bus, Trash2, Upload, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import { useLang } from "@/context/LanguageContext";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -20,6 +21,11 @@ function ScanQRContent() {
   const [scanning, setScanning] = useState(true);
   const [success, setSuccess] = useState(false);
   const [scannedActivity, setScannedActivity] = useState<any>(null);
+  
+  // Form State
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedActivity, setSelectedActivity] = useState<string>("");
+  const [hasImage, setHasImage] = useState(false);
 
   const handleScan = (detectedCodes: any) => {
     if (detectedCodes && detectedCodes.length > 0 && !success) {
@@ -54,21 +60,159 @@ function ScanQRContent() {
     }
   };
 
+  const handleManualSubmit = () => {
+    if (!selectedActivity || !hasImage) {
+      toast.error(lang === "th" ? "กรุณาเลือกกิจกรรมและอัปโหลดรูปภาพ" : "Please select an activity and upload evidence");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    // Simulate API call and AI Verification
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSuccess(true);
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#10b981', '#3b82f6', '#f59e0b'],
+        zIndex: 100
+      });
+      setScannedActivity({
+        title: lang === "th" ? "บันทึกสำเร็จ" : "Action Logged",
+        points: 20,
+        carbon: 0.3,
+        icon: Leaf,
+      });
+      toast.success(lang === "th" ? "บันทึกกิจกรรมเรียบร้อยแล้ว!" : "Activity successfully logged!");
+    }, 1500);
+  };
+
   if (!isScan) {
-    // Fallback if not ?scan=true, just redirect to activities list or show manual form
+    if (success) {
+      return (
+        <div className="p-6 max-w-lg mx-auto flex flex-col items-center animate-in fade-in zoom-in duration-500 pt-20">
+          <div className="h-24 w-24 bg-emerald-100 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/20">
+            <CheckCircle2 className="h-12 w-12 text-emerald-600" />
+          </div>
+          
+          <Card className="w-full text-center border-emerald-100 shadow-xl shadow-emerald-500/10">
+            <CardContent className="pt-6 space-y-4">
+              <h2 className="text-2xl font-bold text-slate-900">
+                {lang === "th" ? "กิจกรรมได้รับการยืนยัน!" : "Action Verified!"}
+              </h2>
+              
+              <div className="w-full p-4 bg-emerald-50 rounded-xl space-y-3">
+                <div className="flex items-center justify-center gap-2 text-emerald-700">
+                  <Leaf className="h-5 w-5" />
+                  <span className="font-semibold">{lang === "th" ? "กิจกรรมรักษ์โลก" : "Eco-friendly Action"}</span>
+                </div>
+                <div className="flex justify-around pt-3 border-t border-emerald-200">
+                  <div>
+                    <p className="text-2xl font-bold text-emerald-600">+20</p>
+                    <p className="text-xs text-emerald-700/70">Green Credits</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-blue-500">-0.3</p>
+                    <p className="text-xs text-blue-700/70">kgCO₂e Saved</p>
+                  </div>
+                </div>
+              </div>
+
+              <Link href="/dashboard" className="w-full mt-4 block">
+                <Button className="w-full text-lg h-12 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-md">
+                  {lang === "th" ? "กลับสู่หน้าหลัก" : "Back to Dashboard"}
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    }
+
     return (
-      <div className="p-6 max-w-lg mx-auto text-center space-y-4">
-        <h1 className="text-2xl font-bold">
-          {lang === "th" ? "บันทึกกิจกรรมด้วยตนเอง" : "Submit Action Manually"}
-        </h1>
-        <p className="text-muted-foreground">
-          {lang === "th" ? "แบบฟอร์มจะอยู่ที่นี่..." : "Form goes here..."}
-        </p>
-        <Link href="/dashboard">
-          <Button variant="outline">
-            {lang === "th" ? "กลับสู่หน้าหลัก" : "Back to Dashboard"}
+      <div className="p-4 sm:p-6 max-w-lg mx-auto space-y-6 pt-8">
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="icon" onClick={() => router.back()} className="rounded-full">
+            <ArrowLeft className="h-5 w-5" />
           </Button>
-        </Link>
+          <div>
+            <h1 className="text-2xl font-bold">
+              {lang === "th" ? "บันทึกกิจกรรม" : "Log Action"}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {lang === "th" ? "บันทึกหลักฐานเพื่อรับ Green Credits" : "Submit evidence to earn Green Credits"}
+            </p>
+          </div>
+        </div>
+
+        <Card className="border-slate-200 shadow-sm">
+          <CardHeader>
+            <CardTitle>{lang === "th" ? "ข้อมูลกิจกรรม" : "Activity Details"}</CardTitle>
+            <CardDescription>
+              {lang === "th" ? "AI จะทำการตรวจสอบภาพถ่ายของคุณโดยอัตโนมัติ" : "AI will automatically verify your photo."}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-3">
+              <Label>{lang === "th" ? "เลือกประเภทกิจกรรม" : "Select Activity Type"}</Label>
+              <select 
+                className="flex h-12 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                value={selectedActivity}
+                onChange={(e) => setSelectedActivity(e.target.value)}
+              >
+                <option value="" disabled>{lang === "th" ? "เลือกกิจกรรม..." : "Select an activity..."}</option>
+                <option value="byoc">{lang === "th" ? "พกแก้วน้ำมาเอง (BYOC)" : "Bring Your Own Cup (BYOC)"}</option>
+                <option value="recycle">{lang === "th" ? "แยกขยะขวดพลาสติก" : "Recycle Plastic Bottles"}</option>
+                <option value="food">{lang === "th" ? "ทานอาหารหมดจาน (Zero Food Waste)" : "Zero Food Waste"}</option>
+                <option value="bag">{lang === "th" ? "ใช้ถุงผ้าช้อปปิ้ง" : "Use Reusable Bag"}</option>
+              </select>
+            </div>
+
+            <div className="space-y-3">
+              <Label>{lang === "th" ? "อัปโหลดภาพหลักฐาน" : "Upload Evidence Photo"}</Label>
+              <div 
+                className={`border-2 border-dashed rounded-2xl p-8 text-center flex flex-col items-center justify-center gap-3 transition-colors cursor-pointer ${
+                  hasImage ? 'border-primary bg-primary/5' : 'border-slate-300 hover:bg-slate-50'
+                }`}
+                onClick={() => setHasImage(true)}
+              >
+                {hasImage ? (
+                  <>
+                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <CheckCircle2 className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-primary">{lang === "th" ? "อัปโหลดรูปภาพแล้ว" : "Photo uploaded"}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{lang === "th" ? "แตะเพื่อเปลี่ยนรูป" : "Tap to change"}</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center">
+                      <Camera className="h-6 w-6 text-slate-500" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-slate-700">{lang === "th" ? "แตะเพื่อถ่ายรูป หรือ เลือกจากอัลบั้ม" : "Tap to take photo or choose from gallery"}</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            <Button 
+              className="w-full h-12 rounded-xl text-base font-semibold shadow-md" 
+              onClick={handleManualSubmit}
+              disabled={isSubmitting || !selectedActivity || !hasImage}
+            >
+              {isSubmitting ? (
+                <>{lang === "th" ? "กำลังตรวจสอบด้วย AI..." : "AI Verifying..."}</>
+              ) : (
+                <>{lang === "th" ? "ส่งหลักฐาน" : "Submit Evidence"}</>
+              )}
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     );
   }

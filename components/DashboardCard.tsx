@@ -64,19 +64,19 @@ export function DashboardCard({
       <div className="absolute -right-10 top-6 h-24 w-24 rounded-full bg-slate-100 opacity-90 blur-2xl pointer-events-none" />
       <div className="absolute -left-8 bottom-8 h-28 w-28 rounded-full bg-emerald-100/70 opacity-70 blur-2xl pointer-events-none" />
 
-      <div className="relative p-5">
-        <div className="flex items-start justify-between gap-4">
+      <div className="relative p-4 sm:p-5">
+        <div className="flex items-start justify-between gap-3 sm:gap-4">
           <div className="min-w-0 flex-1">
-            <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-slate-500 truncate mb-1">
+            <p className="text-[10px] sm:text-sm font-semibold uppercase tracking-wider text-slate-500 truncate mb-1">
               {title}
             </p>
-            <p className="text-2xl sm:text-3xl font-semibold tracking-tight mt-1 tabular-nums text-slate-900">
+            <p className="text-xl sm:text-3xl font-semibold tracking-tight mt-1 tabular-nums text-slate-900">
               {value}
             </p>
           </div>
           <div
             className={cn(
-              "h-12 w-12 rounded-[1.25rem] flex items-center justify-center flex-shrink-0 ring-1",
+              "h-10 w-10 sm:h-12 sm:w-12 rounded-[1rem] sm:rounded-[1.25rem] flex items-center justify-center flex-shrink-0 ring-1",
               accent.iconBg,
               accent.ring,
             )}
@@ -86,21 +86,21 @@ export function DashboardCard({
         </div>
 
         {(subtitle || trendValue) && (
-          <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+          <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
             {trendValue && (
               <span
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold",
+                  "inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[10px] sm:text-xs font-semibold",
                   trendColor,
                 )}
               >
-                <TrendIcon className="h-3.5 w-3.5" />
+                <TrendIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                 {trend === "up" ? "+" : trend === "down" ? "-" : ""}
                 {trendValue}
               </span>
             )}
             {subtitle && (
-              <span className="text-sm text-slate-600">{subtitle}</span>
+              <span className="text-xs sm:text-sm text-slate-600 truncate">{subtitle}</span>
             )}
           </div>
         )}

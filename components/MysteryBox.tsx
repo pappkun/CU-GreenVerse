@@ -96,7 +96,7 @@ export function MysteryBox({ userCredits = currentUser.greenCredits }: MysteryBo
     <>
       {/* Mystery Box Card */}
       <div
-        className={`relative flex flex-col items-center justify-center p-8 rounded-2xl border-2 cursor-pointer transition-all duration-300 group
+        className={`relative flex flex-col items-center justify-center p-3 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all duration-300 group h-full
           ${canAfford
             ? "border-amber-400/50 bg-gradient-to-b from-amber-500/10 to-orange-500/5 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/10"
             : "border-border/30 bg-muted/30 opacity-60 cursor-not-allowed"
@@ -106,39 +106,39 @@ export function MysteryBox({ userCredits = currentUser.greenCredits }: MysteryBo
         {/* Sparkles */}
         {canAfford && (
           <>
-            <Sparkles className="absolute top-3 right-3 h-4 w-4 text-amber-400 animate-pulse" />
-            <Star className="absolute top-4 left-4 h-3 w-3 text-amber-300 animate-pulse" style={{ animationDelay: "0.5s" }} />
-            <Sparkles className="absolute bottom-4 left-5 h-3 w-3 text-orange-400 animate-pulse" style={{ animationDelay: "1s" }} />
+            <Sparkles className="absolute top-3 right-3 h-3 w-3 sm:h-4 sm:w-4 text-amber-400 animate-pulse" />
+            <Star className="absolute top-4 left-4 h-2 w-2 sm:h-3 sm:w-3 text-amber-300 animate-pulse" style={{ animationDelay: "0.5s" }} />
+            <Sparkles className="absolute bottom-4 left-5 h-2 w-2 sm:h-3 sm:w-3 text-orange-400 animate-pulse" style={{ animationDelay: "1s" }} />
           </>
         )}
 
-        <div className="relative mb-4">
-          <div className={`h-24 w-24 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg
+        <div className="relative mb-2 sm:mb-4">
+          <div className={`h-16 w-16 sm:h-24 sm:w-24 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg
             ${canAfford ? "group-hover:scale-110 transition-transform duration-300" : ""}`}>
-            <Gift className="h-12 w-12 text-white" />
+            <Gift className="h-8 w-8 sm:h-12 sm:w-12 text-white" />
           </div>
-          <Badge className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-amber-500 hover:bg-amber-500 text-white text-[10px] px-2 whitespace-nowrap">
+          <Badge className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-amber-500 hover:bg-amber-500 text-white text-[9px] sm:text-[10px] px-1.5 sm:px-2 whitespace-nowrap">
             สุ่มรับของรางวัล
           </Badge>
         </div>
 
-        <h3 className="font-bold text-lg mt-3">Green Capsule</h3>
-        <p className="text-sm text-muted-foreground text-center mt-1 max-w-[180px]">
-          สุ่มรับของรางวัลสุดพิเศษ มีโอกาสได้รางวัล Legendary!
+        <h3 className="font-bold text-sm sm:text-base mt-2 sm:mt-3 leading-tight text-center">Green Capsule</h3>
+        <p className="text-[10px] sm:text-sm text-muted-foreground text-center mt-1 sm:mt-1.5 line-clamp-2 leading-relaxed px-1">
+          สุ่มรับของรางวัลพิเศษ มีโอกาสได้ Legendary!
         </p>
 
-        <div className="mt-4 flex items-center gap-1.5 text-sm font-bold text-amber-600 dark:text-amber-400">
-          <Leaf className="h-4 w-4" />
-          {MYSTERY_BOX_COST.toLocaleString()} Credits
+        <div className="mt-auto pt-3 flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-sm font-bold text-amber-600 dark:text-amber-400">
+          <Leaf className="h-3 w-3 sm:h-4 sm:w-4" />
+          {MYSTERY_BOX_COST.toLocaleString()} <span className="hidden sm:inline">Credits</span><span className="sm:hidden">pts</span>
         </div>
 
         <Button
-          className="mt-4 w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0"
+          className="mt-2 sm:mt-3 w-full h-9 sm:h-11 rounded-xl sm:rounded-[1.5rem] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0 text-xs sm:text-sm font-semibold shadow-sm"
           disabled={!canAfford}
           onClick={(e) => { e.stopPropagation(); handleOpen(); }}
         >
-          <Gift className="mr-2 h-4 w-4" />
-          {canAfford ? "เปิดกล่องสุ่ม!" : "Credits ไม่พอ"}
+          <Gift className="mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+          {canAfford ? "เปิดสุ่ม!" : "แต้มไม่พอ"}
         </Button>
       </div>
 
