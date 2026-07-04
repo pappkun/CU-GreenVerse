@@ -50,7 +50,8 @@ export default function RewardsPage() {
               item.category !== "digital" &&
               item.category !== "event" &&
               !item.title.toLowerCase().includes("avatar") &&
-              !item.title.toLowerCase().includes("mystery box")
+              !item.title.toLowerCase().includes("mystery box") &&
+              !item.title.toLowerCase().includes("workshop")
           );
 
         setRewards(mappedData);
