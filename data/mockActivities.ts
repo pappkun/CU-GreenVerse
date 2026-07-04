@@ -1,0 +1,58 @@
+import { ActivityType } from "@/types";
+
+export const availableActivities: ActivityType[] = [
+  {
+    id: "walk-campus",
+    title: "Walk to campus",
+    description: "Choose walking for your daily campus commute.",
+    category: "transport",
+    points: 60,
+    carbonReduction: 0.8,
+    icon: "Footprints",
+  },
+  {
+    id: "bike-ride",
+    title: "Bike to campus",
+    description: "Ride a bike for a low-impact trip to class.",
+    category: "transport",
+    points: 90,
+    carbonReduction: 1.2,
+    icon: "Bike",
+  },
+  {
+    id: "use-public-transit",
+    title: "Use public transit",
+    description: "Take the train or bus instead of a private car.",
+    category: "transport",
+    points: 70,
+    carbonReduction: 1.0,
+    icon: "TrainFront",
+  },
+  {
+    id: "recycle-plastic",
+    title: "Recycle plastic bottles",
+    description: "Sort and drop off your plastic waste properly.",
+    category: "waste",
+    points: 40,
+    carbonReduction: 0.4,
+    icon: "Recycle",
+  },
+  {
+    id: "bring-tumbler",
+    title: "Bring your own tumbler",
+    description: "Use a reusable tumbler instead of a disposable cup.",
+    category: "food",
+    points: 50,
+    carbonReduction: 0.3,
+    icon: "Coffee",
+  },
+  {
+    id: "join-workshop",
+    title: "Join a sustainability workshop",
+    description: "Attend a short workshop on green habits and impact.",
+    category: "education",
+    points: 80,
+    carbonReduction: 0.2,
+    icon: "Users",
+  },
+];

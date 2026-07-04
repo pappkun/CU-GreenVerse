@@ -35,42 +35,182 @@ import { toast } from "sonner";
 
 // --- Avatar Tier System (ตามเอกสาร) ---
 const AVATAR_TIERS = [
-  { id: "seed", label: "Seed Starter", minCredits: 0, color: "text-slate-500", bg: "bg-slate-500/10", ring: "ring-slate-400/30" },
-  { id: "eco", label: "Eco Explorer", minCredits: 500, color: "text-emerald-600", bg: "bg-emerald-500/10", ring: "ring-emerald-400/40" },
-  { id: "energy", label: "Energy Saver", minCredits: 1200, color: "text-blue-600", bg: "bg-blue-500/10", ring: "ring-blue-400/40" },
-  { id: "carbon", label: "Carbon Champion", minCredits: 2000, color: "text-purple-600", bg: "bg-purple-500/10", ring: "ring-purple-400/40" },
-  { id: "guardian", label: "Green Guardian", minCredits: 5000, color: "text-amber-500", bg: "bg-amber-500/10", ring: "ring-amber-400/50" },
+  {
+    id: "seed",
+    label: "Seed Starter",
+    minCredits: 0,
+    color: "text-slate-500",
+    bg: "bg-slate-500/10",
+    ring: "ring-slate-400/30",
+  },
+  {
+    id: "eco",
+    label: "Eco Explorer",
+    minCredits: 500,
+    color: "text-emerald-600",
+    bg: "bg-emerald-500/10",
+    ring: "ring-emerald-400/40",
+  },
+  {
+    id: "energy",
+    label: "Energy Saver",
+    minCredits: 1200,
+    color: "text-blue-600",
+    bg: "bg-blue-500/10",
+    ring: "ring-blue-400/40",
+  },
+  {
+    id: "carbon",
+    label: "Carbon Champion",
+    minCredits: 2000,
+    color: "text-purple-600",
+    bg: "bg-purple-500/10",
+    ring: "ring-purple-400/40",
+  },
+  {
+    id: "guardian",
+    label: "Green Guardian",
+    minCredits: 5000,
+    color: "text-amber-500",
+    bg: "bg-amber-500/10",
+    ring: "ring-amber-400/50",
+  },
 ];
 
 // --- Badge Definitions ---
 const ALL_BADGES = [
-  { id: "first_action", label: "First Step", desc: "ทำกิจกรรมรักษ์โลกครั้งแรก", earned: true },
-  { id: "walker", label: "Urban Walker", desc: "เดินเท้าสะสม 10 ครั้ง", earned: true },
-  { id: "cyclist", label: "Campus Cyclist", desc: "ปั่นจักรยานสะสม 5 ครั้ง", earned: true },
-  { id: "recycler", label: "Recycler", desc: "แยกขยะสะสม 20 ครั้ง", earned: true },
-  { id: "top10", label: "Top 10%", desc: "ติดอันดับ Top 10% ของมหาวิทยาลัย", earned: true },
-  { id: "carbon100", label: "Carbon Saver", desc: "ลดคาร์บอนได้ 100 kgCO₂", earned: true },
-  { id: "event10", label: "Event Goer", desc: "เข้าร่วมกิจกรรม 10 ครั้ง", earned: false },
-  { id: "streak30", label: "30-Day Streak", desc: "ทำกิจกรรมติดต่อกัน 30 วัน", earned: false },
-  { id: "champion", label: "Carbon Champion", desc: "ถึงระดับ Carbon Champion", earned: false },
-  { id: "guardian", label: "Green Guardian", desc: "ถึงระดับ Green Guardian", earned: false },
-  { id: "mystery", label: "Lucky Box", desc: "ได้รับ Legendary จาก Mystery Box", earned: false },
-  { id: "faculty1", label: "Faculty #1", desc: "คณะของคุณอยู่อันดับ 1", earned: false },
+  {
+    id: "first_action",
+    label: "First Step",
+    desc: "ทำกิจกรรมรักษ์โลกครั้งแรก",
+    earned: true,
+  },
+  {
+    id: "walker",
+    label: "Urban Walker",
+    desc: "เดินเท้าสะสม 10 ครั้ง",
+    earned: true,
+  },
+  {
+    id: "cyclist",
+    label: "Campus Cyclist",
+    desc: "ปั่นจักรยานสะสม 5 ครั้ง",
+    earned: true,
+  },
+  {
+    id: "recycler",
+    label: "Recycler",
+    desc: "แยกขยะสะสม 20 ครั้ง",
+    earned: true,
+  },
+  {
+    id: "top10",
+    label: "Top 10%",
+    desc: "ติดอันดับ Top 10% ของมหาวิทยาลัย",
+    earned: true,
+  },
+  {
+    id: "carbon100",
+    label: "Carbon Saver",
+    desc: "ลดคาร์บอนได้ 100 kgCO₂",
+    earned: true,
+  },
+  {
+    id: "event10",
+    label: "Event Goer",
+    desc: "เข้าร่วมกิจกรรม 10 ครั้ง",
+    earned: false,
+  },
+  {
+    id: "streak30",
+    label: "30-Day Streak",
+    desc: "ทำกิจกรรมติดต่อกัน 30 วัน",
+    earned: false,
+  },
+  {
+    id: "champion",
+    label: "Carbon Champion",
+    desc: "ถึงระดับ Carbon Champion",
+    earned: false,
+  },
+  {
+    id: "guardian",
+    label: "Green Guardian",
+    desc: "ถึงระดับ Green Guardian",
+    earned: false,
+  },
+  {
+    id: "mystery",
+    label: "Lucky Box",
+    desc: "ได้รับ Legendary จาก Mystery Box",
+    earned: false,
+  },
+  {
+    id: "faculty1",
+    label: "Faculty #1",
+    desc: "คณะของคุณอยู่อันดับ 1",
+    earned: false,
+  },
 ];
 
 // --- Activity History ---
 const ACTIVITY_HISTORY = [
-  { date: "3 ก.ค. 2567",  action: "เดินเท้าเข้ามหาวิทยาลัย",     points: 50,  carbon: 0.5,  icon: Footprints },
-  { date: "3 ก.ค. 2567",  action: "ปั่นจักรยาน",                  points: 80,  carbon: 1.2,  icon: Bike },
-  { date: "2 ก.ค. 2567",  action: "ใช้รถ MRT/BTS",                points: 60,  carbon: 1.0,  icon: TrainFront },
-  { date: "2 ก.ค. 2567",  action: "แยกขยะพลาสติก (AI Verified)", points: 30,  carbon: 0.2,  icon: Recycle },
-  { date: "1 ก.ค. 2567",  action: "พกแก้วส่วนตัว",                points: 40,  carbon: 0.1,  icon: Coffee },
-  { date: "30 มิ.ย. 2567", action: "เข้าร่วมกิจกรรม Green Day",    points: 200, carbon: 0.0,  icon: Users },
-  { date: "29 มิ.ย. 2567", action: "เรียนบทเรียน Zero Waste",      points: 100, carbon: 0.0,  icon: BookOpen },
+  {
+    date: "3 ก.ค. 2567",
+    action: "เดินเท้าเข้ามหาวิทยาลัย",
+    points: 50,
+    carbon: 0.5,
+    icon: Footprints,
+  },
+  {
+    date: "3 ก.ค. 2567",
+    action: "ปั่นจักรยาน",
+    points: 80,
+    carbon: 1.2,
+    icon: Bike,
+  },
+  {
+    date: "2 ก.ค. 2567",
+    action: "ใช้รถ MRT/BTS",
+    points: 60,
+    carbon: 1.0,
+    icon: TrainFront,
+  },
+  {
+    date: "2 ก.ค. 2567",
+    action: "แยกขยะพลาสติก (AI Verified)",
+    points: 30,
+    carbon: 0.2,
+    icon: Recycle,
+  },
+  {
+    date: "1 ก.ค. 2567",
+    action: "พกแก้วส่วนตัว",
+    points: 40,
+    carbon: 0.1,
+    icon: Coffee,
+  },
+  {
+    date: "30 มิ.ย. 2567",
+    action: "เข้าร่วมกิจกรรม Green Day",
+    points: 200,
+    carbon: 0.0,
+    icon: Users,
+  },
+  {
+    date: "29 มิ.ย. 2567",
+    action: "เรียนบทเรียน Zero Waste",
+    points: 100,
+    carbon: 0.0,
+    icon: BookOpen,
+  },
 ];
 
 function getCurrentTier(credits: number) {
-  return [...AVATAR_TIERS].reverse().find((t) => credits >= t.minCredits) || AVATAR_TIERS[0];
+  return (
+    [...AVATAR_TIERS].reverse().find((t) => credits >= t.minCredits) ||
+    AVATAR_TIERS[0]
+  );
 }
 
 function getNextTier(credits: number) {
@@ -94,29 +234,36 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState(tabParam || "passport");
 
   // Use real user if logged in, else fallback to mock
-  const displayName   = profile?.name   || user?.email?.split("@")[0] || currentUser.name;
-  const displayEmail  = user?.email     || currentUser.email;
+  const displayName =
+    profile?.name || user?.email?.split("@")[0] || currentUser.name;
+  const displayEmail = user?.email || currentUser.email;
   const displayAvatar = profile?.avatar_url || currentUser.avatar;
   const displayFaculty = profile?.faculty || currentUser.faculty;
-  const credits       = profile?.green_credits    ?? currentUser.greenCredits;
-  const carbonSaved   = profile?.carbon_saved_kg  ?? currentUser.carbonSaved;
+  const credits = profile?.green_credits ?? currentUser.greenCredits;
+  const carbonSaved = profile?.carbon_saved_kg ?? currentUser.carbonSaved;
 
-  const currentTier   = getCurrentTier(credits);
-  const nextTier      = getNextTier(credits);
-  const tierProgress  = getTierProgress(credits);
-  const actionsCount  = ACTIVITY_HISTORY.length + 38; // mock total
+  const currentTier = getCurrentTier(credits);
+  const nextTier = getNextTier(credits);
+  const tierProgress = getTierProgress(credits);
+  const actionsCount = ACTIVITY_HISTORY.length + 38; // mock total
 
   function handleShare() {
-    const text = lang === "th"
-      ? `ฉันลดคาร์บอนไปแล้ว ${carbonSaved} kgCO₂e บน CU GreenVerse!\nระดับ: ${currentTier.label}\nGreen Credits: ${credits.toLocaleString()} pts\n\n#CUGreenVerse #Chula #Sustainability`
-      : `I've reduced ${carbonSaved} kgCO₂e on CU GreenVerse!\nLevel: ${currentTier.label}\nGreen Credits: ${credits.toLocaleString()} pts\n\n#CUGreenVerse #Chula #Sustainability`;
+    const text =
+      lang === "th"
+        ? `ฉันลดคาร์บอนไปแล้ว ${carbonSaved} kgCO₂e บน CU GreenVerse!\nระดับ: ${currentTier.label}\nGreen Credits: ${credits.toLocaleString()} pts\n\n#CUGreenVerse #Chula #Sustainability`
+        : `I've reduced ${carbonSaved} kgCO₂e on CU GreenVerse!\nLevel: ${currentTier.label}\nGreen Credits: ${credits.toLocaleString()} pts\n\n#CUGreenVerse #Chula #Sustainability`;
     if (navigator.share) {
       navigator.share({ title: "CU GreenVerse Achievement", text });
     } else {
       navigator.clipboard.writeText(text);
       toast.success(
         lang === "th" ? "คัดลอกข้อความสำหรับแชร์แล้ว!" : "Copied to clipboard!",
-        { description: lang === "th" ? "นำไปวางใน Instagram Story ได้เลย" : "Paste it in your Instagram Story!" }
+        {
+          description:
+            lang === "th"
+              ? "นำไปวางใน Instagram Story ได้เลย"
+              : "Paste it in your Instagram Story!",
+        },
       );
     }
   }
@@ -129,12 +276,15 @@ export default function ProfilePage() {
             {lang === "th" ? "โปรไฟล์ของฉัน" : "My Profile"}
           </h1>
           <p className="text-muted-foreground mt-1">
-            {lang === "th" ? "Green Passport & ความสำเร็จด้านความยั่งยืน" : "Green Passport & Sustainability Achievements"}
+            {lang === "th"
+              ? "Green Passport & ความสำเร็จด้านความยั่งยืน"
+              : "Green Passport & Sustainability Achievements"}
           </p>
         </div>
         <div className="flex gap-2">
           <Button size="sm" onClick={handleShare} className="gap-2 rounded-lg">
-            <Share2 className="h-4 w-4" /> {lang === "th" ? "แชร์โปรไฟล์" : "Share Profile"}
+            <Share2 className="h-4 w-4" />{" "}
+            {lang === "th" ? "แชร์โปรไฟล์" : "Share Profile"}
           </Button>
         </div>
       </div>
@@ -142,13 +292,20 @@ export default function ProfilePage() {
       {/* Hero Card */}
       <Card className="border-border/50 shadow-sm overflow-hidden">
         <div className="h-28 bg-gradient-to-r from-primary/30 via-emerald-500/20 to-teal-500/20 relative">
-          <div className="absolute inset-0 opacity-20"
-            style={{ backgroundImage: "radial-gradient(circle at 20% 50%, hsl(var(--primary)) 0%, transparent 60%)" }} />
+          <div
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 20% 50%, hsl(var(--primary)) 0%, transparent 60%)",
+            }}
+          />
         </div>
         <CardContent className="pt-0 pb-6">
           <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-end -mt-12">
             {/* Avatar */}
-            <div className={`relative h-24 w-24 rounded-full ring-4 ${currentTier.ring} shadow-xl`}>
+            <div
+              className={`relative h-24 w-24 rounded-full ring-4 ${currentTier.ring} shadow-xl`}
+            >
               <Avatar className="h-24 w-24 border-4 border-background">
                 <AvatarImage src={displayAvatar} alt={displayName} />
                 <AvatarFallback className="text-2xl font-bold bg-primary/10">
@@ -160,31 +317,55 @@ export default function ProfilePage() {
             <div className="flex-1 pb-1">
               <div className="flex flex-wrap items-center gap-2 mb-1">
                 <h2 className="text-2xl font-bold">{displayName}</h2>
-                <Badge className={`${currentTier.bg} ${currentTier.color} border-0 font-semibold`}>
+                <Badge
+                  className={`${currentTier.bg} ${currentTier.color} border-0 font-semibold`}
+                >
                   {currentTier.label}
                 </Badge>
               </div>
-              <p className="text-muted-foreground text-sm">{displayEmail} · {displayFaculty}</p>
+              <p className="text-muted-foreground text-sm">
+                {displayEmail} · {displayFaculty}
+              </p>
 
               {/* Tier Progress */}
               {nextTier && (
                 <div className="mt-3 max-w-xs">
                   <div className="flex justify-between text-xs text-muted-foreground mb-1">
                     <span>{currentTier.label}</span>
-                    <span>{nextTier.label} ({nextTier.minCredits.toLocaleString()} pts)</span>
+                    <span>
+                      {nextTier.label} ({nextTier.minCredits.toLocaleString()}{" "}
+                      pts)
+                    </span>
                   </div>
                   <Progress value={tierProgress} className="h-2" />
                   <p className="text-xs text-muted-foreground mt-1">
-                    {lang === "th"
-                      ? <>{"อีก "}<span className="text-primary font-semibold">{(nextTier.minCredits - credits).toLocaleString()}</span>{" Credits เพื่อเลื่อนระดับ"}</>
-                      : <>{<span className="text-primary font-semibold">{(nextTier.minCredits - credits).toLocaleString()}</span>}{" more Credits to level up"}</>}
+                    {lang === "th" ? (
+                      <>
+                        {"อีก "}
+                        <span className="text-primary font-semibold">
+                          {(nextTier.minCredits - credits).toLocaleString()}
+                        </span>
+                        {" Credits เพื่อเลื่อนระดับ"}
+                      </>
+                    ) : (
+                      <>
+                        {
+                          <span className="text-primary font-semibold">
+                            {(nextTier.minCredits - credits).toLocaleString()}
+                          </span>
+                        }
+                        {" more Credits to level up"}
+                      </>
+                    )}
                   </p>
                 </div>
               )}
               {!nextTier && (
                 <div className="mt-3">
                   <Badge className="bg-amber-500/10 text-amber-600 border-0">
-                    {lang === "th" ? "ระดับสูงสุด · Green Guardian" : "Max Level · Green Guardian"}
+                    {lang === "th"
+                      ? "ระดับสูงสุด · Green Guardian"
+                      : "Max Level · Green Guardian"}
                   </Badge>
                 </div>
               )}
@@ -196,19 +377,52 @@ export default function ProfilePage() {
       {/* Stats Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { icon: Leaf,       label: "Green Credits",                          value: credits.toLocaleString(),    unit: "pts",   color: "text-primary",                  bg: "bg-primary/10" },
-          { icon: TrendingUp, label: lang==="th" ? "คาร์บอนที่ลดได้" : "Carbon Saved", value: carbonSaved.toLocaleString(), unit: "kgCO₂", color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-500/10" },
-          { icon: Target,     label: lang==="th" ? "กิจกรรมทั้งหมด" : "Total Actions",  value: actionsCount.toString(),     unit: lang==="th" ? "ครั้ง" : "times", color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-500/10" },
-          { icon: Award,      label: lang==="th" ? "Badge ที่ได้รับ" : "Badges Earned", value: ALL_BADGES.filter(b => b.earned).length.toString(), unit: `/ ${ALL_BADGES.length}`, color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-500/10" },
+          {
+            icon: Leaf,
+            label: "Green Credits",
+            value: credits.toLocaleString(),
+            unit: "pts",
+            color: "text-primary",
+            bg: "bg-primary/10",
+          },
+          {
+            icon: TrendingUp,
+            label: lang === "th" ? "คาร์บอนที่ลดได้" : "Carbon Saved",
+            value: carbonSaved.toLocaleString(),
+            unit: "kgCO₂",
+            color: "text-emerald-600 dark:text-emerald-400",
+            bg: "bg-emerald-500/10",
+          },
+          {
+            icon: Target,
+            label: lang === "th" ? "กิจกรรมทั้งหมด" : "Total Actions",
+            value: actionsCount.toString(),
+            unit: lang === "th" ? "ครั้ง" : "times",
+            color: "text-blue-600 dark:text-blue-400",
+            bg: "bg-blue-500/10",
+          },
+          {
+            icon: Award,
+            label: lang === "th" ? "Badge ที่ได้รับ" : "Badges Earned",
+            value: ALL_BADGES.filter((b) => b.earned).length.toString(),
+            unit: `/ ${ALL_BADGES.length}`,
+            color: "text-purple-600 dark:text-purple-400",
+            bg: "bg-purple-500/10",
+          },
         ].map((stat) => (
           <Card key={stat.label} className="border-border/50 shadow-sm">
             <CardContent className="pt-5 pb-4">
-              <div className={`h-10 w-10 rounded-xl ${stat.bg} flex items-center justify-center mb-3`}>
+              <div
+                className={`h-10 w-10 rounded-xl ${stat.bg} flex items-center justify-center mb-3`}
+              >
                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
               <p className="text-xs text-muted-foreground">{stat.label}</p>
               <p className="text-2xl font-bold mt-0.5">
-                {stat.value} <span className="text-sm font-normal text-muted-foreground">{stat.unit}</span>
+                {stat.value}{" "}
+                <span className="text-sm font-normal text-muted-foreground">
+                  {stat.unit}
+                </span>
               </p>
             </CardContent>
           </Card>
@@ -216,12 +430,25 @@ export default function ProfilePage() {
       </div>
 
       {/* Tabs */}
-      <Tabs defaultValue="passport" onValueChange={setActiveTab} className="w-full">
+      <Tabs
+        defaultValue="passport"
+        onValueChange={setActiveTab}
+        className="w-full"
+      >
         <div className="overflow-x-auto pb-2 scrollbar-hide">
           <TabsList className="w-full sm:w-auto inline-flex justify-start">
-            <TabsTrigger value="passport" className="whitespace-nowrap">🛂 Green Passport</TabsTrigger>
-            <TabsTrigger value="badges" className="whitespace-nowrap">🏅 {lang==="th" ? "Badge" : "Badges"}</TabsTrigger>
-            <TabsTrigger value="history" className="whitespace-nowrap">📋 {lang==="th" ? "ประวัติ" : "History"}</TabsTrigger>
+            <TabsTrigger value="passport" className="whitespace-nowrap">
+              Green Passport
+            </TabsTrigger>
+            <TabsTrigger value="badges" className="whitespace-nowrap">
+              {lang === "th" ? "Badge" : "Badges"}
+            </TabsTrigger>
+            <TabsTrigger value="history" className="whitespace-nowrap">
+              {lang === "th" ? "ประวัติ" : "History"}
+            </TabsTrigger>
+            <TabsTrigger value="avatar" className="whitespace-nowrap">
+              Avatar
+            </TabsTrigger>
           </TabsList>
         </div>
 
@@ -232,43 +459,85 @@ export default function ProfilePage() {
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-lg">
                   Green Passport
-                  <Badge variant="outline" className="ml-auto text-xs">{lang==="th" ? "ฉบับดิจิทัล" : "Digital"}</Badge>
+                  <Badge variant="outline" className="ml-auto text-xs">
+                    {lang === "th" ? "ฉบับดิจิทัล" : "Digital"}
+                  </Badge>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {(lang === "th" ? [
-                  { label: "ชื่อ-สกุล",         value: displayName },
-                  { label: "คณะ",               value: displayFaculty || "Engineering" },
-                  { label: "ระดับผู้ใช้งาน",     value: currentTier.label },
-                  { label: "Green Credits รวม", value: `${credits.toLocaleString()} pts` },
-                  { label: "คาร์บอนที่ลดได้",    value: `${carbonSaved} kgCO₂e` },
-                  { label: "กิจกรรมทั้งหมด",     value: `${actionsCount} ครั้ง` },
-                  { label: "Badge ที่ได้รับ",     value: `${ALL_BADGES.filter(b => b.earned).length} รางวัล` },
-                  { label: "ชั่วโมงจิตอาสา",     value: "12.5 ชั่วโมง" },
-                ] : [
-                  { label: "Full Name",          value: displayName },
-                  { label: "Faculty",             value: displayFaculty || "Engineering" },
-                  { label: "User Level",          value: currentTier.label },
-                  { label: "Total Green Credits", value: `${credits.toLocaleString()} pts` },
-                  { label: "Carbon Saved",        value: `${carbonSaved} kgCO₂e` },
-                  { label: "Total Activities",    value: `${actionsCount} times` },
-                  { label: "Badges Earned",       value: `${ALL_BADGES.filter(b => b.earned).length} badges` },
-                  { label: "Volunteer Hours",     value: "12.5 hrs" },
-                ]).map((row) => (
-                  <div key={row.label} className="flex justify-between items-center py-1 border-b border-border/30 last:border-0">
-                    <span className="text-sm text-muted-foreground">{row.label}</span>
+                {(lang === "th"
+                  ? [
+                      { label: "ชื่อ-สกุล", value: displayName },
+                      { label: "คณะ", value: displayFaculty || "Engineering" },
+                      { label: "ระดับผู้ใช้งาน", value: currentTier.label },
+                      {
+                        label: "Green Credits รวม",
+                        value: `${credits.toLocaleString()} pts`,
+                      },
+                      {
+                        label: "คาร์บอนที่ลดได้",
+                        value: `${carbonSaved} kgCO₂e`,
+                      },
+                      {
+                        label: "กิจกรรมทั้งหมด",
+                        value: `${actionsCount} ครั้ง`,
+                      },
+                      {
+                        label: "Badge ที่ได้รับ",
+                        value: `${ALL_BADGES.filter((b) => b.earned).length} รางวัล`,
+                      },
+                      { label: "ชั่วโมงจิตอาสา", value: "12.5 ชั่วโมง" },
+                    ]
+                  : [
+                      { label: "Full Name", value: displayName },
+                      {
+                        label: "Faculty",
+                        value: displayFaculty || "Engineering",
+                      },
+                      { label: "User Level", value: currentTier.label },
+                      {
+                        label: "Total Green Credits",
+                        value: `${credits.toLocaleString()} pts`,
+                      },
+                      { label: "Carbon Saved", value: `${carbonSaved} kgCO₂e` },
+                      {
+                        label: "Total Activities",
+                        value: `${actionsCount} times`,
+                      },
+                      {
+                        label: "Badges Earned",
+                        value: `${ALL_BADGES.filter((b) => b.earned).length} badges`,
+                      },
+                      { label: "Volunteer Hours", value: "12.5 hrs" },
+                    ]
+                ).map((row) => (
+                  <div
+                    key={row.label}
+                    className="flex justify-between items-center py-1 border-b border-border/30 last:border-0"
+                  >
+                    <span className="text-sm text-muted-foreground">
+                      {row.label}
+                    </span>
                     <span className="text-sm font-medium">{row.value}</span>
                   </div>
                 ))}
 
                 <div className="pt-3">
-                  <Button className="w-full gap-2 rounded-xl h-10 shadow-sm shadow-primary/20" onClick={handleShare}>
-                    <Share2 className="h-4 w-4" /> {lang==="th" ? "แชร์ความสำเร็จ (Share)" : "Share to Social Media"}
+                  <Button
+                    className="w-full gap-2 rounded-xl h-10 shadow-sm shadow-primary/20"
+                    onClick={handleShare}
+                  >
+                    <Share2 className="h-4 w-4" />{" "}
+                    {lang === "th"
+                      ? "แชร์ความสำเร็จ (Share)"
+                      : "Share to Social Media"}
                   </Button>
                 </div>
 
                 <p className="text-xs text-muted-foreground text-center">
-                  {lang==="th" ? "ใช้ประกอบการสมัครทุน ฝึกงาน และแลกเปลี่ยนได้" : "Use for internship, scholarship & exchange program applications"}
+                  {lang === "th"
+                    ? "ใช้ประกอบการสมัครทุน ฝึกงาน และแลกเปลี่ยนได้"
+                    : "Use for internship, scholarship & exchange program applications"}
                 </p>
               </CardContent>
             </Card>
@@ -278,31 +547,76 @@ export default function ProfilePage() {
             <Card className="border-border/50 shadow-sm">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg">
-                  {lang==="th" ? "ผลกระทบของคุณ" : "Your Impact"}
+                  {lang === "th" ? "ผลกระทบของคุณ" : "Your Impact"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-sm text-muted-foreground">
-                  {lang==="th" ? "คุณมีส่วนร่วมในการลดคาร์บอนเท่ากับ..." : "Your actions are equivalent to..."}
+                  {lang === "th"
+                    ? "คุณมีส่วนร่วมในการลดคาร์บอนเท่ากับ..."
+                    : "Your actions are equivalent to..."}
                 </p>
 
-                {(lang==="th" ? [
-                  { label: "ต้นไม้ที่ช่วยดูดคาร์บอน", value: Math.round(carbonSaved / 21.77), unit: "ต้น/ปี" },
-                  { label: "ระยะทางที่ไม่ขับรถ", value: Math.round(carbonSaved / 0.21), unit: "กม." },
-                  { label: "ชั่วโมงไฟ LED ที่ประหยัด", value: Math.round(carbonSaved * 100), unit: "ชั่วโมง" },
-                  { label: "มื้อเนื้อสัตว์ที่งดได้", value: Math.round(carbonSaved / 6.6), unit: "มื้อ" },
-                ] : [
-                  { label: "Trees absorbing carbon", value: Math.round(carbonSaved / 21.77), unit: "trees/yr" },
-                  { label: "Car-free distance", value: Math.round(carbonSaved / 0.21), unit: "km" },
-                  { label: "LED light hours saved", value: Math.round(carbonSaved * 100), unit: "hrs" },
-                  { label: "Meat meals avoided", value: Math.round(carbonSaved / 6.6), unit: "meals" },
-                ]).map((item) => (
-                  <div key={item.label} className="flex items-center gap-3 p-3 rounded-xl bg-muted/40">
+                {(lang === "th"
+                  ? [
+                      {
+                        label: "ต้นไม้ที่ช่วยดูดคาร์บอน",
+                        value: Math.round(carbonSaved / 21.77),
+                        unit: "ต้น/ปี",
+                      },
+                      {
+                        label: "ระยะทางที่ไม่ขับรถ",
+                        value: Math.round(carbonSaved / 0.21),
+                        unit: "กม.",
+                      },
+                      {
+                        label: "ชั่วโมงไฟ LED ที่ประหยัด",
+                        value: Math.round(carbonSaved * 100),
+                        unit: "ชั่วโมง",
+                      },
+                      {
+                        label: "มื้อเนื้อสัตว์ที่งดได้",
+                        value: Math.round(carbonSaved / 6.6),
+                        unit: "มื้อ",
+                      },
+                    ]
+                  : [
+                      {
+                        label: "Trees absorbing carbon",
+                        value: Math.round(carbonSaved / 21.77),
+                        unit: "trees/yr",
+                      },
+                      {
+                        label: "Car-free distance",
+                        value: Math.round(carbonSaved / 0.21),
+                        unit: "km",
+                      },
+                      {
+                        label: "LED light hours saved",
+                        value: Math.round(carbonSaved * 100),
+                        unit: "hrs",
+                      },
+                      {
+                        label: "Meat meals avoided",
+                        value: Math.round(carbonSaved / 6.6),
+                        unit: "meals",
+                      },
+                    ]
+                ).map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center gap-3 p-3 rounded-xl bg-muted/40"
+                  >
                     <div className="h-9 w-9 rounded-full bg-background/80 border border-border/50" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs text-muted-foreground">{item.label}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {item.label}
+                      </p>
                       <p className="font-bold text-lg leading-tight">
-                        {item.value.toLocaleString()} <span className="text-sm font-normal text-muted-foreground">{item.unit}</span>
+                        {item.value.toLocaleString()}{" "}
+                        <span className="text-sm font-normal text-muted-foreground">
+                          {item.unit}
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -310,9 +624,13 @@ export default function ProfilePage() {
 
                 <div className="pt-2">
                   <div className="bg-primary/10 border border-primary/20 rounded-xl p-4 text-center">
-                    <p className="text-2xl font-black text-primary">{carbonSaved} kgCO₂e</p>
+                    <p className="text-2xl font-black text-primary">
+                      {carbonSaved} kgCO₂e
+                    </p>
                     <p className="text-sm text-muted-foreground mt-1">
-                      {lang==="th" ? "คาร์บอนรวมที่คุณลดได้ตั้งแต่เริ่มต้น" : "Total carbon you've reduced since joining"}
+                      {lang === "th"
+                        ? "คาร์บอนรวมที่คุณลดได้ตั้งแต่เริ่มต้น"
+                        : "Total carbon you've reduced since joining"}
                     </p>
                   </div>
                 </div>
@@ -327,11 +645,11 @@ export default function ProfilePage() {
           <Card className="border-border/50 shadow-sm">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg">
-                {lang==="th" ? "Badge ทั้งหมด" : "All Badges"}
+                {lang === "th" ? "Badge ทั้งหมด" : "All Badges"}
                 <Badge variant="secondary" className="ml-3">
-                  {lang==="th"
-                    ? `ได้รับแล้ว ${ALL_BADGES.filter(b => b.earned).length}/${ALL_BADGES.length}`
-                    : `${ALL_BADGES.filter(b => b.earned).length}/${ALL_BADGES.length} Earned`}
+                  {lang === "th"
+                    ? `ได้รับแล้ว ${ALL_BADGES.filter((b) => b.earned).length}/${ALL_BADGES.length}`
+                    : `${ALL_BADGES.filter((b) => b.earned).length}/${ALL_BADGES.length} Earned`}
                 </Badge>
               </CardTitle>
             </CardHeader>
@@ -341,9 +659,10 @@ export default function ProfilePage() {
                   <div
                     key={badge.id}
                     className={`relative flex flex-col items-center text-center p-4 rounded-2xl border transition-all gap-2
-                      ${badge.earned
-                        ? "border-primary/30 bg-primary/5 hover:shadow-md hover:border-primary/50"
-                        : "border-border/40 bg-muted/30 opacity-50"
+                      ${
+                        badge.earned
+                          ? "border-primary/30 bg-primary/5 hover:shadow-md hover:border-primary/50"
+                          : "border-border/40 bg-muted/30 opacity-50"
                       }`}
                   >
                     {badge.earned ? (
@@ -351,8 +670,12 @@ export default function ProfilePage() {
                     ) : (
                       <Lock className="absolute top-2 right-2 h-4 w-4 text-muted-foreground/50" />
                     )}
-                    <p className="text-sm font-semibold leading-tight">{badge.label}</p>
-                    <p className="text-xs text-muted-foreground leading-snug">{badge.desc}</p>
+                    <p className="text-sm font-semibold leading-tight">
+                      {badge.label}
+                    </p>
+                    <p className="text-xs text-muted-foreground leading-snug">
+                      {badge.desc}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -365,7 +688,9 @@ export default function ProfilePage() {
           <Card className="border-border/50 shadow-sm">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg">
-                {lang==="th" ? "ประวัติกิจกรรมล่าสุด" : "Recent Activity History"}
+                {lang === "th"
+                  ? "ประวัติกิจกรรมล่าสุด"
+                  : "Recent Activity History"}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -378,28 +703,171 @@ export default function ProfilePage() {
                     <item.icon className="h-5 w-5 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm truncate">{item.action}</p>
+                    <p className="font-medium text-sm truncate">
+                      {item.action}
+                    </p>
                     <p className="text-xs text-muted-foreground flex items-center gap-1">
                       <Calendar className="h-3 w-3" /> {item.date}
                     </p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="text-sm font-bold text-primary">+{item.points} pts</p>
+                    <p className="text-sm font-bold text-primary">
+                      +{item.points} pts
+                    </p>
                     {item.carbon > 0 && (
-                      <p className="text-xs text-emerald-600 dark:text-emerald-400">-{item.carbon} kgCO₂</p>
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400">
+                        -{item.carbon} kgCO₂
+                      </p>
                     )}
                   </div>
                 </div>
               ))}
 
               <Button variant="outline" className="w-full mt-2">
-                {lang==="th" ? "ดูประวัติทั้งหมด" : "View All History"}
+                {lang === "th" ? "ดูประวัติทั้งหมด" : "View All History"}
               </Button>
             </CardContent>
           </Card>
         </TabsContent>
 
+        {/* AVATAR CUSTOMIZATION */}
+        <TabsContent value="avatar" className="mt-6">
+          <div className="grid md:grid-cols-5 gap-6">
+            {/* Preview */}
+            <div className="md:col-span-2">
+              <Card className="border-border/50 shadow-sm text-center">
+                <CardContent className="pt-8 pb-6 flex flex-col items-center gap-4">
+                  <div
+                    className={`relative h-32 w-32 rounded-full ring-4 ${currentTier.ring} shadow-xl`}
+                  >
+                    <Avatar className="h-32 w-32 border-4 border-background">
+                      <AvatarImage src={displayAvatar} alt={displayName} />
+                      <AvatarFallback className="text-3xl font-bold bg-primary/10">
+                        {displayName.substring(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <div>
+                    <p className="font-bold text-lg">{displayName}</p>
+                    <Badge
+                      className={`${currentTier.bg} ${currentTier.color} border-0 mt-1`}
+                    >
+                      {currentTier.label}
+                    </Badge>
+                  </div>
 
+                  <div className="w-full space-y-2 text-sm">
+                    <p className="text-muted-foreground text-xs">
+                      {lang === "th"
+                        ? "เลื่อนระดับ Avatar ด้วยการสะสม Green Credits"
+                        : "Level up your Avatar by collecting Green Credits"}
+                    </p>
+                    {AVATAR_TIERS.map((tier) => (
+                      <div
+                        key={tier.id}
+                        className={`flex items-center gap-2 p-2 rounded-lg ${credits >= tier.minCredits ? tier.bg + " " + tier.color : "bg-muted/30 text-muted-foreground/50"}`}
+                      >
+                        <span className="flex-1 text-left text-xs font-medium">
+                          {tier.label}
+                        </span>
+                        {credits >= tier.minCredits ? (
+                          <CheckCircle2 className="h-4 w-4" />
+                        ) : (
+                          <span className="text-xs">
+                            {tier.minCredits.toLocaleString()} pts
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Avatar Items */}
+            <div className="md:col-span-3">
+              <Card className="border-border/50 shadow-sm">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg">
+                    {lang === "th" ? "ไอเทม Avatar ของฉัน" : "My Avatar Items"}
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    {lang === "th"
+                      ? "รับไอเทมจาก Mystery Box หรือแลกด้วย Green Credits"
+                      : "Get items from Mystery Box or redeem with Green Credits"}
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { name: "ใบไม้สีเขียว", equipped: true, owned: true },
+                      { name: "Solar Halo", equipped: false, owned: true },
+                      { name: "Solar Panel Hat", equipped: false, owned: true },
+                      {
+                        name: "Butterfly Wings",
+                        equipped: false,
+                        owned: false,
+                      },
+                      { name: "Ocean Aura", equipped: false, owned: false },
+                      { name: "Energy Spark", equipped: false, owned: false },
+                    ].map((item, i) => (
+                      <div
+                        key={i}
+                        className={`flex flex-col items-center p-3 rounded-xl border text-center gap-2 transition-all cursor-pointer
+                          ${
+                            item.equipped
+                              ? "border-primary bg-primary/10 shadow-sm"
+                              : item.owned
+                                ? "border-border/50 hover:border-primary/50 hover:bg-muted/50"
+                                : "border-border/30 opacity-40 cursor-not-allowed bg-muted/20"
+                          }`}
+                        onClick={() =>
+                          item.owned &&
+                          toast.success(
+                            `${item.equipped ? "ถอด" : "ใส่"}ไอเทม ${item.name} แล้ว!`,
+                          )
+                        }
+                      >
+                        <div className="h-9 w-9 rounded-full bg-muted/70 border border-border/40" />
+                        <p className="text-xs font-medium leading-tight">
+                          {item.name}
+                        </p>
+                        {item.equipped ? (
+                          <Badge className="text-[10px] bg-primary text-primary-foreground h-4 px-1.5">
+                            {lang === "th" ? "สวมอยู่" : "Equipped"}
+                          </Badge>
+                        ) : item.owned ? (
+                          <Badge
+                            variant="outline"
+                            className="text-[10px] h-4 px-1.5"
+                          >
+                            {lang === "th" ? "มีแล้ว" : "Owned"}
+                          </Badge>
+                        ) : (
+                          <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-center">
+                    <p className="text-sm font-medium text-amber-600 dark:text-amber-400">
+                      {lang === "th"
+                        ? "เปิด Green Capsule เพื่อรับไอเทม Avatar ใหม่!"
+                        : "Open Green Capsule to get new Avatar items!"}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {lang === "th"
+                        ? 'ไปที่หน้า "ร้านค้าของรางวัล"'
+                        : 'Go to "Reward Store"'}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </TabsContent>
+>>>>>>> 44b709c (Fix build compatibility for new dashboard routes)
       </Tabs>
     </div>
   );

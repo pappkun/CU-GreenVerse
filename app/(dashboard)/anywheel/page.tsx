@@ -6,11 +6,31 @@ import { useAuth } from "@/context/AuthContext";
 import { useLang } from "@/context/LanguageContext";
 import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bike, CheckCircle2, Loader2, MapPin, AlertCircle, ArrowRight } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Bike,
+  CheckCircle2,
+  Loader2,
+  MapPin,
+  AlertCircle,
+  ArrowRight,
+} from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
-type ConnectionState = "idle" | "connecting" | "fetching" | "geofencing" | "success" | "error";
+type ConnectionState =
+  | "idle"
+  | "connecting"
+  | "fetching"
+  | "geofencing"
+  | "success"
+  | "error";
 
 export default function AnywheelMockPage() {
   const { user, profile } = useAuth();
@@ -28,9 +48,9 @@ export default function AnywheelMockPage() {
     points: 80,
     carbonSaved: 1.2,
     startLat: 13.7367, // CU Campus coordinates
-    startLng: 100.5320,
-    endLat: 13.7380,
-    endLng: 100.5330,
+    startLng: 100.532,
+    endLat: 13.738,
+    endLng: 100.533,
   };
 
   const handleConnect = () => {
@@ -58,7 +78,7 @@ export default function AnywheelMockPage() {
   };
 
   const handleClaim = async () => {
-    if (!user || !profile) return;
+    if (!user || !profile || !supabase) return;
     try {
       // 1. Log activity
       const { error: logError } = await supabase.from("activity_logs").insert({
@@ -69,7 +89,7 @@ export default function AnywheelMockPage() {
         status: "approved",
         points_awarded: mockTrip.points,
         carbon_saved_record: mockTrip.carbonSaved,
-        category: "transport"
+        category: "transport",
       });
       if (logError) throw logError;
 
@@ -78,11 +98,12 @@ export default function AnywheelMockPage() {
         .from("profiles")
         .update({
           green_credits: (profile.green_credits || 0) + mockTrip.points,
-          carbon_saved_kg: (profile.carbon_saved_kg || 0) + mockTrip.carbonSaved,
+          carbon_saved_kg:
+            (profile.carbon_saved_kg || 0) + mockTrip.carbonSaved,
           green_actions: (profile.green_actions || 0) + 1,
         })
         .eq("id", user.id);
-      
+
       if (profileError) throw profileError;
 
       router.push("/dashboard?success=true");
@@ -137,16 +158,27 @@ export default function AnywheelMockPage() {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="text-center space-y-1">
                   <h3 className="font-bold">
-                    {connState === "connecting" && (lang === "th" ? "กำลังเชื่อมต่อ API..." : "Connecting to API...")}
-                    {connState === "fetching" && (lang === "th" ? "กำลังดึงข้อมูลทริปล่าสุด..." : "Fetching recent trips...")}
-                    {connState === "geofencing" && (lang === "th" ? "กำลังตรวจสอบพื้นที่ (Geofencing)..." : "Verifying Geofence bounds...")}
+                    {connState === "connecting" &&
+                      (lang === "th"
+                        ? "กำลังเชื่อมต่อ API..."
+                        : "Connecting to API...")}
+                    {connState === "fetching" &&
+                      (lang === "th"
+                        ? "กำลังดึงข้อมูลทริปล่าสุด..."
+                        : "Fetching recent trips...")}
+                    {connState === "geofencing" &&
+                      (lang === "th"
+                        ? "กำลังตรวจสอบพื้นที่ (Geofencing)..."
+                        : "Verifying Geofence bounds...")}
                   </h3>
                   <p className="text-xs text-muted-foreground">
                     {connState === "geofencing" && (
-                      <span className="font-mono">Lat: {mockTrip.startLat}, Lng: {mockTrip.startLng}</span>
+                      <span className="font-mono">
+                        Lat: {mockTrip.startLat}, Lng: {mockTrip.startLng}
+                      </span>
                     )}
                   </p>
                 </div>
@@ -165,8 +197,8 @@ export default function AnywheelMockPage() {
                   {lang === "th" ? "พบข้อมูลการเดินทาง!" : "Ride Found!"}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  {lang === "th" 
-                    ? "ตรวจสอบพิกัด Geofence: ภายในพื้นที่จุฬาลงกรณ์มหาวิทยาลัย" 
+                  {lang === "th"
+                    ? "ตรวจสอบพิกัด Geofence: ภายในพื้นที่จุฬาลงกรณ์มหาวิทยาลัย"
                     : "Geofence verified: Inside CU Campus"}
                 </p>
               </div>
@@ -176,13 +208,19 @@ export default function AnywheelMockPage() {
                   <p className="text-xs font-semibold uppercase text-muted-foreground">
                     {lang === "th" ? "ระยะทาง" : "Distance"}
                   </p>
-                  <p className="text-xl font-bold">{mockTrip.distanceKm} <span className="text-sm font-medium">km</span></p>
+                  <p className="text-xl font-bold">
+                    {mockTrip.distanceKm}{" "}
+                    <span className="text-sm font-medium">km</span>
+                  </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-xs font-semibold uppercase text-muted-foreground">
                     {lang === "th" ? "ลดคาร์บอน" : "CO₂ Saved"}
                   </p>
-                  <p className="text-xl font-bold text-blue-500">{mockTrip.carbonSaved} <span className="text-sm font-medium">kg</span></p>
+                  <p className="text-xl font-bold text-blue-500">
+                    {mockTrip.carbonSaved}{" "}
+                    <span className="text-sm font-medium">kg</span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -192,7 +230,11 @@ export default function AnywheelMockPage() {
         <CardFooter className="pb-6 px-6">
           {connState === "idle" && (
             <div className="flex gap-3 w-full">
-              <Button variant="ghost" className="w-full" onClick={() => router.back()}>
+              <Button
+                variant="ghost"
+                className="w-full"
+                onClick={() => router.back()}
+              >
                 {lang === "th" ? "ยกเลิก" : "Cancel"}
               </Button>
               <Button className="w-full gap-2" onClick={handleConnect}>
@@ -203,8 +245,13 @@ export default function AnywheelMockPage() {
           )}
 
           {connState === "success" && (
-            <Button className="w-full gap-2 bg-emerald-600 hover:bg-emerald-700" onClick={handleClaim}>
-              {lang === "th" ? `รับ +${mockTrip.points} แต้ม` : `Claim +${mockTrip.points} pts`}
+            <Button
+              className="w-full gap-2 bg-emerald-600 hover:bg-emerald-700"
+              onClick={handleClaim}
+            >
+              {lang === "th"
+                ? `รับ +${mockTrip.points} แต้ม`
+                : `Claim +${mockTrip.points} pts`}
               <ArrowRight className="h-4 w-4" />
             </Button>
           )}
