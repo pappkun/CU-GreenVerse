@@ -15,7 +15,7 @@ export type ActivityType = {
   id: string;
   title: string;
   description: string;
-  category: "transport" | "waste" | "energy" | "food" | "education";
+  category: "transport" | "waste" | "energy" | "food" | "education" | "reduce" | "recycle";
   points: number;
   carbonReduction: number; // in kgCO2e
   icon: string;
