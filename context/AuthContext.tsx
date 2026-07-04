@@ -40,7 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       setSession(currentSession as Session | null);
       if (currentSession?.user) {
-        await fetchProfile(currentSession.user.id);
+        await fetchProfile(currentSession.user.id, currentSession.user.email);
       } else {
         setProfile(null);
       }
@@ -54,17 +54,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  async function fetchProfile(userId: string) {
+  async function fetchProfile(userId: string, email?: string) {
+    let role = "user";
+    if (email?.toLowerCase().includes("admin")) {
+      role = "admin";
+    }
+
     if (typeof window !== "undefined") {
       const storedProfile = window.localStorage.getItem(
         "cu-greenverse-mock-profile",
       );
       if (storedProfile) {
-        setProfile(JSON.parse(storedProfile));
+        const parsedProfile = JSON.parse(storedProfile);
+        if (parsedProfile.name?.toLowerCase().includes("admin") || role === "admin") {
+          parsedProfile.role = "admin";
+        }
+        setProfile(parsedProfile);
         return;
       }
     }
-    setProfile({ id: userId, name: "", role: "user" });
+    setProfile({ id: userId, name: "", role });
   }
 
   async function handleSignOut() {
