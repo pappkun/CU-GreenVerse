@@ -232,7 +232,7 @@ function ProfilePageContent() {
   const { lang } = useLang();
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab");
-  const [activeTab, setActiveTab] = useState(tabParam || "passport");
+  const [activeTab, setActiveTab] = useState(tabParam || "badges");
 
   // Use real user if logged in, else fallback to mock
   const displayName =
@@ -432,15 +432,12 @@ function ProfilePageContent() {
 
       {/* Tabs */}
       <Tabs
-        defaultValue="passport"
+        defaultValue="badges"
         onValueChange={setActiveTab}
         className="w-full"
       >
         <div className="overflow-x-auto pb-2 scrollbar-hide">
           <TabsList className="w-full sm:w-auto inline-flex justify-start">
-            <TabsTrigger value="passport" className="whitespace-nowrap">
-              Green Passport
-            </TabsTrigger>
             <TabsTrigger value="badges" className="whitespace-nowrap">
               {lang === "th" ? "Badge" : "Badges"}
             </TabsTrigger>
@@ -452,101 +449,6 @@ function ProfilePageContent() {
             </TabsTrigger>
           </TabsList>
         </div>
-
-        {/* GREEN PASSPORT */}
-        <TabsContent value="passport" className="mt-6">
-          <div className="max-w-2xl mx-auto">
-            <Card className="border-border/50 shadow-sm bg-gradient-to-br from-primary/5 to-emerald-500/5">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  Green Passport
-                  <Badge variant="outline" className="ml-auto text-xs">
-                    {lang === "th" ? "ฉบับดิจิทัล" : "Digital"}
-                  </Badge>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {(lang === "th"
-                  ? [
-                      { label: "ชื่อ-สกุล", value: displayName },
-                      { label: "คณะ", value: displayFaculty || "Engineering" },
-                      { label: "ระดับผู้ใช้งาน", value: currentTier.label },
-                      {
-                        label: "Green Credits รวม",
-                        value: `${credits.toLocaleString()} pts`,
-                      },
-                      {
-                        label: "คาร์บอนที่ลดได้",
-                        value: `${carbonSaved} kgCO₂e`,
-                      },
-                      {
-                        label: "กิจกรรมทั้งหมด",
-                        value: `${actionsCount} ครั้ง`,
-                      },
-                      {
-                        label: "Badge ที่ได้รับ",
-                        value: `${ALL_BADGES.filter((b) => b.earned).length} รางวัล`,
-                      },
-                      { label: "ชั่วโมงจิตอาสา", value: "12.5 ชั่วโมง" },
-                    ]
-                  : [
-                      { label: "Full Name", value: displayName },
-                      {
-                        label: "Faculty",
-                        value: displayFaculty || "Engineering",
-                      },
-                      { label: "User Level", value: currentTier.label },
-                      {
-                        label: "Total Green Credits",
-                        value: `${credits.toLocaleString()} pts`,
-                      },
-                      { label: "Carbon Saved", value: `${carbonSaved} kgCO₂e` },
-                      {
-                        label: "Total Activities",
-                        value: `${actionsCount} times`,
-                      },
-                      {
-                        label: "Badges Earned",
-                        value: `${ALL_BADGES.filter((b) => b.earned).length} badges`,
-                      },
-                      { label: "Volunteer Hours", value: "12.5 hrs" },
-                    ]
-                ).map((row) => (
-                  <div
-                    key={row.label}
-                    className="flex justify-between items-center py-1 border-b border-border/30 last:border-0"
-                  >
-                    <span className="text-sm text-muted-foreground">
-                      {row.label}
-                    </span>
-                    <span className="text-sm font-medium">{row.value}</span>
-                  </div>
-                ))}
-
-                <div className="pt-3">
-                  <Button
-                    className="w-full gap-2 rounded-xl h-10 shadow-sm shadow-primary/20"
-                    onClick={handleShare}
-                  >
-                    <Share2 className="h-4 w-4" />{" "}
-                    {lang === "th"
-                      ? "แชร์ความสำเร็จ (Share)"
-                      : "Share to Social Media"}
-                  </Button>
-                </div>
-
-                <p className="text-xs text-muted-foreground text-center">
-                  {lang === "th"
-                    ? "ใช้ประกอบการสมัครทุน ฝึกงาน และแลกเปลี่ยนได้"
-                    : "Use for internship, scholarship & exchange program applications"}
-                </p>
-              </CardContent>
-            </Card>
-
-
-            {/* Carbon Achievement Card Removed */}
-          </div>
-        </TabsContent>
 
         {/* BADGES */}
         <TabsContent value="badges" className="mt-6">
