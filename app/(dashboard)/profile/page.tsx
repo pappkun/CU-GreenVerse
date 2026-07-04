@@ -35,27 +35,27 @@ import { toast } from "sonner";
 
 // --- Avatar Tier System (ตามเอกสาร) ---
 const AVATAR_TIERS = [
-  { id: "seed",    label: "Seed Starter",    emoji: "🌱", minCredits: 0,     color: "text-slate-500",  bg: "bg-slate-500/10",  ring: "ring-slate-400/30" },
-  { id: "eco",     label: "Eco Explorer",    emoji: "🌿", minCredits: 500,   color: "text-emerald-600", bg: "bg-emerald-500/10", ring: "ring-emerald-400/40" },
-  { id: "energy",  label: "Energy Saver",    emoji: "⚡", minCredits: 1200,  color: "text-blue-600",   bg: "bg-blue-500/10",   ring: "ring-blue-400/40" },
-  { id: "carbon",  label: "Carbon Champion", emoji: "🏆", minCredits: 2000,  color: "text-purple-600", bg: "bg-purple-500/10", ring: "ring-purple-400/40" },
-  { id: "guardian",label: "Green Guardian",  emoji: "🌍", minCredits: 5000,  color: "text-amber-500",  bg: "bg-amber-500/10",  ring: "ring-amber-400/50" },
+  { id: "seed", label: "Seed Starter", minCredits: 0, color: "text-slate-500", bg: "bg-slate-500/10", ring: "ring-slate-400/30" },
+  { id: "eco", label: "Eco Explorer", minCredits: 500, color: "text-emerald-600", bg: "bg-emerald-500/10", ring: "ring-emerald-400/40" },
+  { id: "energy", label: "Energy Saver", minCredits: 1200, color: "text-blue-600", bg: "bg-blue-500/10", ring: "ring-blue-400/40" },
+  { id: "carbon", label: "Carbon Champion", minCredits: 2000, color: "text-purple-600", bg: "bg-purple-500/10", ring: "ring-purple-400/40" },
+  { id: "guardian", label: "Green Guardian", minCredits: 5000, color: "text-amber-500", bg: "bg-amber-500/10", ring: "ring-amber-400/50" },
 ];
 
 // --- Badge Definitions ---
 const ALL_BADGES = [
-  { id: "first_action",  emoji: "🌱", label: "First Step",       desc: "ทำกิจกรรมรักษ์โลกครั้งแรก",   earned: true },
-  { id: "walker",        emoji: "🚶", label: "Urban Walker",     desc: "เดินเท้าสะสม 10 ครั้ง",          earned: true },
-  { id: "cyclist",       emoji: "🚴", label: "Campus Cyclist",   desc: "ปั่นจักรยานสะสม 5 ครั้ง",        earned: true },
-  { id: "recycler",      emoji: "♻️", label: "Recycler",         desc: "แยกขยะสะสม 20 ครั้ง",            earned: true },
-  { id: "top10",         emoji: "🏅", label: "Top 10%",          desc: "ติดอันดับ Top 10% ของมหาวิทยาลัย", earned: true },
-  { id: "carbon100",     emoji: "💚", label: "Carbon Saver",     desc: "ลดคาร์บอนได้ 100 kgCO₂",         earned: true },
-  { id: "event10",       emoji: "🎟️", label: "Event Goer",       desc: "เข้าร่วมกิจกรรม 10 ครั้ง",       earned: false },
-  { id: "streak30",      emoji: "🔥", label: "30-Day Streak",    desc: "ทำกิจกรรมติดต่อกัน 30 วัน",     earned: false },
-  { id: "champion",      emoji: "🏆", label: "Carbon Champion",  desc: "ถึงระดับ Carbon Champion",        earned: false },
-  { id: "guardian",      emoji: "🌍", label: "Green Guardian",   desc: "ถึงระดับ Green Guardian",         earned: false },
-  { id: "mystery",       emoji: "🎁", label: "Lucky Box",        desc: "ได้รับ Legendary จาก Mystery Box", earned: false },
-  { id: "faculty1",      emoji: "🥇", label: "Faculty #1",       desc: "คณะของคุณอยู่อันดับ 1",           earned: false },
+  { id: "first_action", label: "First Step", desc: "ทำกิจกรรมรักษ์โลกครั้งแรก", earned: true },
+  { id: "walker", label: "Urban Walker", desc: "เดินเท้าสะสม 10 ครั้ง", earned: true },
+  { id: "cyclist", label: "Campus Cyclist", desc: "ปั่นจักรยานสะสม 5 ครั้ง", earned: true },
+  { id: "recycler", label: "Recycler", desc: "แยกขยะสะสม 20 ครั้ง", earned: true },
+  { id: "top10", label: "Top 10%", desc: "ติดอันดับ Top 10% ของมหาวิทยาลัย", earned: true },
+  { id: "carbon100", label: "Carbon Saver", desc: "ลดคาร์บอนได้ 100 kgCO₂", earned: true },
+  { id: "event10", label: "Event Goer", desc: "เข้าร่วมกิจกรรม 10 ครั้ง", earned: false },
+  { id: "streak30", label: "30-Day Streak", desc: "ทำกิจกรรมติดต่อกัน 30 วัน", earned: false },
+  { id: "champion", label: "Carbon Champion", desc: "ถึงระดับ Carbon Champion", earned: false },
+  { id: "guardian", label: "Green Guardian", desc: "ถึงระดับ Green Guardian", earned: false },
+  { id: "mystery", label: "Lucky Box", desc: "ได้รับ Legendary จาก Mystery Box", earned: false },
+  { id: "faculty1", label: "Faculty #1", desc: "คณะของคุณอยู่อันดับ 1", earned: false },
 ];
 
 // --- Activity History ---
@@ -108,8 +108,8 @@ export default function ProfilePage() {
 
   function handleShare() {
     const text = lang === "th"
-      ? `🌿 ฉันลดคาร์บอนไปแล้ว ${carbonSaved} kgCO₂e บน CU GreenVerse!\nระดับ: ${currentTier.emoji} ${currentTier.label}\nGreen Credits: ${credits.toLocaleString()} pts\n\n#CUGreenVerse #Chula #Sustainability`
-      : `🌿 I've reduced ${carbonSaved} kgCO₂e on CU GreenVerse!\nLevel: ${currentTier.emoji} ${currentTier.label}\nGreen Credits: ${credits.toLocaleString()} pts\n\n#CUGreenVerse #Chula #Sustainability`;
+      ? `ฉันลดคาร์บอนไปแล้ว ${carbonSaved} kgCO₂e บน CU GreenVerse!\nระดับ: ${currentTier.label}\nGreen Credits: ${credits.toLocaleString()} pts\n\n#CUGreenVerse #Chula #Sustainability`
+      : `I've reduced ${carbonSaved} kgCO₂e on CU GreenVerse!\nLevel: ${currentTier.label}\nGreen Credits: ${credits.toLocaleString()} pts\n\n#CUGreenVerse #Chula #Sustainability`;
     if (navigator.share) {
       navigator.share({ title: "CU GreenVerse Achievement", text });
     } else {
@@ -155,16 +155,13 @@ export default function ProfilePage() {
                   {displayName.substring(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <div className={`absolute -bottom-1 -right-1 h-8 w-8 rounded-full ${currentTier.bg} border-2 border-background flex items-center justify-center text-sm`}>
-                {currentTier.emoji}
-              </div>
             </div>
 
             <div className="flex-1 pb-1">
               <div className="flex flex-wrap items-center gap-2 mb-1">
                 <h2 className="text-2xl font-bold">{displayName}</h2>
                 <Badge className={`${currentTier.bg} ${currentTier.color} border-0 font-semibold`}>
-                  {currentTier.emoji} {currentTier.label}
+                  {currentTier.label}
                 </Badge>
               </div>
               <p className="text-muted-foreground text-sm">{displayEmail} · {displayFaculty}</p>
@@ -187,7 +184,7 @@ export default function ProfilePage() {
               {!nextTier && (
                 <div className="mt-3">
                   <Badge className="bg-amber-500/10 text-amber-600 border-0">
-                    {lang === "th" ? "🌍 ระดับสูงสุด · Green Guardian" : "🌍 Max Level · Green Guardian"}
+                    {lang === "th" ? "ระดับสูงสุด · Green Guardian" : "Max Level · Green Guardian"}
                   </Badge>
                 </div>
               )}
@@ -234,7 +231,7 @@ export default function ProfilePage() {
             <Card className="border-border/50 shadow-sm bg-gradient-to-br from-primary/5 to-emerald-500/5">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-lg">
-                  <span>🛂</span> Green Passport
+                  Green Passport
                   <Badge variant="outline" className="ml-auto text-xs">{lang==="th" ? "ฉบับดิจิทัล" : "Digital"}</Badge>
                 </CardTitle>
               </CardHeader>
@@ -242,7 +239,7 @@ export default function ProfilePage() {
                 {(lang === "th" ? [
                   { label: "ชื่อ-สกุล",         value: displayName },
                   { label: "คณะ",               value: displayFaculty || "Engineering" },
-                  { label: "ระดับผู้ใช้งาน",     value: `${currentTier.emoji} ${currentTier.label}` },
+                  { label: "ระดับผู้ใช้งาน",     value: currentTier.label },
                   { label: "Green Credits รวม", value: `${credits.toLocaleString()} pts` },
                   { label: "คาร์บอนที่ลดได้",    value: `${carbonSaved} kgCO₂e` },
                   { label: "กิจกรรมทั้งหมด",     value: `${actionsCount} ครั้ง` },
@@ -251,7 +248,7 @@ export default function ProfilePage() {
                 ] : [
                   { label: "Full Name",          value: displayName },
                   { label: "Faculty",             value: displayFaculty || "Engineering" },
-                  { label: "User Level",          value: `${currentTier.emoji} ${currentTier.label}` },
+                  { label: "User Level",          value: currentTier.label },
                   { label: "Total Green Credits", value: `${credits.toLocaleString()} pts` },
                   { label: "Carbon Saved",        value: `${carbonSaved} kgCO₂e` },
                   { label: "Total Activities",    value: `${actionsCount} times` },
@@ -277,6 +274,51 @@ export default function ProfilePage() {
             </Card>
 
 
+            {/* Carbon Achievement Card */}
+            <Card className="border-border/50 shadow-sm">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">
+                  {lang==="th" ? "ผลกระทบของคุณ" : "Your Impact"}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  {lang==="th" ? "คุณมีส่วนร่วมในการลดคาร์บอนเท่ากับ..." : "Your actions are equivalent to..."}
+                </p>
+
+                {(lang==="th" ? [
+                  { label: "ต้นไม้ที่ช่วยดูดคาร์บอน", value: Math.round(carbonSaved / 21.77), unit: "ต้น/ปี" },
+                  { label: "ระยะทางที่ไม่ขับรถ", value: Math.round(carbonSaved / 0.21), unit: "กม." },
+                  { label: "ชั่วโมงไฟ LED ที่ประหยัด", value: Math.round(carbonSaved * 100), unit: "ชั่วโมง" },
+                  { label: "มื้อเนื้อสัตว์ที่งดได้", value: Math.round(carbonSaved / 6.6), unit: "มื้อ" },
+                ] : [
+                  { label: "Trees absorbing carbon", value: Math.round(carbonSaved / 21.77), unit: "trees/yr" },
+                  { label: "Car-free distance", value: Math.round(carbonSaved / 0.21), unit: "km" },
+                  { label: "LED light hours saved", value: Math.round(carbonSaved * 100), unit: "hrs" },
+                  { label: "Meat meals avoided", value: Math.round(carbonSaved / 6.6), unit: "meals" },
+                ]).map((item) => (
+                  <div key={item.label} className="flex items-center gap-3 p-3 rounded-xl bg-muted/40">
+                    <div className="h-9 w-9 rounded-full bg-background/80 border border-border/50" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-muted-foreground">{item.label}</p>
+                      <p className="font-bold text-lg leading-tight">
+                        {item.value.toLocaleString()} <span className="text-sm font-normal text-muted-foreground">{item.unit}</span>
+                      </p>
+                    </div>
+                  </div>
+                ))}
+
+                <div className="pt-2">
+                  <div className="bg-primary/10 border border-primary/20 rounded-xl p-4 text-center">
+                    <p className="text-2xl font-black text-primary">{carbonSaved} kgCO₂e</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {lang==="th" ? "คาร์บอนรวมที่คุณลดได้ตั้งแต่เริ่มต้น" : "Total carbon you've reduced since joining"}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            </Card>
           </div>
         </TabsContent>
 
@@ -309,7 +351,6 @@ export default function ProfilePage() {
                     ) : (
                       <Lock className="absolute top-2 right-2 h-4 w-4 text-muted-foreground/50" />
                     )}
-                    <div className="text-4xl mt-1">{badge.emoji}</div>
                     <p className="text-sm font-semibold leading-tight">{badge.label}</p>
                     <p className="text-xs text-muted-foreground leading-snug">{badge.desc}</p>
                   </div>

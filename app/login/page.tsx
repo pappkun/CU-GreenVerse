@@ -52,7 +52,7 @@ export default function LoginPage() {
       toast.error("เข้าสู่ระบบไม่สำเร็จ", { description: error.message });
       setIsLoading(false);
     } else {
-      toast.success("เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ 🌱");
+      toast.success("เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ");
       // Hard redirect เพื่อให้ React re-render ด้วย session ใหม่ครับ
       window.location.href = "/dashboard";
     }
@@ -168,7 +168,7 @@ export default function LoginPage() {
                   {/* Demo hint */}
                   <div className="bg-emerald-50/80 border border-emerald-200 rounded-[1rem] p-3 text-xs text-slate-600">
                     <p className="font-semibold text-emerald-700 mb-1">
-                      🧪 Demo Account
+                      Demo Account
                     </p>
                     <p>Email: demo@student.chula.ac.th</p>
                     <p>Password: demo1234</p>

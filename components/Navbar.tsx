@@ -2,15 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Leaf,
-  Moon,
-  Sun,
-  User as UserIcon,
-  LogOut,
-  Settings,
-} from "lucide-react";
-import { useTheme } from "@/components/ThemeProvider";
+import { Leaf, User as UserIcon, LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -25,7 +17,6 @@ import { useLang } from "@/context/LanguageContext";
 
 export function Navbar() {
   const pathname = usePathname();
-  const { setTheme, resolvedTheme } = useTheme();
   const { user, profile, signOut } = useAuth();
   const { lang, setLang, t } = useLang();
 
@@ -96,19 +87,6 @@ export function Navbar() {
             className="rounded-full font-bold text-sm px-3 h-9 border border-border/50 hover:bg-primary/10 min-w-[52px]"
           >
             {lang === "th" ? "EN" : "TH"}
-          </Button>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() =>
-              setTheme(resolvedTheme === "dark" ? "light" : "dark")
-            }
-            className="rounded-full"
-          >
-            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
           </Button>
 
           {isPublicPage ? (

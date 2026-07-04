@@ -77,7 +77,7 @@ export function MysteryBox({ userCredits = currentUser.greenCredits }: MysteryBo
         setPrize(result);
         setPhase("revealed");
         if (result.rarity === "legendary") {
-          toast.success("🎉 Legendary! คุณโชคดีมาก!", { duration: 6000 });
+          toast.success("Legendary! คุณโชคดีมาก!", { duration: 6000 });
         }
       }, 800);
     }, 1200);
@@ -202,26 +202,24 @@ export function MysteryBox({ userCredits = currentUser.greenCredits }: MysteryBo
                     {[...Array(12)].map((_, i) => (
                       <div
                         key={i}
-                        className="absolute text-2xl"
+                        className="absolute h-2.5 w-2.5 rounded-full bg-amber-400/80"
                         style={{
                           left: `${Math.random() * 100}%`,
                           top: `${Math.random() * 100}%`,
                           animation: `fall ${1 + Math.random()}s ease-in forwards`,
                           animationDelay: `${Math.random() * 0.5}s`,
                         }}
-                      >
-                        {["🎉", "⭐", "✨", "🎊"][Math.floor(Math.random() * 4)]}
-                      </div>
+                      />
                     ))}
                   </div>
                 )}
 
-                <div className={`h-24 w-24 rounded-2xl ${prize.bg} flex items-center justify-center text-5xl shadow-lg ring-4 ${
+                <div className={`h-24 w-24 rounded-2xl ${prize.bg} flex items-center justify-center shadow-lg ring-4 ${
                   prize.rarity === "legendary" ? "ring-yellow-400/50 animate-pulse" :
                   prize.rarity === "epic" ? "ring-purple-400/30" :
                   prize.rarity === "rare" ? "ring-blue-400/30" : "ring-border"
                 }`}>
-                  {prize.emoji}
+                  <Gift className="h-10 w-10 text-amber-600" />
                 </div>
 
                 <div className="space-y-1 text-center">
