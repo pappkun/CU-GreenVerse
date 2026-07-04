@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { RewardCard } from "@/components/RewardCard";
-import { MysteryBox } from "@/components/MysteryBox";
 import { currentUser } from "@/data/mockUsers";
 import { Leaf, Loader2, Gift } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -49,7 +48,9 @@ export default function RewardsPage() {
             (item: any) =>
               item.category !== "avatar" &&
               item.category !== "digital" &&
-              !item.title.toLowerCase().includes("avatar")
+              item.category !== "event" &&
+              !item.title.toLowerCase().includes("avatar") &&
+              !item.title.toLowerCase().includes("mystery box")
           );
 
         setRewards(mappedData);
@@ -68,7 +69,6 @@ export default function RewardsPage() {
     { id: "all", label: lang === "th" ? "ทั้งหมด" : "All" },
     { id: "coupon", label: lang === "th" ? "คูปอง" : "Coupons" },
     { id: "merchandise", label: lang === "th" ? "สินค้า" : "Merch" },
-    { id: "event", label: lang === "th" ? "กิจกรรม" : "Events" },
   ];
 
   const filteredRewards =
@@ -78,7 +78,6 @@ export default function RewardsPage() {
           (r) =>
             (activeTab === "coupon" && (r.category === "voucher" || r.category === "coupon")) ||
             (activeTab === "merchandise" && (r.category === "physical" || r.category === "merchandise")) ||
-            (activeTab === "event" && r.category === "event") ||
             r.category === activeTab,
         );
 
@@ -126,8 +125,6 @@ export default function RewardsPage() {
 
         <div className="mt-4 sm:mt-6">
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
-            {/* Mystery Box - always first */}
-            <MysteryBox userCredits={currentUser.greenCredits} />
             {isLoading ? (
               <div className="col-span-full py-12 flex justify-center">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />

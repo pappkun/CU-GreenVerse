@@ -46,25 +46,6 @@ export const mockRewards: Reward[] = [
     category: "merchandise",
     stock: 2,
   },
-
-  {
-    id: "r_8",
-    title: "Sustainability Workshop Entry",
-    description: "Ticket to join CU Sustainability workshop next month.",
-    cost: 1500,
-    image: "/rewards/workshop.png",
-    category: "event",
-    stock: 15,
-  },
-  {
-    id: "r_9",
-    title: "Plant a Tree in Your Name",
-    description: "We will plant a real tree on campus with your name on it.",
-    cost: 10000,
-    image: "/rewards/tree.png",
-    category: "event",
-    stock: 3,
-  },
   {
     id: "r_10",
     title: "POP BUS VIP Pass 7 Days",
