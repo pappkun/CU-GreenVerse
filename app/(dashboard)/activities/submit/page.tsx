@@ -151,9 +151,9 @@ function ScanQRContent() {
                 </div>
               </div>
 
-              <Link href="/dashboard" className="w-full mt-4 block">
+              <Link href="/profile?tab=history" className="w-full mt-4 block">
                 <Button className="w-full text-lg h-12 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-md">
-                  {lang === "th" ? "กลับสู่หน้าหลัก" : "Back to Dashboard"}
+                  {lang === "th" ? "ดูประวัติกิจกรรม" : "View Activity History"}
                 </Button>
               </Link>
             </CardContent>
@@ -342,9 +342,9 @@ function ScanQRContent() {
                   </div>
                 )}
 
-                <Link href="/dashboard" className="w-full mt-4 block">
+                <Link href="/profile?tab=history" className="w-full mt-4 block">
                   <Button className="w-full text-lg h-12 rounded-full">
-                    {lang === "th" ? "กลับสู่หน้าหลัก" : "Back to Dashboard"}
+                    {lang === "th" ? "ดูประวัติกิจกรรม" : "View Activity History"}
                   </Button>
                 </Link>
               </CardContent>

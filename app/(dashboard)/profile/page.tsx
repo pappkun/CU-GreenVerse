@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLang } from "@/context/LanguageContext";
+import { useSearchParams } from "next/navigation";
 import { currentUser } from "@/data/mockUsers";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -88,7 +89,9 @@ function getTierProgress(credits: number) {
 export default function ProfilePage() {
   const { user, profile } = useAuth();
   const { lang } = useLang();
-  const [activeTab, setActiveTab] = useState("passport");
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get("tab");
+  const [activeTab, setActiveTab] = useState(tabParam || "passport");
 
   // Use real user if logged in, else fallback to mock
   const displayName   = profile?.name   || user?.email?.split("@")[0] || currentUser.name;
