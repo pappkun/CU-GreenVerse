@@ -32,7 +32,6 @@ export function Sidebar({ className }: SidebarProps) {
   const userLinks = [
     { name: t("dashboard"),    href: "/dashboard",   icon: LayoutDashboard },
     { name: t("activities"),   href: "/activities",  icon: Leaf },
-    { name: "POP BUS",         href: "/pop-bus",     icon: Bus },
     { name: t("rewards"),      href: "/rewards",     icon: Gift },
     { name: t("leaderboard"),  href: "/leaderboard", icon: Trophy },
     { name: t("passport_side"),href: "/passport",    icon: BookOpen },
