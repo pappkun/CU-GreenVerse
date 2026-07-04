@@ -222,7 +222,6 @@ export default function ProfilePage() {
             <TabsTrigger value="passport" className="whitespace-nowrap">🛂 Green Passport</TabsTrigger>
             <TabsTrigger value="badges" className="whitespace-nowrap">🏅 {lang==="th" ? "Badge" : "Badges"}</TabsTrigger>
             <TabsTrigger value="history" className="whitespace-nowrap">📋 {lang==="th" ? "ประวัติ" : "History"}</TabsTrigger>
-            <TabsTrigger value="avatar" className="whitespace-nowrap">🎨 Avatar</TabsTrigger>
           </TabsList>
         </div>
 
@@ -399,113 +398,7 @@ export default function ProfilePage() {
           </Card>
         </TabsContent>
 
-        {/* AVATAR CUSTOMIZATION */}
-        <TabsContent value="avatar" className="mt-6">
-          <div className="grid md:grid-cols-5 gap-6">
-            {/* Preview */}
-            <div className="md:col-span-2">
-              <Card className="border-border/50 shadow-sm text-center">
-                <CardContent className="pt-8 pb-6 flex flex-col items-center gap-4">
-                  <div className={`relative h-32 w-32 rounded-full ring-4 ${currentTier.ring} shadow-xl`}>
-                    <Avatar className="h-32 w-32 border-4 border-background">
-                      <AvatarImage src={displayAvatar} alt={displayName} />
-                      <AvatarFallback className="text-3xl font-bold bg-primary/10">
-                        {displayName.substring(0, 2).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className={`absolute -bottom-2 -right-2 h-10 w-10 rounded-full ${currentTier.bg} border-2 border-background flex items-center justify-center text-xl`}>
-                      {currentTier.emoji}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="font-bold text-lg">{displayName}</p>
-                    <Badge className={`${currentTier.bg} ${currentTier.color} border-0 mt-1`}>
-                      {currentTier.emoji} {currentTier.label}
-                    </Badge>
-                  </div>
 
-                  <div className="w-full space-y-2 text-sm">
-                    <p className="text-muted-foreground text-xs">
-                      {lang==="th" ? "เลื่อนระดับ Avatar ด้วยการสะสม Green Credits" : "Level up your Avatar by collecting Green Credits"}
-                    </p>
-                    {AVATAR_TIERS.map((tier) => (
-                      <div
-                        key={tier.id}
-                        className={`flex items-center gap-2 p-2 rounded-lg ${credits >= tier.minCredits ? tier.bg + " " + tier.color : "bg-muted/30 text-muted-foreground/50"}`}
-                      >
-                        <span>{tier.emoji}</span>
-                        <span className="flex-1 text-left text-xs font-medium">{tier.label}</span>
-                        {credits >= tier.minCredits ? (
-                          <CheckCircle2 className="h-4 w-4" />
-                        ) : (
-                          <span className="text-xs">{tier.minCredits.toLocaleString()} pts</span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Avatar Items */}
-            <div className="md:col-span-3">
-              <Card className="border-border/50 shadow-sm">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg">
-                    {lang==="th" ? "ไอเทม Avatar ของฉัน" : "My Avatar Items"}
-                  </CardTitle>
-                  <p className="text-sm text-muted-foreground">
-                    {lang==="th" ? "รับไอเทมจาก Mystery Box หรือแลกด้วย Green Credits" : "Get items from Mystery Box or redeem with Green Credits"}
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-3 gap-3">
-                    {[
-                      { emoji: "🌿", name: "ใบไม้สีเขียว", equipped: true, owned: true },
-                      { emoji: "☀️", name: "Solar Halo",    equipped: false, owned: true },
-                      { emoji: "🎩", name: "Solar Panel Hat", equipped: false, owned: true },
-                      { emoji: "🦋", name: "Butterfly Wings", equipped: false, owned: false },
-                      { emoji: "🌊", name: "Ocean Aura",    equipped: false, owned: false },
-                      { emoji: "⚡", name: "Energy Spark",  equipped: false, owned: false },
-                    ].map((item, i) => (
-                      <div
-                        key={i}
-                        className={`flex flex-col items-center p-3 rounded-xl border text-center gap-2 transition-all cursor-pointer
-                          ${item.equipped ? "border-primary bg-primary/10 shadow-sm"
-                            : item.owned ? "border-border/50 hover:border-primary/50 hover:bg-muted/50"
-                            : "border-border/30 opacity-40 cursor-not-allowed bg-muted/20"}`}
-                        onClick={() => item.owned && toast.success(`${item.equipped ? "ถอด" : "ใส่"}ไอเทม ${item.name} แล้ว!`)}
-                      >
-                        <div className="text-3xl">{item.emoji}</div>
-                        <p className="text-xs font-medium leading-tight">{item.name}</p>
-                        {item.equipped ? (
-                          <Badge className="text-[10px] bg-primary text-primary-foreground h-4 px-1.5">
-                            {lang==="th" ? "สวมอยู่" : "Equipped"}
-                          </Badge>
-                        ) : item.owned ? (
-                          <Badge variant="outline" className="text-[10px] h-4 px-1.5">
-                            {lang==="th" ? "มีแล้ว" : "Owned"}
-                          </Badge>
-                        ) : (
-                          <Lock className="h-3.5 w-3.5 text-muted-foreground" />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-center">
-                    <p className="text-sm font-medium text-amber-600 dark:text-amber-400">
-                      {lang==="th" ? "🎁 เปิด Green Capsule เพื่อรับไอเทม Avatar ใหม่!" : "🎁 Open Green Capsule to get new Avatar items!"}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {lang==="th" ? "ไปที่หน้า \"ร้านค้าของรางวัล\"" : "Go to \"Reward Store\""}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </TabsContent>
       </Tabs>
     </div>
   );

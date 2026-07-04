@@ -46,24 +46,7 @@ export const mockRewards: Reward[] = [
     category: "merchandise",
     stock: 2,
   },
-  {
-    id: "r_6",
-    title: "Eco Hero Digital Badge",
-    description: "Show off your green commitment on your profile.",
-    cost: 300,
-    image: "/rewards/badge.png",
-    category: "avatar",
-    stock: 999,
-  },
-  {
-    id: "r_7",
-    title: "Nature Avatar Frame",
-    description: "Exclusive leaf-themed avatar frame.",
-    cost: 500,
-    image: "/rewards/frame.png",
-    category: "avatar",
-    stock: 999,
-  },
+
   {
     id: "r_8",
     title: "Sustainability Workshop Entry",

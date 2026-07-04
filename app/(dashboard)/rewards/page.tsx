@@ -61,7 +61,6 @@ export default function RewardsPage() {
     { id: "all", label: lang === "th" ? "ทั้งหมด" : "All" },
     { id: "coupon", label: lang === "th" ? "คูปอง" : "Coupons" },
     { id: "merchandise", label: lang === "th" ? "สินค้า" : "Merch" },
-    { id: "avatar", label: "Avatar" },
     { id: "event", label: lang === "th" ? "กิจกรรม" : "Events" },
   ];
 
@@ -72,7 +71,6 @@ export default function RewardsPage() {
           (r) =>
             (activeTab === "coupon" && (r.category === "voucher" || r.category === "coupon")) ||
             (activeTab === "merchandise" && (r.category === "physical" || r.category === "merchandise")) ||
-            (activeTab === "avatar" && (r.category === "digital" || r.category === "avatar")) ||
             (activeTab === "event" && r.category === "event") ||
             r.category === activeTab,
         );
