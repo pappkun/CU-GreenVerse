@@ -64,8 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
     }
-
-    setProfile({ id: userId, name: userId, role: "user" });
+    setProfile({ id: userId, name: "", role: "user" });
   }
 
   async function handleSignOut() {
