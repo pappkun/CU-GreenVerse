@@ -26,10 +26,7 @@ import { currentUser } from "@/data/mockUsers";
 const MYSTERY_POOL = [
   { name: "ส่วนลด True Coffee 30 บาท", rarity: "common", color: "text-slate-500", bg: "bg-slate-500/10", credits: 300, emoji: "☕" },
   { name: "ถุงผ้า CU Green", rarity: "common", color: "text-slate-500", bg: "bg-slate-500/10", credits: 500, emoji: "👜" },
-  { name: "Avatar: ใบไม้สีเขียว", rarity: "common", color: "text-slate-500", bg: "bg-slate-500/10", credits: 200, emoji: "🍃" },
-  { name: "Avatar: หมวก Solar Panel", rarity: "rare", color: "text-blue-500", bg: "bg-blue-500/10", credits: 800, emoji: "🎩" },
   { name: "บัตรเข้า CU Green Day", rarity: "rare", color: "text-blue-500", bg: "bg-blue-500/10", credits: 1000, emoji: "🎟️" },
-  { name: "Avatar: ปีก Butterfly", rarity: "epic", color: "text-purple-500", bg: "bg-purple-500/10", credits: 1500, emoji: "🦋" },
   { name: "ส่วนลด 100 บาท ร้านอาหาร Green Zone", rarity: "epic", color: "text-purple-500", bg: "bg-purple-500/10", credits: 1200, emoji: "🌿" },
   { name: "🏆 Grand Prize: ทริป Eco Tour", rarity: "legendary", color: "text-yellow-500", bg: "bg-yellow-500/10", credits: 5000, emoji: "🌍" },
 ];

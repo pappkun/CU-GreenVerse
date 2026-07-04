@@ -35,15 +35,22 @@ export default function RewardsPage() {
           return;
         }
 
-        const mappedData = data.map((item: any) => ({
-          id: item.id,
-          title: item.name,
-          description: item.description || "",
-          category: item.category.toLowerCase(),
-          cost: item.points_required,
-          image: item.image_url || "/rewards/mystery-box.png",
-          stock: item.quantity_available,
-        }));
+        const mappedData = data
+          .map((item: any) => ({
+            id: item.id,
+            title: item.name,
+            description: item.description || "",
+            category: item.category.toLowerCase(),
+            cost: item.points_required,
+            image: item.image_url || "/rewards/mystery-box.png",
+            stock: item.quantity_available,
+          }))
+          .filter(
+            (item: any) =>
+              item.category !== "avatar" &&
+              item.category !== "digital" &&
+              !item.title.toLowerCase().includes("avatar")
+          );
 
         setRewards(mappedData);
       } catch (error) {
