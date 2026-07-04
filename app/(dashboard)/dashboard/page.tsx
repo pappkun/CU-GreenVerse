@@ -66,12 +66,12 @@ export default function DashboardPage() {
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <div className="min-w-0">
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            {lang === "th" ? "แดชบอร์ด" : "Dashboard"}
+            {t("dashboard")}
           </h1>
           <p className="text-muted-foreground mt-0.5 text-sm sm:text-base truncate">
             {lang === "th"
-              ? `ยินดีต้อนรับกลับ, ${displayName} 🌱`
-              : `Welcome back, ${displayName} 🌱`}
+              ? `ยินดีต้อนรับกลับ, ${displayName}`
+              : `Welcome back, ${displayName}`}
           </p>
         </div>
         <div className="flex md:hidden items-center gap-2 sm:gap-3 flex-shrink-0">

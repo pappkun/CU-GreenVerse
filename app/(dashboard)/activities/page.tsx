@@ -7,6 +7,7 @@ import { Search, Filter, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
 import { useLang } from "@/context/LanguageContext";
+import { availableActivities } from "@/data/mockActivities";
 
 export default function ActivitiesPage() {
   const { t } = useLang();
@@ -19,7 +20,16 @@ export default function ActivitiesPage() {
     async function fetchMissions() {
       try {
         if (!supabase) {
-          setActivities([]);
+          const mappedData = availableActivities.map((item) => ({
+            id: item.id,
+            title: item.title,
+            description: item.description,
+            category: item.category,
+            points: item.points,
+            carbonReduction: item.carbonReduction,
+            icon: item.icon,
+          }));
+          setActivities(mappedData);
           return;
         }
 
@@ -42,9 +52,32 @@ export default function ActivitiesPage() {
             icon: item.image_url || "Leaf",
           }));
 
-        setActivities(mappedData);
+        setActivities(
+          mappedData.length > 0
+            ? mappedData
+            : availableActivities.map((item) => ({
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                category: item.category,
+                points: item.points,
+                carbonReduction: item.carbonReduction,
+                icon: item.icon,
+              })),
+        );
       } catch (error) {
         console.error("Error fetching missions:", error);
+        setActivities(
+          availableActivities.map((item) => ({
+            id: item.id,
+            title: item.title,
+            description: item.description,
+            category: item.category,
+            points: item.points,
+            carbonReduction: item.carbonReduction,
+            icon: item.icon,
+          })),
+        );
       } finally {
         setIsLoading(false);
       }

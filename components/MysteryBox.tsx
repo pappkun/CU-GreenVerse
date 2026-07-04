@@ -24,14 +24,14 @@ import { currentUser } from "@/data/mockUsers";
 
 // Pool of possible mystery items
 const MYSTERY_POOL = [
-  { name: "ส่วนลด True Coffee 30 บาท", rarity: "common", color: "text-slate-500", bg: "bg-slate-500/10", credits: 300, emoji: "☕" },
-  { name: "ถุงผ้า CU Green", rarity: "common", color: "text-slate-500", bg: "bg-slate-500/10", credits: 500, emoji: "👜" },
-  { name: "Avatar: ใบไม้สีเขียว", rarity: "common", color: "text-slate-500", bg: "bg-slate-500/10", credits: 200, emoji: "🍃" },
-  { name: "Avatar: หมวก Solar Panel", rarity: "rare", color: "text-blue-500", bg: "bg-blue-500/10", credits: 800, emoji: "🎩" },
-  { name: "บัตรเข้า CU Green Day", rarity: "rare", color: "text-blue-500", bg: "bg-blue-500/10", credits: 1000, emoji: "🎟️" },
-  { name: "Avatar: ปีก Butterfly", rarity: "epic", color: "text-purple-500", bg: "bg-purple-500/10", credits: 1500, emoji: "🦋" },
-  { name: "ส่วนลด 100 บาท ร้านอาหาร Green Zone", rarity: "epic", color: "text-purple-500", bg: "bg-purple-500/10", credits: 1200, emoji: "🌿" },
-  { name: "🏆 Grand Prize: ทริป Eco Tour", rarity: "legendary", color: "text-yellow-500", bg: "bg-yellow-500/10", credits: 5000, emoji: "🌍" },
+  { name: "ส่วนลด True Coffee 30 บาท", rarity: "common", color: "text-slate-500", bg: "bg-slate-500/10", credits: 300 },
+  { name: "ถุงผ้า CU Green", rarity: "common", color: "text-slate-500", bg: "bg-slate-500/10", credits: 500 },
+  { name: "Avatar: ใบไม้สีเขียว", rarity: "common", color: "text-slate-500", bg: "bg-slate-500/10", credits: 200 },
+  { name: "Avatar: หมวก Solar Panel", rarity: "rare", color: "text-blue-500", bg: "bg-blue-500/10", credits: 800 },
+  { name: "บัตรเข้า CU Green Day", rarity: "rare", color: "text-blue-500", bg: "bg-blue-500/10", credits: 1000 },
+  { name: "Avatar: ปีก Butterfly", rarity: "epic", color: "text-purple-500", bg: "bg-purple-500/10", credits: 1500 },
+  { name: "ส่วนลด 100 บาท ร้านอาหาร Green Zone", rarity: "epic", color: "text-purple-500", bg: "bg-purple-500/10", credits: 1200 },
+  { name: "Grand Prize: ทริป Eco Tour", rarity: "legendary", color: "text-yellow-500", bg: "bg-yellow-500/10", credits: 5000 },
 ];
 
 const RARITY_LABELS: Record<string, string> = {
@@ -80,7 +80,7 @@ export function MysteryBox({ userCredits = currentUser.greenCredits }: MysteryBo
         setPrize(result);
         setPhase("revealed");
         if (result.rarity === "legendary") {
-          toast.success("🎉 Legendary! คุณโชคดีมาก!", { duration: 6000 });
+          toast.success("Legendary! คุณโชคดีมาก!", { duration: 6000 });
         }
       }, 800);
     }, 1200);
@@ -205,26 +205,24 @@ export function MysteryBox({ userCredits = currentUser.greenCredits }: MysteryBo
                     {[...Array(12)].map((_, i) => (
                       <div
                         key={i}
-                        className="absolute text-2xl"
+                        className="absolute h-2.5 w-2.5 rounded-full bg-amber-400/80"
                         style={{
                           left: `${Math.random() * 100}%`,
                           top: `${Math.random() * 100}%`,
                           animation: `fall ${1 + Math.random()}s ease-in forwards`,
                           animationDelay: `${Math.random() * 0.5}s`,
                         }}
-                      >
-                        {["🎉", "⭐", "✨", "🎊"][Math.floor(Math.random() * 4)]}
-                      </div>
+                      />
                     ))}
                   </div>
                 )}
 
-                <div className={`h-24 w-24 rounded-2xl ${prize.bg} flex items-center justify-center text-5xl shadow-lg ring-4 ${
+                <div className={`h-24 w-24 rounded-2xl ${prize.bg} flex items-center justify-center shadow-lg ring-4 ${
                   prize.rarity === "legendary" ? "ring-yellow-400/50 animate-pulse" :
                   prize.rarity === "epic" ? "ring-purple-400/30" :
                   prize.rarity === "rare" ? "ring-blue-400/30" : "ring-border"
                 }`}>
-                  {prize.emoji}
+                  <Gift className="h-10 w-10 text-amber-600" />
                 </div>
 
                 <div className="space-y-1 text-center">

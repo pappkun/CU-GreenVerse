@@ -19,7 +19,7 @@ export const translations = {
     logout: "ออกจากระบบ",
 
     // Sidebar
-    dashboard: "แดชบอร์ด",
+    dashboard: "สถิติ",
     activities: "กิจกรรมรักษ์โลก",
     rewards: "ร้านค้าของรางวัล",
     passport_side: "กรีนพาสปอร์ต",
@@ -80,7 +80,7 @@ export const translations = {
     logout: "Logout",
 
     // Sidebar
-    dashboard: "Dashboard",
+    dashboard: "Statistics",
     activities: "Green Activities",
     rewards: "Reward Store",
     passport_side: "Green Passport",
@@ -99,14 +99,16 @@ export const translations = {
 
     // Activities
     activitiesTitle: "Green Activities",
-    activitiesDesc: "Discover activities to reduce carbon emissions and earn Green Credits.",
+    activitiesDesc:
+      "Discover activities to reduce carbon emissions and earn Green Credits.",
     searchPlaceholder: "Search activities...",
     submitAction: "Submit Action",
     noActivities: "No activities found matching your criteria.",
 
     // Rewards
     rewardsTitle: "Reward Store",
-    rewardsDesc: "Exchange your Green Credits for exclusive items and discounts.",
+    rewardsDesc:
+      "Exchange your Green Credits for exclusive items and discounts.",
     yourBalance: "Your Balance",
     redeemNow: "Redeem Now",
     notEnough: "Not Enough Credits",
@@ -115,7 +117,8 @@ export const translations = {
 
     // Leaderboard
     leaderboardTitle: "Leaderboard",
-    leaderboardDesc: "See who is leading the sustainability movement at Chulalongkorn University.",
+    leaderboardDesc:
+      "See who is leading the sustainability movement at Chulalongkorn University.",
     faculties: "Faculties",
     individuals: "Individuals",
     liveData: "Live Data",

@@ -8,7 +8,7 @@ import {
   ReactNode,
 } from "react";
 import { Session, User } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabase";
+import { getSession, signOut as signOutSession } from "@/lib/supabase";
 
 interface AuthContextType {
   session: Session | null;
@@ -32,50 +32,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!supabase) {
-      setIsLoading(false);
-      return;
-    }
+    let isMounted = true;
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      if (session?.user) fetchProfile(session.user.id);
-      setIsLoading(false);
-    });
+    async function initializeSession() {
+      const currentSession = await getSession();
+      if (!isMounted) return;
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      if (session?.user) {
-        fetchProfile(session.user.id);
+      setSession(currentSession as Session | null);
+      if (currentSession?.user) {
+        await fetchProfile(currentSession.user.id);
       } else {
         setProfile(null);
       }
-    });
+      setIsLoading(false);
+    }
 
-    return () => subscription.unsubscribe();
+    initializeSession();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   async function fetchProfile(userId: string) {
-    if (!supabase) return;
+    if (typeof window !== "undefined") {
+      const storedProfile = window.localStorage.getItem(
+        "cu-greenverse-mock-profile",
+      );
+      if (storedProfile) {
+        setProfile(JSON.parse(storedProfile));
+        return;
+      }
+    }
 
-    const { data } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", userId)
-      .single();
-    setProfile(data);
+    setProfile({ id: userId, name: userId, role: "user" });
   }
 
   async function handleSignOut() {
-    if (!supabase) {
-      setSession(null);
-      setProfile(null);
-      return;
-    }
-
-    await supabase.auth.signOut();
+    await signOutSession();
     setSession(null);
     setProfile(null);
   }
