@@ -151,7 +151,7 @@ function ScanQRContent() {
                 </div>
               </div>
 
-              <Link href="/profile?tab=history" className="w-full mt-4 block">
+              <Link href="/history" className="w-full mt-4 block">
                 <Button className="w-full text-lg h-12 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-md">
                   {lang === "th" ? "ดูประวัติกิจกรรม" : "View Activity History"}
                 </Button>
@@ -346,7 +346,7 @@ function ScanQRContent() {
                   </div>
                 )}
 
-                <Link href="/profile?tab=history" className="w-full mt-4 block">
+                <Link href={scannedActivity ? `/history?activity=${encodeURIComponent(scannedActivity.title)}` : "/history"} className="w-full mt-4 block">
                   <Button className="w-full text-lg h-12 rounded-full shadow-md">
                     {lang === "th" ? "ดูประวัติกิจกรรม" : "View Activity History"}
                   </Button>
