@@ -40,10 +40,10 @@ export function BottomNav() {
           const isActive =
             pathname === item.href ||
             (item.href !== "/dashboard" &&
-              !item.isSpecial &&
+              !("isSpecial" in item && item.isSpecial) &&
               pathname.startsWith(item.href));
 
-          if (item.isSpecial) {
+          if ("isSpecial" in item && item.isSpecial) {
             return (
               <Link
                 key={item.name}
