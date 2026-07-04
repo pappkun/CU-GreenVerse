@@ -45,11 +45,7 @@ export function Navbar() {
         { name: t("home"), href: "/" },
         { name: t("features"), href: "/#features" },
       ]
-    : [
-        { name: t("dashboard"), href: "/dashboard" },
-        { name: t("rewards"), href: "/rewards" },
-        { name: t("leaderboard"), href: "/leaderboard" },
-      ];
+    : [];
 
   return (
     <nav
@@ -72,22 +68,24 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                pathname === link.href
-                  ? "text-primary"
-                  : "text-muted-foreground"
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
+        {/* Desktop Nav (Only on Public Pages since Dashboard has Sidebar) */}
+        {isPublicPage && (
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  pathname === link.href
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+        )}
 
         <div className="flex items-center gap-2">
           {/* Language Toggle */}
