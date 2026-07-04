@@ -318,11 +318,6 @@ function ProfilePageContent() {
             <div className="flex-1 pb-1">
               <div className="flex flex-wrap items-center gap-2 mb-1">
                 <h2 className="text-2xl font-bold">{displayName}</h2>
-                <Badge
-                  className={`${currentTier.bg} ${currentTier.color} border-0 font-semibold`}
-                >
-                  {currentTier.label}
-                </Badge>
               </div>
               <p className="text-muted-foreground text-sm">
                 {displayEmail} · {displayFaculty}
