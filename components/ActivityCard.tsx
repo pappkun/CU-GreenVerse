@@ -39,7 +39,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
   const catLabel = categoryLabels[activity.category];
 
   const isAnywheel = activity.title.toLowerCase().includes("anywheel");
-  const href = isAnywheel ? `/anywheel?id=${activity.id}` : `/activities/submit?scan=true&id=${activity.id}`;
+  const href = isAnywheel ? `/anywheel?id=${activity.id}` : `/history?activity=${encodeURIComponent(activity.title)}`;
 
   return (
     <div
@@ -100,8 +100,8 @@ export function ActivityCard({ activity }: ActivityCardProps) {
             )}
           >
             {lang === "th" 
-              ? (isAnywheel ? "เชื่อมต่อ API" : "บันทึกกิจกรรม") 
-              : (isAnywheel ? "Connect API" : "Log Action")}
+              ? (isAnywheel ? "เชื่อมต่อ API" : "ดูประวัติแต้ม") 
+              : (isAnywheel ? "Connect API" : "View Points History")}
             <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Button>
         </Link>
