@@ -154,7 +154,7 @@ export default function AdminDashboardPage() {
                   ))}
                 </Pie>
                 <RechartsTooltip 
-                  formatter={(value: number) => [`${value.toLocaleString()} kg`, lang === "th" ? "คาร์บอน" : "Carbon"]}
+                  formatter={(value: any) => [`${Number(value || 0).toLocaleString()} kg`, lang === "th" ? "คาร์บอน" : "Carbon"]}
                   contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                 />
                 <Legend verticalAlign="bottom" height={36} iconType="circle" />
