@@ -34,7 +34,7 @@ function ScanQRContent() {
       // ถ้ารหัสใน QR Code ตรงกับที่เรากำหนดไว้
       if (qrData === "POP-BUS" || qrData === "RECYCLE_CU") {
         const isBus = qrData === "POP-BUS";
-        const pointsToEarn = isBus ? 10 : 30;
+        const pointsToEarn = isBus ? 5 : 10;
 
         // Check daily limit (100 pts)
         const today = new Date().toISOString().split('T')[0];
@@ -81,8 +81,8 @@ function ScanQRContent() {
       return;
     }
 
-    const pointsMap: Record<string, number> = { byoc: 40, recycle: 30, food: 50, bag: 20 };
-    const pointsToEarn = pointsMap[selectedActivity] || 20;
+    const pointsMap: Record<string, number> = { byoc: 15, recycle: 10, food: 20, bag: 10 };
+    const pointsToEarn = pointsMap[selectedActivity] || 10;
 
     // Check daily limit (100 pts)
     const today = new Date().toISOString().split('T')[0];
