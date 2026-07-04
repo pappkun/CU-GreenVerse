@@ -38,6 +38,9 @@ export function ActivityCard({ activity }: ActivityCardProps) {
   const colors = categoryColors[activity.category] || categoryColors.waste;
   const catLabel = categoryLabels[activity.category];
 
+  const isAnywheel = activity.title.toLowerCase().includes("anywheel");
+  const href = isAnywheel ? `/anywheel?id=${activity.id}` : `/activities/submit?scan=true&id=${activity.id}`;
+
   return (
     <div
       className={cn(
@@ -86,7 +89,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
 
       {/* Footer CTA */}
       <div className="px-4 sm:px-5 pb-4 sm:pb-5">
-        <Link href={`/activities/submit?scan=true&id=${activity.id}`} className="w-full block">
+        <Link href={href} className="w-full block">
           <Button
             variant="outline"
             className={cn(
@@ -96,7 +99,9 @@ export function ActivityCard({ activity }: ActivityCardProps) {
               "group-hover:shadow-md group-hover:shadow-primary/20"
             )}
           >
-            {lang === "th" ? "บันทึกกิจกรรม" : "Log Action"}
+            {lang === "th" 
+              ? (isAnywheel ? "เชื่อมต่อ API" : "บันทึกกิจกรรม") 
+              : (isAnywheel ? "Connect API" : "Log Action")}
             <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Button>
         </Link>
