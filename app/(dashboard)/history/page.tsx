@@ -8,13 +8,13 @@ import { Badge } from "@/components/ui/badge";
 export default function HistoryPage() {
   const { lang } = useLang();
 
-  // Mock transaction data
+  // Mock transaction data based on actual mockActivities and mockRewards
   const transactions = [
-    { id: 1, type: "earn", title: lang === "th" ? "เดินไปเรียน" : "Walk to Campus", points: 60, date: lang === "th" ? "4 ก.ค. 2026 08:30" : "July 4, 2026 08:30", category: lang === "th" ? "การเดินทาง" : "Transport" },
-    { id: 2, type: "spend", title: lang === "th" ? "แลกส่วนลด True Coffee" : "Redeem True Coffee Discount", points: 150, date: lang === "th" ? "3 ก.ค. 2026 13:15" : "July 3, 2026 13:15", category: lang === "th" ? "รางวัล" : "Reward" },
-    { id: 3, type: "earn", title: lang === "th" ? "แยกขวดพลาสติก" : "Recycle Plastic Bottles", points: 40, date: lang === "th" ? "2 ก.ค. 2026 16:45" : "July 2, 2026 16:45", category: lang === "th" ? "ขยะ" : "Waste" },
-    { id: 4, type: "earn", title: lang === "th" ? "นำแก้วมาเอง" : "Bring Your Own Cup", points: 10, date: lang === "th" ? "2 ก.ค. 2026 09:00" : "July 2, 2026 09:00", category: lang === "th" ? "ลดขยะ" : "Reduce" },
-    { id: 5, type: "spend", title: lang === "th" ? "ไอเทมแต่งตัว Avatar" : "GreenVerse Avatar Item", points: 200, date: lang === "th" ? "28 มิ.ย. 2026 19:20" : "June 28, 2026 19:20", category: lang === "th" ? "ร้านค้า" : "Store" },
+    { id: 1, type: "earn", title: lang === "th" ? "นำแก้วมาเอง" : "Bring your own cup", points: 10, date: lang === "th" ? "4 ก.ค. 2026 08:30" : "July 4, 2026 08:30", category: lang === "th" ? "ลดขยะ" : "Reduce" },
+    { id: 2, type: "spend", title: lang === "th" ? "แลกส่วนลด True Coffee 30 บาท" : "Redeem True Coffee Discount 30 THB", points: 500, date: lang === "th" ? "3 ก.ค. 2026 13:15" : "July 3, 2026 13:15", category: lang === "th" ? "คูปอง" : "Coupon" },
+    { id: 3, type: "earn", title: lang === "th" ? "แยกขยะ" : "Recycle Waste", points: 10, date: lang === "th" ? "2 ก.ค. 2026 16:45" : "July 2, 2026 16:45", category: lang === "th" ? "รีไซเคิล" : "Recycle" },
+    { id: 4, type: "earn", title: lang === "th" ? "ปั่นจักรยาน Anywheel" : "Ride Anywheel bike", points: 20, date: lang === "th" ? "2 ก.ค. 2026 09:00" : "July 2, 2026 09:00", category: lang === "th" ? "การเดินทาง" : "Transport" },
+    { id: 5, type: "spend", title: lang === "th" ? "แลกกระเป๋าผ้า CU GreenVerse" : "Redeem CU GreenVerse Tote Bag", points: 3000, date: lang === "th" ? "28 มิ.ย. 2026 19:20" : "June 28, 2026 19:20", category: lang === "th" ? "ของที่ระลึก" : "Merchandise" },
     { id: 6, type: "earn", title: lang === "th" ? "นั่งรถป๊อป" : "Take Pop Bus", points: 15, date: lang === "th" ? "25 มิ.ย. 2026 17:10" : "June 25, 2026 17:10", category: lang === "th" ? "การเดินทาง" : "Transport" },
   ];
 
