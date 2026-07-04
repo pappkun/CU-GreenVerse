@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DashboardCard } from "@/components/DashboardCard";
-import { TrendChart } from "@/components/Charts";
-import { mockStats } from "@/data/mockStats";
+import { TrendChart } from "@/components/TrendChart";
 import { Users, Activity, Leaf, Bus, Route, UserCheck, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -31,6 +30,12 @@ export default function AdminDashboardPage() {
     uniqueRiders: 0,
     ongoingTrips: 0,
   });
+  const [overallStats, setOverallStats] = useState({
+    totalUsers: 0,
+    totalGreenActions: 0,
+    totalCarbonSaved: 0,
+    totalCreditsIssued: 0,
+  });
   const [activityStats, setActivityStats] = useState<ActivityStat[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -57,19 +62,42 @@ export default function AdminDashboardPage() {
       // Activity breakdown by category
       const { data: acts } = await supabase
         .from("activity_logs")
-        .select("category");
+        .select("category, points_awarded, carbon_saved_record");
 
+      let totalActions = 0;
+      let totalCarbonFromActs = 0;
+      
       if (acts) {
+        totalActions = acts.length;
         const grouped: Record<string, number> = {};
         acts.forEach((a: any) => {
           const cat = a.category || "other";
           grouped[cat] = (grouped[cat] || 0) + 1;
+          totalCarbonFromActs += Number(a.carbon_saved_record || 0);
         });
         setActivityStats(
           Object.entries(grouped)
             .map(([category, count]) => ({ category, count }))
             .sort((a, b) => b.count - a.count)
         );
+      }
+
+      // Users stats
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("green_credits, carbon_saved_kg");
+        
+      if (profiles) {
+        const totalUsers = profiles.length;
+        const totalCredits = profiles.reduce((sum, p) => sum + Number(p.green_credits || 0), 0);
+        const totalCarbon = profiles.reduce((sum, p) => sum + Number(p.carbon_saved_kg || 0), 0);
+        
+        setOverallStats({
+          totalUsers,
+          totalGreenActions: totalActions,
+          totalCarbonSaved: totalCarbon, // or totalCarbonFromActs if prefer
+          totalCreditsIssued: totalCredits,
+        });
       }
 
       setIsLoading(false);
@@ -109,26 +137,22 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <DashboardCard
           title={lang === "th" ? "ผู้ใช้งานทั้งหมด" : "Total Users"}
-          value={mockStats.totalUsers.toLocaleString()}
+          value={isLoading ? "—" : overallStats.totalUsers.toLocaleString()}
           icon={<Users className="h-5 w-5" />}
-          subtitle={`${mockStats.activeUsers.toLocaleString()} ${lang === "th" ? "ใช้งานเดือนนี้" : "active this month"}`}
         />
         <DashboardCard
           title={lang === "th" ? "กิจกรรมทั้งหมด" : "Total Green Actions"}
-          value={mockStats.totalGreenActions.toLocaleString()}
+          value={isLoading ? "—" : overallStats.totalGreenActions.toLocaleString()}
           icon={<Activity className="h-5 w-5" />}
-          trend="up"
-          trendValue="15%"
-          subtitle={lang === "th" ? "เทียบกับเดือนก่อน" : "vs last month"}
         />
         <DashboardCard
           title={lang === "th" ? "คาร์บอนที่ลดได้" : "Total Carbon Saved"}
-          value={`${mockStats.totalCarbonSaved.toLocaleString()} kg`}
+          value={isLoading ? "—" : `${overallStats.totalCarbonSaved.toFixed(1)} kg`}
           icon={<Leaf className="h-5 w-5" />}
         />
         <DashboardCard
           title={lang === "th" ? "Credits ที่แจก" : "Credits Issued"}
-          value={(mockStats.totalCreditsIssued / 1_000_000).toFixed(2) + "M"}
+          value={isLoading ? "—" : overallStats.totalCreditsIssued.toLocaleString()}
           icon={<AwardIcon />}
         />
       </div>

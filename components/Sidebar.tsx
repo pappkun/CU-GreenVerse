@@ -40,13 +40,12 @@ export function Sidebar({ className }: SidebarProps) {
   ];
 
   const adminLinks = [
-    { name: t("dashboard"),    href: "/dashboard",   icon: LayoutDashboard },
-    { name: t("admin"),        href: "/admin",        icon: Settings },
+    { name: t("admin"),        href: "/admin",        icon: LayoutDashboard },
     { name: "QR Codes",        href: "/admin/qr",    icon: QrCode },
   ];
 
-  const mainLinks = isAdmin ? adminLinks.filter(l => l.href !== "/admin") : userLinks;
-  const adminOnlyLinks = isAdmin ? adminLinks.filter(l => l.href === "/admin") : [];
+  const mainLinks = isAdmin ? adminLinks : userLinks;
+  const adminOnlyLinks: any[] = [];
 
 
   return (

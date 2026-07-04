@@ -7,11 +7,22 @@ import { useLang } from "@/context/LanguageContext";
 import { Leaf, Award, Footprints, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 
 export default function DashboardPage() {
   const { profile, user } = useAuth();
   const { t, lang } = useLang();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (profile?.role === "admin") {
+      router.push("/admin");
+    }
+  }, [profile, router]);
+
+  if (profile?.role === "admin") return null;
 
   const displayName =
     profile?.name ||
