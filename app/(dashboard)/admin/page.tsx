@@ -82,7 +82,8 @@ export default function AdminDashboardPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 sm:p-6">
-          <div className="overflow-x-auto">
+          {/* Desktop Table View */}
+          <div className="hidden md:block overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent bg-slate-50 dark:bg-slate-900/50">
@@ -116,6 +117,36 @@ export default function AdminDashboardPage() {
                 ))}
               </TableBody>
             </Table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="grid grid-cols-1 gap-4 md:hidden">
+            {activitiesData.map((act) => (
+              <div key={act.id} className="border border-border/50 rounded-xl p-4 space-y-4 bg-white dark:bg-slate-900 shadow-sm">
+                <div className="flex items-center gap-3 border-b border-border/50 pb-3">
+                  <div className={`h-12 w-12 rounded-xl ${act.bg} flex items-center justify-center shadow-sm shrink-0`}>
+                    <act.icon className={`h-6 w-6 ${act.color}`} />
+                  </div>
+                  <span className="text-base font-semibold leading-tight">{act.title}</span>
+                </div>
+                <div className="grid grid-cols-2 gap-y-4 gap-x-2 text-sm">
+                  <div className="flex flex-col">
+                    <span className="text-muted-foreground mb-1 text-xs">{lang === "th" ? "จำนวนครั้งที่ทำ" : "Total Count"}</span>
+                    <span className="font-bold text-slate-700 dark:text-slate-300 text-base">{act.count.toLocaleString()}</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-muted-foreground mb-1 text-xs">{lang === "th" ? "คาร์บอนที่ลดได้" : "Carbon Saved"}</span>
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400 text-base">
+                      {act.carbon > 0 ? `-${act.carbon.toLocaleString()} kg` : "-"}
+                    </span>
+                  </div>
+                  <div className="flex flex-col col-span-2">
+                    <span className="text-muted-foreground mb-1 text-xs">{lang === "th" ? "ข้อมูลการใช้งาน" : "Usage Data"}</span>
+                    <span className="font-bold text-primary text-base">{act.usage}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
