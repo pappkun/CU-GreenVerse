@@ -144,8 +144,8 @@ export default function LandingPage() {
                 title={lang === "th" ? "รับของรางวัล" : "Earn Rewards"}
                 description={
                   lang === "th"
-                    ? "สะสม Green Credits และนำไปแลกรับของรางวัลพิเศษ ส่วนลดร้านค้า หรือไอเท็มสำหรับอวาตาร์ดิจิทัล"
-                    : "Collect Green Credits to redeem exclusive rewards, discounts, or digital avatar items."
+                    ? "สะสม Green Credits และนำไปแลกรับของรางวัลพิเศษ หรือส่วนลดร้านค้า"
+                    : "Collect Green Credits to redeem exclusive rewards or discounts."
                 }
               />
             </div>
