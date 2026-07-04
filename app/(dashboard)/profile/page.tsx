@@ -323,48 +323,7 @@ function ProfilePageContent() {
                 {displayEmail} · {displayFaculty}
               </p>
 
-              {/* Tier Progress */}
-              {nextTier && (
-                <div className="mt-3 max-w-xs">
-                  <div className="flex justify-between text-xs text-muted-foreground mb-1">
-                    <span>{currentTier.label}</span>
-                    <span>
-                      {nextTier.label} ({nextTier.minCredits.toLocaleString()}{" "}
-                      pts)
-                    </span>
-                  </div>
-                  <Progress value={tierProgress} className="h-2" />
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {lang === "th" ? (
-                      <>
-                        {"อีก "}
-                        <span className="text-primary font-semibold">
-                          {(nextTier.minCredits - credits).toLocaleString()}
-                        </span>
-                        {" Credits เพื่อเลื่อนระดับ"}
-                      </>
-                    ) : (
-                      <>
-                        {
-                          <span className="text-primary font-semibold">
-                            {(nextTier.minCredits - credits).toLocaleString()}
-                          </span>
-                        }
-                        {" more Credits to level up"}
-                      </>
-                    )}
-                  </p>
-                </div>
-              )}
-              {!nextTier && (
-                <div className="mt-3">
-                  <Badge className="bg-amber-500/10 text-amber-600 border-0">
-                    {lang === "th"
-                      ? "ระดับสูงสุด · Green Guardian"
-                      : "Max Level · Green Guardian"}
-                  </Badge>
-                </div>
-              )}
+              {/* Tier Progress Removed */}
             </div>
           </div>
         </CardContent>
