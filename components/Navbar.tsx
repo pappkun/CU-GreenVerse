@@ -124,18 +124,22 @@ export function Navbar() {
                     {displayEmail}
                   </p>
                 </div>
-                <DropdownMenuItem
-                  render={<Link href="/profile" className="cursor-pointer" />}
-                >
-                  <UserIcon className="mr-2 h-4 w-4" />
-                  <span>{t("profile")}</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  render={<Link href="/history" className="cursor-pointer" />}
-                >
-                  <Leaf className="mr-2 h-4 w-4" />
-                  <span>{lang === "th" ? "ประวัติการใช้งาน" : "History"}</span>
-                </DropdownMenuItem>
+                {!isAdmin && (
+                  <>
+                    <DropdownMenuItem
+                      render={<Link href="/profile" className="cursor-pointer" />}
+                    >
+                      <UserIcon className="mr-2 h-4 w-4" />
+                      <span>{t("profile")}</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      render={<Link href="/history" className="cursor-pointer" />}
+                    >
+                      <Leaf className="mr-2 h-4 w-4" />
+                      <span>{lang === "th" ? "ประวัติการใช้งาน" : "History"}</span>
+                    </DropdownMenuItem>
+                  </>
+                )}
                 {isAdmin && (
                   <>
                     <DropdownMenuItem
