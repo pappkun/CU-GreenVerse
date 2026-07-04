@@ -250,10 +250,10 @@ function ScanQRContent() {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)] bg-black text-white relative">
+    <div className={`flex flex-col h-[calc(100vh-4rem)] relative ${success ? "bg-background text-foreground" : "bg-black text-white"}`}>
       {/* Header */}
-      <div className="absolute top-0 left-0 right-0 p-4 flex items-center z-10 bg-gradient-to-b from-black/80 to-transparent">
-        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 rounded-full" onClick={() => router.back()}>
+      <div className={`absolute top-0 left-0 right-0 p-4 flex items-center z-10 ${success ? "bg-background/80 backdrop-blur-sm border-b border-border/40" : "bg-gradient-to-b from-black/80 to-transparent"}`}>
+        <Button variant="ghost" size="icon" className={`${success ? "text-foreground hover:bg-muted" : "text-white hover:bg-white/20"} rounded-full`} onClick={() => router.back()}>
           <ArrowLeft className="h-6 w-6" />
         </Button>
         <h1 className="flex-1 text-center font-semibold text-lg mr-10">
@@ -280,11 +280,15 @@ function ScanQRContent() {
         )}
 
         {/* Background Image simulating camera (Fallback if camera blocked) */}
-        <div 
-          className={`absolute inset-0 opacity-40 bg-cover bg-center ${!success ? '-z-10' : ''}`}
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1590240402855-32e67df1488c?auto=format&fit=crop&q=80&w=600')" }}
-        />
-        <div className={`absolute inset-0 bg-black/40 ${!success ? '-z-10' : ''}`} />
+        {!success && (
+          <>
+            <div 
+              className="absolute inset-0 opacity-40 bg-cover bg-center -z-10"
+              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1590240402855-32e67df1488c?auto=format&fit=crop&q=80&w=600')" }}
+            />
+            <div className="absolute inset-0 bg-black/40 -z-10" />
+          </>
+        )}
 
         {!success ? (
           <>
@@ -312,38 +316,38 @@ function ScanQRContent() {
           </>
         ) : (
           /* Success State */
-          <div className="relative z-10 flex flex-col items-center animate-in fade-in zoom-in duration-500 p-6 w-full max-w-sm">
+          <div className="relative z-10 flex flex-col items-center animate-in fade-in zoom-in duration-500 p-6 w-full max-w-sm mt-12">
             <div className="h-24 w-24 bg-primary rounded-full flex items-center justify-center mb-6 shadow-lg shadow-primary/30">
               <CheckCircle2 className="h-12 w-12 text-primary-foreground" />
             </div>
             
-            <Card className="w-full bg-white/10 backdrop-blur-md border-white/20 text-white shadow-xl">
+            <Card className="w-full border-border/50 shadow-xl">
               <CardContent className="pt-6 space-y-4 flex flex-col items-center text-center">
                 <h2 className="text-2xl font-bold">
                   {lang === "th" ? "บันทึกสำเร็จ!" : "Action Logged!"}
                 </h2>
                 
                 {scannedActivity && (
-                  <div className="w-full p-4 bg-black/40 rounded-xl space-y-3">
+                  <div className="w-full p-4 bg-muted/40 rounded-xl space-y-3">
                     <div className="flex items-center justify-center gap-2 text-primary">
                       <scannedActivity.icon className="h-5 w-5" />
                       <span className="font-semibold">{scannedActivity.title}</span>
                     </div>
-                    <div className="flex justify-around pt-2 border-t border-white/10">
+                    <div className="flex justify-around pt-2 border-t border-border/40">
                       <div>
                         <p className="text-2xl font-bold text-primary">+{scannedActivity.points}</p>
-                        <p className="text-xs text-white/70">Green Credits</p>
+                        <p className="text-xs text-muted-foreground">Green Credits</p>
                       </div>
                       <div>
-                        <p className="text-2xl font-bold text-emerald-400">-{scannedActivity.carbon}</p>
-                        <p className="text-xs text-white/70">kgCO₂e Saved</p>
+                        <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">-{scannedActivity.carbon}</p>
+                        <p className="text-xs text-muted-foreground">kgCO₂e Saved</p>
                       </div>
                     </div>
                   </div>
                 )}
 
                 <Link href="/profile?tab=history" className="w-full mt-4 block">
-                  <Button className="w-full text-lg h-12 rounded-full">
+                  <Button className="w-full text-lg h-12 rounded-full shadow-md">
                     {lang === "th" ? "ดูประวัติกิจกรรม" : "View Activity History"}
                   </Button>
                 </Link>
