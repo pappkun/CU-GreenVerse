@@ -73,6 +73,13 @@ export function RewardCard({ reward, userCredits }: RewardCardProps) {
   const colors = categoryColors[reward.category] || categoryColors.digital;
   const CatIcon = categoryIconMap[reward.category] || Gift;
 
+  let displayImage = reward.image;
+  if (reward.title.includes("Mystery Eco Box")) {
+    displayImage = "/rewards/mystery-box.png";
+  } else if (reward.title.includes("Tote Bag")) {
+    displayImage = "/rewards/tote-bag.png";
+  }
+
   return (
     <div
       className={cn(
@@ -88,11 +95,15 @@ export function RewardCard({ reward, userCredits }: RewardCardProps) {
           colors.bg,
         )}
       >
-        {reward.image ? (
+        {displayImage ? (
           <img 
-            src={reward.image} 
+            src={displayImage} 
             alt={reward.title} 
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            onError={(e) => {
+              // hide broken image icon
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
           />
         ) : (
           <>
