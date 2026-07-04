@@ -401,6 +401,191 @@ function ProfilePageContent() {
           </TabsList>
         </div>
 
+        {/* GREEN PASSPORT */}
+        <TabsContent value="passport" className="mt-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="border-border/50 shadow-sm bg-gradient-to-br from-primary/5 to-emerald-500/5">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  Green Passport
+                  <Badge variant="outline" className="ml-auto text-xs">
+                    {lang === "th" ? "ฉบับดิจิทัล" : "Digital"}
+                  </Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {(lang === "th"
+                  ? [
+                      { label: "ชื่อ-สกุล", value: displayName },
+                      { label: "คณะ", value: displayFaculty || "Engineering" },
+                      { label: "ระดับผู้ใช้งาน", value: currentTier.label },
+                      {
+                        label: "Green Credits รวม",
+                        value: `${credits.toLocaleString()} pts`,
+                      },
+                      {
+                        label: "คาร์บอนที่ลดได้",
+                        value: `${carbonSaved} kgCO₂e`,
+                      },
+                      {
+                        label: "กิจกรรมทั้งหมด",
+                        value: `${actionsCount} ครั้ง`,
+                      },
+                      {
+                        label: "Badge ที่ได้รับ",
+                        value: `${ALL_BADGES.filter((b) => b.earned).length} รางวัล`,
+                      },
+                      { label: "ชั่วโมงจิตอาสา", value: "12.5 ชั่วโมง" },
+                    ]
+                  : [
+                      { label: "Full Name", value: displayName },
+                      {
+                        label: "Faculty",
+                        value: displayFaculty || "Engineering",
+                      },
+                      { label: "User Level", value: currentTier.label },
+                      {
+                        label: "Total Green Credits",
+                        value: `${credits.toLocaleString()} pts`,
+                      },
+                      { label: "Carbon Saved", value: `${carbonSaved} kgCO₂e` },
+                      {
+                        label: "Total Activities",
+                        value: `${actionsCount} times`,
+                      },
+                      {
+                        label: "Badges Earned",
+                        value: `${ALL_BADGES.filter((b) => b.earned).length} badges`,
+                      },
+                      { label: "Volunteer Hours", value: "12.5 hrs" },
+                    ]
+                ).map((row) => (
+                  <div
+                    key={row.label}
+                    className="flex justify-between items-center py-1 border-b border-border/30 last:border-0"
+                  >
+                    <span className="text-sm text-muted-foreground">
+                      {row.label}
+                    </span>
+                    <span className="text-sm font-medium">{row.value}</span>
+                  </div>
+                ))}
+
+                <div className="pt-3">
+                  <Button
+                    className="w-full gap-2 rounded-xl h-10 shadow-sm shadow-primary/20"
+                    onClick={handleShare}
+                  >
+                    <Share2 className="h-4 w-4" />{" "}
+                    {lang === "th"
+                      ? "แชร์ความสำเร็จ (Share)"
+                      : "Share to Social Media"}
+                  </Button>
+                </div>
+
+                <p className="text-xs text-muted-foreground text-center">
+                  {lang === "th"
+                    ? "ใช้ประกอบการสมัครทุน ฝึกงาน และแลกเปลี่ยนได้"
+                    : "Use for internship, scholarship & exchange program applications"}
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Carbon Achievement Card */}
+            <Card className="border-border/50 shadow-sm">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">
+                  {lang === "th" ? "ผลกระทบของคุณ" : "Your Impact"}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  {lang === "th"
+                    ? "คุณมีส่วนร่วมในการลดคาร์บอนเท่ากับ..."
+                    : "Your actions are equivalent to..."}
+                </p>
+
+                {(lang === "th"
+                  ? [
+                      {
+                        label: "ต้นไม้ที่ช่วยดูดคาร์บอน",
+                        value: Math.round(carbonSaved / 21.77),
+                        unit: "ต้น/ปี",
+                      },
+                      {
+                        label: "ระยะทางที่ไม่ขับรถ",
+                        value: Math.round(carbonSaved / 0.21),
+                        unit: "กม.",
+                      },
+                      {
+                        label: "ชั่วโมงไฟ LED ที่ประหยัด",
+                        value: Math.round(carbonSaved * 100),
+                        unit: "ชั่วโมง",
+                      },
+                      {
+                        label: "มื้อเนื้อสัตว์ที่งดได้",
+                        value: Math.round(carbonSaved / 6.6),
+                        unit: "มื้อ",
+                      },
+                    ]
+                  : [
+                      {
+                        label: "Trees absorbing carbon",
+                        value: Math.round(carbonSaved / 21.77),
+                        unit: "trees/yr",
+                      },
+                      {
+                        label: "Car-free distance",
+                        value: Math.round(carbonSaved / 0.21),
+                        unit: "km",
+                      },
+                      {
+                        label: "LED light hours saved",
+                        value: Math.round(carbonSaved * 100),
+                        unit: "hrs",
+                      },
+                      {
+                        label: "Meat meals avoided",
+                        value: Math.round(carbonSaved / 6.6),
+                        unit: "meals",
+                      },
+                    ]
+                ).map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center gap-3 p-3 rounded-xl bg-muted/40"
+                  >
+                    <div className="h-9 w-9 rounded-full bg-background/80 border border-border/50" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-muted-foreground">
+                        {item.label}
+                      </p>
+                      <p className="font-bold text-lg leading-tight">
+                        {item.value.toLocaleString()}{" "}
+                        <span className="text-sm font-normal text-muted-foreground">
+                          {item.unit}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                ))}
+
+                <div className="pt-2">
+                  <div className="bg-primary/10 border border-primary/20 rounded-xl p-4 text-center">
+                    <p className="text-2xl font-black text-primary">
+                      {carbonSaved} kgCO₂e
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {lang === "th"
+                        ? "คาร์บอนรวมที่คุณลดได้ตั้งแต่เริ่มต้น"
+                        : "Total carbon you've reduced since joining"}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
         {/* BADGES */}
         <TabsContent value="badges" className="mt-6">
           <Card className="border-border/50 shadow-sm">
@@ -492,8 +677,6 @@ function ProfilePageContent() {
             </CardContent>
           </Card>
         </TabsContent>
-
-
       </Tabs>
     </div>
   );

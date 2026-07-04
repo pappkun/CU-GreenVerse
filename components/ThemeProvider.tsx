@@ -48,8 +48,8 @@ function applyTheme(theme: Theme) {
 
 export function ThemeProvider({
   children,
-  defaultTheme = "system",
-  enableSystem = true,
+  defaultTheme = "light",
+  enableSystem = false,
 }: ThemeProviderProps) {
   const [theme, setThemeState] = React.useState<Theme>(defaultTheme);
   const [resolvedTheme, setResolvedTheme] = React.useState<ResolvedTheme>(
@@ -67,20 +67,19 @@ export function ThemeProvider({
         ? storedTheme
         : defaultTheme;
 
-    setThemeState(initialTheme);
+    setThemeState(initialTheme === "system" ? "light" : initialTheme);
     setResolvedTheme(
-      initialTheme === "system" ? getSystemTheme() : initialTheme,
+      initialTheme === "system" || initialTheme === "light"
+        ? "light"
+        : initialTheme,
     );
   }, [defaultTheme]);
 
   React.useEffect(() => {
-    applyTheme(theme);
-    if (theme !== "system") {
-      setResolvedTheme(theme);
-    } else if (enableSystem) {
-      setResolvedTheme(getSystemTheme());
-    }
-  }, [theme, enableSystem]);
+    const normalizedTheme = theme === "system" ? "light" : theme;
+    applyTheme(normalizedTheme);
+    setResolvedTheme(normalizedTheme);
+  }, [theme]);
 
   React.useEffect(() => {
     if (typeof window === "undefined") return;
@@ -99,9 +98,10 @@ export function ThemeProvider({
   }, [theme]);
 
   const setTheme = React.useCallback((nextTheme: Theme) => {
-    setThemeState(nextTheme);
+    const normalizedTheme = nextTheme === "system" ? "light" : nextTheme;
+    setThemeState(normalizedTheme);
     if (typeof window !== "undefined") {
-      window.localStorage.setItem("theme", nextTheme);
+      window.localStorage.setItem("theme", normalizedTheme);
     }
   }, []);
 
