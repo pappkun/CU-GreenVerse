@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useLang } from "@/context/LanguageContext";
@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 
 type ScanState = "scanning" | "processing" | "error" | "success";
 
-export default function PopBusScanPage() {
+function PopBusScanPageContent() {
   const { user } = useAuth();
   const { lang } = useLang();
   const router = useRouter();
@@ -259,5 +259,13 @@ export default function PopBusScanPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function PopBusScanPage() {
+  return (
+    <Suspense fallback={<div className="flex h-screen items-center justify-center bg-black text-white">Loading camera...</div>}>
+      <PopBusScanPageContent />
+    </Suspense>
   );
 }

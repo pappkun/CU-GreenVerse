@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useLang } from "@/context/LanguageContext";
@@ -32,7 +32,7 @@ type ConnectionState =
   | "success"
   | "error";
 
-export default function AnywheelMockPage() {
+function AnywheelMockPageContent() {
   const { user, profile } = useAuth();
   const { lang } = useLang();
   const router = useRouter();
@@ -258,5 +258,13 @@ export default function AnywheelMockPage() {
         </CardFooter>
       </Card>
     </div>
+  );
+}
+
+export default function AnywheelMockPage() {
+  return (
+    <Suspense fallback={<div className="flex h-[80vh] w-full items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}>
+      <AnywheelMockPageContent />
+    </Suspense>
   );
 }

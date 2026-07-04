@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useLang } from "@/context/LanguageContext";
 import { useSearchParams } from "next/navigation";
 import { currentUser } from "@/data/mockUsers";
@@ -226,7 +226,7 @@ function getTierProgress(credits: number) {
   return Math.min(100, Math.round((progress / range) * 100));
 }
 
-export default function ProfilePage() {
+function ProfilePageContent() {
   const { user, profile } = useAuth();
   const { lang } = useLang();
   const searchParams = useSearchParams();
@@ -636,7 +636,6 @@ export default function ProfilePage() {
                 </div>
               </CardContent>
             </Card>
-            </Card>
           </div>
         </TabsContent>
 
@@ -870,5 +869,13 @@ export default function ProfilePage() {
 >>>>>>> 44b709c (Fix build compatibility for new dashboard routes)
       </Tabs>
     </div>
+  );
+}
+
+export default function ProfilePage() {
+  return (
+    <Suspense fallback={<div className="flex justify-center items-center h-[50vh]">Loading profile...</div>}>
+      <ProfilePageContent />
+    </Suspense>
   );
 }
