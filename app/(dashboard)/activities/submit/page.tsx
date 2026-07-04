@@ -33,6 +33,19 @@ function ScanQRContent() {
       
       // ถ้ารหัสใน QR Code ตรงกับที่เรากำหนดไว้
       if (qrData === "POP-BUS" || qrData === "RECYCLE_CU") {
+        const isBus = qrData === "POP-BUS";
+        const pointsToEarn = isBus ? 10 : 30;
+
+        // Check daily limit (100 pts)
+        const today = new Date().toISOString().split('T')[0];
+        const earnedTodayKey = `greenverse_earned_${today}`;
+        const earnedToday = parseInt(localStorage.getItem(earnedTodayKey) || '0', 10);
+
+        if (earnedToday + pointsToEarn > 100) {
+          toast.error(lang === "th" ? "คุณได้รับแต้มสูงสุดต่อวันแล้ว (100 pts)" : "Daily point limit reached (100 pts)");
+          return; // Stop here, don't give points
+        }
+
         setScanning(false);
         setSuccess(true);
         
@@ -45,11 +58,13 @@ function ScanQRContent() {
           zIndex: 100
         });
 
+        // Record points
+        localStorage.setItem(earnedTodayKey, (earnedToday + pointsToEarn).toString());
+
         // ตรวจสอบว่าเป็น QR ของอะไร
-        const isBus = qrData === "POP-BUS";
         setScannedActivity({
           title: isBus ? (lang === "th" ? "เช็คอินรถป๊อบ (POP-BUS)" : "POP-BUS Check-in") : (lang === "th" ? "แยกขยะขวดพลาสติก" : "Plastic Bottle Recycling"),
-          points: isBus ? 10 : 30,
+          points: pointsToEarn,
           carbon: isBus ? 0.5 : 0.2,
           icon: isBus ? Bus : Trash2,
         });
@@ -65,12 +80,29 @@ function ScanQRContent() {
       toast.error(lang === "th" ? "กรุณาเลือกกิจกรรมและอัปโหลดรูปภาพ" : "Please select an activity and upload evidence");
       return;
     }
+
+    const pointsMap: Record<string, number> = { byoc: 40, recycle: 30, food: 50, bag: 20 };
+    const pointsToEarn = pointsMap[selectedActivity] || 20;
+
+    // Check daily limit (100 pts)
+    const today = new Date().toISOString().split('T')[0];
+    const earnedTodayKey = `greenverse_earned_${today}`;
+    const earnedToday = parseInt(localStorage.getItem(earnedTodayKey) || '0', 10);
+
+    if (earnedToday + pointsToEarn > 100) {
+      toast.error(lang === "th" ? "คุณได้รับแต้มสูงสุดต่อวันแล้ว (100 pts)" : "Daily point limit reached (100 pts)");
+      return; // Stop here, don't simulate API call
+    }
     
     setIsSubmitting(true);
     // Simulate API call and AI Verification
     setTimeout(() => {
       setIsSubmitting(false);
       setSuccess(true);
+      
+      // Record points
+      localStorage.setItem(earnedTodayKey, (earnedToday + pointsToEarn).toString());
+
       confetti({
         particleCount: 150,
         spread: 70,
@@ -80,7 +112,7 @@ function ScanQRContent() {
       });
       setScannedActivity({
         title: lang === "th" ? "บันทึกสำเร็จ" : "Action Logged",
-        points: 20,
+        points: pointsToEarn,
         carbon: 0.3,
         icon: Leaf,
       });
