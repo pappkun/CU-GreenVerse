@@ -22,7 +22,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/context/AuthContext";
 import { useLang } from "@/context/LanguageContext";
-import { currentUser } from "@/data/mockUsers";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -30,15 +29,14 @@ export function Navbar() {
   const { user, profile, signOut } = useAuth();
   const { lang, setLang, t } = useLang();
 
-  // Use real user data if logged in, else fall back to mock for public pages
   const displayName =
     profile?.name ||
     user?.user_metadata?.full_name ||
     user?.email?.split("@")[0] ||
-    currentUser.name;
-  const displayEmail = user?.email || currentUser.email;
-  const displayAvatar = profile?.avatar_url || currentUser.avatar;
-  const isAdmin = profile?.role === "admin" || currentUser.role === "admin";
+    "User";
+  const displayEmail = user?.email ?? "";
+  const displayAvatar = profile?.avatar_url ?? "";
+  const isAdmin = profile?.role === "admin";
 
   const isPublicPage = pathname === "/" || pathname === "/login";
 

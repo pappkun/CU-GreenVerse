@@ -1,6 +1,6 @@
 "use client";
 
-import { mockPartners } from "@/data/mockStats";
+import { mockPartners } from "@/data/mockPartners";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

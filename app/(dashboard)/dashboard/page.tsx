@@ -1,8 +1,7 @@
 "use client";
 
 import { DashboardCard } from "@/components/DashboardCard";
-import { ActivityChart } from "@/components/Charts";
-import { currentUser } from "@/data/mockUsers";
+import { ActivityChart } from "@/components/ActivityChart";
 import { useAuth } from "@/context/AuthContext";
 import { useLang } from "@/context/LanguageContext";
 import { Leaf, Award, Footprints, Flame } from "lucide-react";
@@ -18,10 +17,10 @@ export default function DashboardPage() {
     profile?.name ||
     user?.user_metadata?.full_name ||
     user?.email?.split("@")[0] ||
-    currentUser.name;
-  const credits = profile?.green_credits ?? currentUser.greenCredits;
-  const carbon = profile?.carbon_saved_kg ?? currentUser.carbonSaved;
-  const actions = currentUser.greenActions;
+    "User";
+  const credits = profile?.green_credits ?? 0;
+  const carbon = profile?.carbon_saved_kg ?? 0;
+  const actions = profile?.green_actions ?? 0;
 
   const recentActivities =
     lang === "th"
