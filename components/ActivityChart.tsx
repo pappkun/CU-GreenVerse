@@ -29,6 +29,8 @@ const getWeeklyData = (lang: string) => [
   { name: lang === "th" ? "อา." : "Sun", carbon: 2.0, activities: 2 },
 ];
 
+import { useMemo } from "react";
+
 export function ActivityChart() {
   const { resolvedTheme } = useTheme();
   const { lang } = useLang();
@@ -38,7 +40,7 @@ export function ActivityChart() {
   const secondaryColor = isDark ? "hsl(160 60% 45%)" : "hsl(173 58% 39%)";
   const gridColor = isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)";
   const textColor = isDark ? "#a1a1aa" : "#71717a";
-  const data = getWeeklyData(lang);
+  const data = useMemo(() => getWeeklyData(lang), [lang]);
 
   return (
     <Card className="col-span-1 md:col-span-2 lg:col-span-4 border-border/50">
