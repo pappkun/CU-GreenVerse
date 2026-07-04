@@ -10,13 +10,7 @@ import { useLang } from "@/context/LanguageContext";
 export default function PassportPage() {
   const { lang } = useLang();
 
-  const timeline = [
-    { title: lang === "th" ? "ถึงเลเวล 10" : "Reached Level 10", date: lang === "th" ? "25 มิ.ย. 2026" : "June 25, 2026", type: lang === "th" ? "ระดับ" : "level", icon: <Award className="h-5 w-5 text-amber-500" /> },
-    { title: lang === "th" ? "เข้าร่วมกิจกรรมเก็บขยะ" : "Joined Campus Cleanup", date: lang === "th" ? "15 มิ.ย. 2026" : "June 15, 2026", type: lang === "th" ? "กิจกรรม" : "event", icon: <Leaf className="h-5 w-5 text-emerald-500" /> },
-    { title: lang === "th" ? "แลกส่วนลด True Coffee" : "Redeemed True Coffee Discount", date: lang === "th" ? "2 มิ.ย. 2026" : "June 2, 2026", type: lang === "th" ? "รางวัล" : "reward", icon: <Award className="h-5 w-5 text-blue-500" /> },
-    { title: lang === "th" ? "ลดคาร์บอนครบ 50kg" : "Saved First 50kg CO₂", date: lang === "th" ? "20 พ.ค. 2026" : "May 20, 2026", type: lang === "th" ? "ความสำเร็จ" : "milestone", icon: <CheckCircle2 className="h-5 w-5 text-primary" /> },
-    { title: lang === "th" ? "สร้างบัญชี" : "Account Created", date: lang === "th" ? "10 ม.ค. 2026" : "January 10, 2026", type: lang === "th" ? "ความสำเร็จ" : "milestone", icon: <Calendar className="h-5 w-5 text-muted-foreground" /> },
-  ];
+
 
   return (
     <div className="p-6 md:p-8 space-y-8 max-w-4xl mx-auto">
@@ -81,30 +75,6 @@ export default function PassportPage() {
           </CardContent>
         </Card>
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>{lang === "th" ? "ไทม์ไลน์การเดินทาง" : "Journey Timeline"}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="relative border-l-2 border-muted ml-3 space-y-8 pb-4">
-            {timeline.map((item, i) => (
-              <div key={i} className="relative pl-8">
-                <div className="absolute -left-[17px] top-0.5 bg-background p-1 rounded-full border-2 border-muted shadow-sm">
-                  {item.icon}
-                </div>
-                <div>
-                  <h4 className="font-semibold">{item.title}</h4>
-                  <p className="text-sm text-muted-foreground">{item.date}</p>
-                  <Badge variant="outline" className="mt-2 text-[10px] uppercase">
-                    {item.type}
-                  </Badge>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }
